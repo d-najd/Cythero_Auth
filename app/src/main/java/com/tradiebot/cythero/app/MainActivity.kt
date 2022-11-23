@@ -10,7 +10,7 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.tradiebot.cythero.app.ui.base.Screens
 import com.tradiebot.cythero.app.ui.base.controller.setRoot
-import com.tradiebot.cythero.app.ui.register.LoginController
+import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.app.ui.theme.CytheroTheme
 import com.tradiebot.cythero.databinding.MainActivityBinding
 import okhttp3.OkHttpClient

@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.register
+package com.tradiebot.cythero.app.ui.login
 
 import android.os.Bundle
 import androidx.compose.runtime.Composable

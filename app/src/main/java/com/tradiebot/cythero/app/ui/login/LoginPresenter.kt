@@ -1,11 +1,9 @@
-package com.tradiebot.cythero.app.ui.register
+package com.tradiebot.cythero.app.ui.login
 
 import android.os.Bundle
 import com.tradiebot.cythero.app.ui.base.presenter.BasePresenter
 import com.tradiebot.cythero.presentation.login.LoginState
 import com.tradiebot.cythero.presentation.login.LoginStateImpl
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Class containing user information.

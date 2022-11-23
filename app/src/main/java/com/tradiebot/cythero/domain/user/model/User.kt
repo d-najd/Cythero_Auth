@@ -1,8 +1,6 @@
 package com.tradiebot.cythero.domain.user.model
 
 import java.io.Serializable
-import java.util.Date
-
 
 @Deprecated("Use UserLoginUpdate")
 data class UserLogin(

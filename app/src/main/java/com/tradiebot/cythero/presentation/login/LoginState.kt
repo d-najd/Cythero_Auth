@@ -4,7 +4,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.tradiebot.cythero.app.ui.register.LoginPresenter
+import com.tradiebot.cythero.app.ui.login.LoginPresenter
 
 @Stable
 interface LoginState {
