@@ -1,5 +1,7 @@
 package com.tradiebot.cythero.presentation.login.components.fields
 
+import android.util.Log
+import android.util.Log.ERROR
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -13,12 +15,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
 import com.tradiebot.cythero.presentation.login.LoginState
+import java.io.Console
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginFields(
     state: LoginState,
+    onLoginUser: (UserLoginUpdate) -> Unit,
 ) {
     val defaultFieldModifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
 
@@ -66,7 +71,16 @@ fun LoginFields(
     )
 
     Button(onClick = {
-        mail = "testings"
+        if(mail.isEmpty() || password.isEmpty()){
+            mail = "Main or Password is empty, logs disabled"
+        } else {
+            onLoginUser(
+                UserLoginUpdate(
+                    email = mail,
+                    password = password,
+                )
+            )
+        }
     }) {
         Text(stringResource(R.string.action_confirm))
     }

@@ -13,7 +13,11 @@ import com.tradiebot.cythero.app.ui.base.controller.setRoot
 import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.app.ui.theme.CytheroTheme
 import com.tradiebot.cythero.databinding.MainActivityBinding
+import com.tradiebot.cythero.domain.DomainModule
 import okhttp3.OkHttpClient
+import org.kodein.di.*
+import org.kodein.di.android.retainedSubDI
+import uy.kohesive.injekt.Injekt
 
 class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
@@ -21,10 +25,15 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: MainActivityBinding
     private lateinit var router: Router
 
+
     private val startScreenId = Screens.LOGIN
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //TODO move this to the app module, doing so will crash the app because the presenter's will
+        // get instantiated before the DomainModule gets called
+        Injekt.importModule(DomainModule())
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -36,35 +45,5 @@ class MainActivity : AppCompatActivity() {
         if(router.backstack.firstOrNull() == null) {
             router.setRoot(LoginController(), startScreenId)
         }
-
-        /*
-        setContent {
-            CytheroTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
-        }
-         */
-
-    }
-}
-
-
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    CytheroTheme {
-        Greeting("Android")
     }
 }

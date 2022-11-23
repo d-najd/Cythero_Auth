@@ -66,6 +66,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
     implementation 'androidx.appcompat:appcompat:1.5.1'
 
+    implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
+
     // "Borrowed"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-appcompat:1.2.0"

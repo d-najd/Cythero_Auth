@@ -18,7 +18,10 @@ class LoginController(
     override fun ComposeContent() {
         val context = LocalContext.current
 
-        LoginScreen(presenter = presenter)
+        LoginScreen(
+            presenter = presenter,
+            onLoginUser = presenter::loginUser
+        )
 
         val onDismissRequest = { presenter.dialog = null }
         /*
