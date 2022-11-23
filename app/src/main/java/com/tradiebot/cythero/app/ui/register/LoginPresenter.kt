@@ -26,19 +26,7 @@ class LoginPresenter(
      * should attempt to fill user info?
      */
     fun subscribeLogin() {
-        /*
-        if (librarySubscription == null || librarySubscription!!.isCancelled) {
-            librarySubscription = presenterScope.launchIO {
-                combine(getLibraryFlow()) {library -> library }
-                    .collectLatest {
-                    }
-                    .collectLatest {
-                        state.isLoading = false
-                        loadedManga = it
-                    }
-            }
-        }
-         */
+
     }
 
 

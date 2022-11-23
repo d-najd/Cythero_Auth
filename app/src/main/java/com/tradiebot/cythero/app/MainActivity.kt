@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //TestAuth().run()
-
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -12,7 +12,6 @@ interface LoginState {
     val isLoading: Boolean
     val categories: List<Category>
     var searchQuery: String?
-    val selection: List<LibraryManga>
     val selectionMode: Boolean
     var hasActiveFilters: Boolean
      */
@@ -28,7 +27,6 @@ class LoginStateImpl : LoginState {
     override var isLoading: Boolean by mutableStateOf(true)
     override var categories: List<Category> by mutableStateOf(emptyList())
     override var searchQuery: String? by mutableStateOf(null)
-    override var selection: List<LibraryManga> by mutableStateOf(emptyList())
     override val selectionMode: Boolean by derivedStateOf { selection.isNotEmpty() }
     override var hasActiveFilters: Boolean by mutableStateOf(false)
      */
