@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
 
     lateinit var binding: MainActivityBinding
-
     private lateinit var router: Router
 
     private val startScreenId = Screens.LOGIN
@@ -32,15 +31,13 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // If there is no controller set one
-        if(router.backstack.firstOrNull() == null) {
-            router.setRoot(LoginController(), startScreenId)
-        }
-
         val container: ViewGroup = binding.controllerContainer
         router = Conductor.attachRouter(this, container, savedInstanceState)
             .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
 
+        if(router.backstack.firstOrNull() == null) {
+            router.setRoot(LoginController(), startScreenId)
+        }
 
         /*
         setContent {
