@@ -1,9 +1,9 @@
 package com.tradiebot.cythero
 
-import android.app.Activity
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.view.ViewGroup
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -11,41 +11,41 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.tradiebot.cythero.databinding.MainActivityBinding
+import com.tradiebot.cythero.ui.base.Screens
 import com.tradiebot.cythero.ui.theme.CytheroTheme
-import logcat.logcat
-import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    private val client = OkHttpClient()
+
+    lateinit var binding: MainActivityBinding
+
+    private lateinit var router: Router
+
+    private val startScreenId = Screens.LOGIN
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val test: Activity = this
 
-        Thread(Runnable {
-            this@MainActivity.runOnUiThread(java.lang.Runnable {
-                val client = OkHttpClient().newBuilder()
-                    .build()
-                // val mediaType = "text/plain".toMediaTypeOrNull()
-                val body: RequestBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                    // .setType(mediaType!!)
-                    .addFormDataPart("email", "dimitar.najdovski.example@gmail.com")
-                    .addFormDataPart("password", "Dimitar123")
-                    .addFormDataPart("from_web", "true")
-                    .build()
-                val request: Request = Request.Builder()
-                    .url("https://api.cythero.com/api/user/auth/login")
-                    .method("POST", body)
-                    .build()
-                val response = client.newCall(request).execute()
-                logcat { "$response test $response" }
-            })
-        }).start()
+        //TestAuth().run()
 
-        TestAuth().test(test)
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // If there is no controller set one
+        if(router.backstack.firstOrNull() == null) {
+            //router.setRoot()
+        }
+
+        val container: ViewGroup = binding.controllerContainer
+        router = Conductor.attachRouter(this, container, savedInstanceState)
+            .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
 
 
+        /*
         setContent {
             CytheroTheme {
                 // A surface container using the 'background' color from the theme
@@ -57,9 +57,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+         */
 
     }
 }
+
+
 
 @Composable
 fun Greeting(name: String) {
