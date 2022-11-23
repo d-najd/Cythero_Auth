@@ -35,6 +35,7 @@ android {
     }
     buildFeatures {
         compose true
+        viewBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.3.1'
@@ -47,7 +48,7 @@ android {
 }
 
 dependencies {
-
+    // Base
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
@@ -61,7 +62,28 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    // Project Specific
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
-    implementation "com.squareup.logcat:logcat:0.1"
     implementation 'androidx.appcompat:appcompat:1.5.1'
+
+    implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
+
+    // "Borrowed"
+    implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0"
+    implementation "io.github.reactivecircus.flowbinding:flowbinding-appcompat:1.2.0"
+    implementation "com.bluelinelabs:conductor:3.1.8"
+    implementation "com.squareup.logcat:logcat:0.1"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+    implementation 'info.android15.nucleus:nucleus:6.0.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
+    implementation "uy.kohesive.injekt:injekt-core:1.16.+"
+    implementation 'androidx.compose.material3:material3:1.1.0-alpha02'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation "com.google.android.material:compose-theme-adapter-3:1.1.0"
+    implementation 'androidx.compose.runtime:runtime:1.3.1'
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
 }
