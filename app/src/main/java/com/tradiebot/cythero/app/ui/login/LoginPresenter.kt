@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.tradiebot.cythero.app.ui.base.presenter.BasePresenter
 import com.tradiebot.cythero.domain.user.interactor.LoginUser
 import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
+import com.tradiebot.cythero.domain.user.service.UserService
 import com.tradiebot.cythero.presentation.login.LoginState
 import com.tradiebot.cythero.presentation.login.LoginStateImpl
 import com.tradiebot.cythero.util.launchIO
@@ -17,7 +18,9 @@ private data class User(val userData: String)
 
 class LoginPresenter(
     private val state: LoginStateImpl = LoginState() as LoginStateImpl,
-    private val loginUser: LoginUser = Injekt.get(),
+
+    //private val test: UserService = Injekt.get()
+    //private val loginUser: LoginUser = Injekt.get(),
     ) : BasePresenter<LoginController>(), LoginState by state {
 
 
