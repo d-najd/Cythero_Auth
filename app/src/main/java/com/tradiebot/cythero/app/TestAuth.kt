@@ -1,13 +1,7 @@
-package com.tradiebot.cythero
+package com.tradiebot.cythero.app
 
-import android.app.Activity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import logcat.logcat
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.IOException
 
 

@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.ui.theme
+package com.tradiebot.cythero.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

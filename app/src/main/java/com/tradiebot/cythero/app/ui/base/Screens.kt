@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.ui.base
+package com.tradiebot.cythero.app.ui.base
 
 enum class Screens {
     LOGIN,
