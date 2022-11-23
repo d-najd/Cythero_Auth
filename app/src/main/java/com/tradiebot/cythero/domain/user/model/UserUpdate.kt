@@ -2,18 +2,34 @@ package com.tradiebot.cythero.domain.user.model
 
 import logcat.logcat
 
-data class UserLoginApi (
+data class UserLoginUpdate (
     val email: String? = null,
     val username: String? = null,
     val password: String,
     val device_number: String? = null,
     val device_nickname: String? = null,
-    val pin: Int?,
+    val pin: Int? = null,
     val from_web: Boolean = true
-)
+) {
+    init {
+        if(username == null && email == null){
+            throw IllegalStateException("username and email can't be null at the same time")
+        }
+        if(!from_web){
+            logcat { "from_web is false, this is probably unintended behaviour" }
+        }
+    }
 
-fun UserComplete.toChapterLoginApi(): UserLoginApi {
-    val converted = UserLoginApi(
+    companion object {
+        fun testingInstance() = UserLoginUpdate(
+            email = "dimitar.najdovski.example@gmail.com",
+            password = "Dimitar123",
+        )
+    }
+}
+
+fun UserComplete.toChapterLoginUpdate(): UserLoginUpdate {
+    val converted = UserLoginUpdate(
         email = email,
         username = username,
         password = password!!,

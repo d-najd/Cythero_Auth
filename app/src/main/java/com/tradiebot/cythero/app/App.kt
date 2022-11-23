@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
+import com.tradiebot.cythero.domain.DomainModule
 import uy.kohesive.injekt.Injekt
 
 class App : Application(), DefaultLifecycleObserver{
@@ -12,7 +13,8 @@ class App : Application(), DefaultLifecycleObserver{
         super<Application>.onCreate()
 
         Injekt.importModule(AppModule(this))
-        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
+        Injekt.importModule(DomainModule())
 
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 }
