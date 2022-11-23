@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
 import com.tradiebot.cythero.presentation.components.Divider
 import com.tradiebot.cythero.presentation.login.LoginState
 import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
@@ -23,6 +24,7 @@ import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 fun LoginContent(
     state: LoginState,
     contentPadding: PaddingValues,
+    onLoginUser: (UserLoginUpdate) -> Unit,
 ) {
     Column(
         horizontalAlignment = CenterHorizontally,
@@ -46,6 +48,8 @@ fun LoginContent(
             color = Color.White
         )
 
-        LoginFields(state = state)
+        LoginFields(
+            state = state,
+            onLoginUser = onLoginUser)
     }
 }

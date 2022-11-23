@@ -62,12 +62,6 @@ abstract class BaseController<VB : ViewBinding>(bundle: Bundle? = null) : Contro
     override fun onChangeStarted(handler: ControllerChangeHandler, type: ControllerChangeType) {
         //Note keyboard may need to be hidden here
 
-        /*
-        if (type.isEnter) {
-            setHasOptionsMenu(true)
-        }
-         */
-
         super.onChangeStarted(handler, type)
     }
 

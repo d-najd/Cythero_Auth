@@ -5,6 +5,6 @@ import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
 
 interface UserService {
 
-    suspend fun loginUser(user: UserLoginUpdate): UserComplete
+    suspend fun loginUser(user: UserLoginUpdate): UserComplete?
 
 }

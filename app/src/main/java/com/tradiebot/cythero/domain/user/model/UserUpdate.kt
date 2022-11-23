@@ -11,6 +11,7 @@ data class UserLoginUpdate (
     val pin: Int? = null,
     val from_web: Boolean = true
 ) {
+    //TODO test this, if it doesn't work uncomment the one below
     init {
         if(username == null && email == null){
             throw IllegalStateException("username and email can't be null at the same time")
@@ -38,12 +39,13 @@ fun UserComplete.toChapterLoginUpdate(): UserLoginUpdate {
         pin = pin,
         from_web = from_web ?: true
     )
-
+    /*
     if(converted.username == null && converted.email == null){
         throw IllegalStateException("username and email can't be null at the same time")
     }
     if(!converted.from_web){
         logcat { "from_web is false, this is probably unintended behaviour" }
     }
+     */
     return converted
 }

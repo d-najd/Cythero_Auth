@@ -2,7 +2,6 @@ package com.tradiebot.cythero.app.ui.login
 
 import android.os.Bundle
 import com.tradiebot.cythero.app.ui.base.presenter.BasePresenter
-import com.tradiebot.cythero.domain.user.interactor.LoginUser
 import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
 import com.tradiebot.cythero.domain.user.service.UserService
 import com.tradiebot.cythero.presentation.login.LoginState
@@ -18,9 +17,7 @@ private data class User(val userData: String)
 
 class LoginPresenter(
     private val state: LoginStateImpl = LoginState() as LoginStateImpl,
-
-    //private val test: UserService = Injekt.get()
-    //private val loginUser: LoginUser = Injekt.get(),
+    private val userService: UserService = Injekt.get()
     ) : BasePresenter<LoginController>(), LoginState by state {
 
 
@@ -28,20 +25,19 @@ class LoginPresenter(
         super.onCreate(savedState)
     }
 
-    /*
     fun loginUser(
         user: UserLoginUpdate
     ) {
-       presenterScope.launchIO {
+        //val userService: UserService = Injekt.injectLazy<UserService>()
+        presenterScope.launchIO {
+            userService.loginUser(user)
+            /*
            loginUser.await(
                UserLoginUpdate.testingInstance()
            )
-       }
+            */
+        }
     }
-
-     */
-
-
 
     /**
      * should attempt to fill user info?
