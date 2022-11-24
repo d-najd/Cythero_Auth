@@ -15,14 +15,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.app.ui.login.LoginScreenState
 import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
-import com.tradiebot.cythero.presentation.login.LoginState
 import java.io.Console
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginFields(
-    state: LoginState,
+    state: LoginScreenState, //.Success
     onLoginUser: (UserLoginUpdate) -> Unit,
 ) {
     val defaultFieldModifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
