@@ -7,10 +7,11 @@ import com.tradiebot.cythero.network.user.utils.POST
 import com.tradiebot.cythero.network.user.utils.addFormDataPartIfNotNull
 import logcat.logcat
 import okhttp3.*
+import org.json.JSONObject
 import java.io.IOException
 
 class UserServiceImpl : UserService {
-    private val client = OkHttpClient() // TODO replace this with injekt
+    private val client = OkHttpClient() // TODO replace with injekt
 
     override suspend fun loginUser(user: UserLoginUpdate): UserComplete? {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
@@ -38,6 +39,8 @@ class UserServiceImpl : UserService {
                     for ((name, value) in response.headers) {
                         println("$name: $value")
                     }
+
+                    var test = JSONObject(response.body.string()).get("user")
 
                     logcat { response.body.string() }
                 }

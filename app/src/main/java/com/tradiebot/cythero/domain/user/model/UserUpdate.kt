@@ -11,7 +11,6 @@ data class UserLoginUpdate (
     val pin: Int? = null,
     val from_web: Boolean = true
 ) {
-    //TODO test this, if it doesn't work uncomment the one below
     init {
         if(username == null && email == null){
             throw IllegalStateException("username and email can't be null at the same time")
