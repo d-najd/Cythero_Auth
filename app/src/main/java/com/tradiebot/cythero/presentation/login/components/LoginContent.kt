@@ -14,15 +14,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.tradiebot.cythero.app.ui.login.LoginScreenState
 import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
 import com.tradiebot.cythero.presentation.components.Divider
-import com.tradiebot.cythero.presentation.login.LoginState
 import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun LoginContent(
-    state: LoginState,
+    state: LoginScreenState, //.Success
     contentPadding: PaddingValues,
     onLoginUser: (UserLoginUpdate) -> Unit,
 ) {

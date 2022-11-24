@@ -68,13 +68,28 @@ dependencies {
 
     implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
 
+    // voyager
+    implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-androidx:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-tab-navigator:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-transitions:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyager_version"
+
+    /*
+    implementation "cafe.adriel.voyager:voyager-koin:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-kodein:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-hilt:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-rxjava:$voyager_version"
+    implementation "cafe.adriel.voyager:voyager-livedata:$voyager_version"
+     */
+
     // "Borrowed"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-android:1.2.0"
     implementation "io.github.reactivecircus.flowbinding:flowbinding-appcompat:1.2.0"
     implementation "com.bluelinelabs:conductor:3.1.8"
     implementation "com.squareup.logcat:logcat:0.1"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-    implementation 'info.android15.nucleus:nucleus:6.0.0'
+    implementation 'info.android15.nucleus:nucleus:6.0.0' //should be able to get rid of
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
