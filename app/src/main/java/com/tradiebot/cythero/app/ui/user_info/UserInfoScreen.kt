@@ -10,7 +10,10 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.tradiebot.cythero.app.ui.base.controller.pushController
+import com.tradiebot.cythero.app.ui.login.Event
 import com.tradiebot.cythero.domain.user.model.User
+import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.login.LoginScreen
 import com.tradiebot.cythero.presentation.user_info.UserInfoScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
@@ -29,8 +32,16 @@ data class UserInfoScreen(
 
         val state by screenModel.state.collectAsState()
 
+        if (state is UserInfoScreenState.Loading){
+            LoadingScreen()
+            return
+        }
+
+        val successState = state as UserInfoScreenState.Success
+
         UserInfoScreen(
-            presenter = state,
+            presenter = successState,
+            onBackClicked = router::popCurrentController
         )
     }
 }

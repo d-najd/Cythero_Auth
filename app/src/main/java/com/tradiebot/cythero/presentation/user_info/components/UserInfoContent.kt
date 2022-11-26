@@ -24,7 +24,7 @@ import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun UserInfoContent(
-    state: UserInfoScreenState, //.Success
+    state: UserInfoScreenState.Success, //.Success
     contentPadding: PaddingValues,
 ) {
     Column(
@@ -35,13 +35,18 @@ fun UserInfoContent(
     ) {
         Text(
             textAlign = TextAlign.Center,
-            text = "Hello World",
+            text = "Hello ${state.user?.firstName} ${state.user?.lastName}",
             fontSize = TextUnit(24F, TextUnitType.Sp),
             lineHeight = TextUnit(32F, TextUnitType.Sp),
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .width(240.dp)
-                .padding(top = 42.dp),
+                .padding(top = 42.dp, bottom = 20.dp),
         )
+
+        Text(text = "Your username is ${state.user?.username}")
+        Text(text = "Your email is ${state.user?.email}")
+        Text(text = "Your id is ${state.user?.id}")
+        Text(text = "Your sign up date is ${state.user?.sign_up_date}")
     }
 }

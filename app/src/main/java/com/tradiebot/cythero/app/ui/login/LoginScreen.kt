@@ -13,6 +13,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.google.gson.Gson
 import com.tradiebot.cythero.app.ui.base.controller.pushController
 import com.tradiebot.cythero.app.ui.user_info.UserInfoController
+import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
+import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.login.LoginScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +29,11 @@ object LoginScreen : Screen {
         val screenModel = rememberScreenModel { LoginScreenModel(context) }
 
         val state by screenModel.state.collectAsState()
+
+        if (state is LoginScreenState.Loading){
+            LoadingScreen()
+            return
+        }
 
         LoginScreen(
             presenter = state,

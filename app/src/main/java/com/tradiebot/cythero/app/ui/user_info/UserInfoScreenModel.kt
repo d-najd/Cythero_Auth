@@ -15,6 +15,8 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.util.Optional
@@ -25,20 +27,14 @@ class UserInfoScreenModel(
 ) : StateScreenModel<UserInfoScreenState>(UserInfoScreenState.Loading) {
 
     init {
-        updateSuccessState {
-            UserInfoScreenState.Success(
-                user = user,
-            )
+        coroutineScope.launch {
+            mutableState.update {
+                UserInfoScreenState.Success(
+                    user = user,
+                )
+            }
         }
     }
-
-    private val successState: UserInfoScreenState.Success?
-        get() = state.value as? UserInfoScreenState.Success
-
-    private fun updateSuccessState(func: (UserInfoScreenState.Success) -> UserInfoScreenState.Success) {
-        mutableState.update { if (it is UserInfoScreenState.Success) func(it) else it }
-    }
-
 }
 
 sealed class UserInfoScreenState {
@@ -48,7 +44,5 @@ sealed class UserInfoScreenState {
     @Immutable
     data class Success(
         val user: User?,
-    ) : UserInfoScreenState(){
-        //TODO set the auth data
-    }
+    ) : UserInfoScreenState()
 }
