@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.network.user.utils
+package com.tradiebot.cythero.network.utils
 
 import okhttp3.CacheControl
 import okhttp3.FormBody

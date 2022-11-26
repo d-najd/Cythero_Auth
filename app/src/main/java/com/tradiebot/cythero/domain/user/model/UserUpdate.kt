@@ -2,6 +2,7 @@ package com.tradiebot.cythero.domain.user.model
 
 import logcat.logcat
 
+//TODO this may be redundant
 data class UserLoginUpdate (
     val email: String? = null,
     val username: String? = null,
@@ -28,7 +29,7 @@ data class UserLoginUpdate (
     }
 }
 
-fun UserComplete.toChapterLoginUpdate(): UserLoginUpdate {
+fun UserComplete.toUserLoginUpdate(): UserLoginUpdate {
     return UserLoginUpdate(
         email = email,
         username = username,

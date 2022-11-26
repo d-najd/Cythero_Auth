@@ -1,15 +1,20 @@
 package com.tradiebot.cythero.domain
 
-import com.tradiebot.cythero.domain.user.interactor.LoginUser
-import com.tradiebot.cythero.domain.user.service.UserService
-import com.tradiebot.cythero.network.user.UserServiceImpl
+import com.tradiebot.cythero.domain.auth.interactor.LoginUser
+import com.tradiebot.cythero.domain.auth.model.Auth
+import com.tradiebot.cythero.domain.auth.service.AuthService
+import com.tradiebot.cythero.network.auth.AuthServiceImpl
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
 
     override fun InjektRegistrar.registerInjectables() {
-        addSingletonFactory<UserService> { UserServiceImpl() }
-        addFactory { LoginUser(get()) }
+        addSingletonFactory<AuthService> { AuthServiceImpl() }
+        addFactory{ LoginUser(get()) }
+
+
+        // addSingletonFactory<UserService> { UserServiceImpl() }
+        // addFactory { LoginUser(get()) }
     }
 
 }
