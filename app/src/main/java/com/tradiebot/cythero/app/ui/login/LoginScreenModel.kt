@@ -37,7 +37,7 @@ class LoginScreenModel(
     }
 
     fun loginUser(
-        user: UserLogin
+        user: UserLogin,
     ) {
         coroutineScope.launchIO {
             val auth: Optional<Auth> = loginUser.await(user)

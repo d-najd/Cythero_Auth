@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
@@ -30,13 +31,13 @@ fun ColumnScope.LoginFields(
         .align(CenterHorizontally)
         .fillMaxWidth()
 
-    var mail by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     OutlinedTextField(
-        value = mail,
-        onValueChange = { mail = it },
+        value = email,
+        onValueChange = { email = it },
         modifier = defaultContentModifier,
         label = { Text(stringResource(R.string.email)) },
         keyboardOptions = KeyboardOptions(
@@ -75,27 +76,27 @@ fun ColumnScope.LoginFields(
         singleLine = true,
     )
 
+
     Button(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
         onClick = {
-        /*
-        if(mail.isEmpty() || password.isEmpty()){
-            mail = "Main or Password is empty, logs disabled"
+        if(email.isBlank() || password.isBlank()){
+            email = "Empty Field/s"
         } else {
-         */
             onClickUserLogin(
-                UserLogin.testingInstance()
-                /*
-                UserLoginUpdate(
-                    email = mail,
+                //UserLogin.testingInstance()
+                UserLogin(
+                    email = email,
                     password = password,
                 )
-                 */
             )
-       // }
+        }
     }) {
-        Text(stringResource(R.string.action_confirm))
+        Text(
+            text = stringResource(R.string.action_sign_in),
+            color = Color.White
+        )
     }
 
     Column(

@@ -13,6 +13,7 @@ import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.io.IOException
 import java.util.*
 
 class AuthServiceImpl : AuthService {
@@ -36,12 +37,17 @@ class AuthServiceImpl : AuthService {
             body = body
         )
 
-        val response: Response = client.newCall(request).execute().printResponse()
-        if (response.isSuccessful) {
-            response.use {
-                val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
-                return Optional.of(authUser)
+        try {
+            val response: Response = client.newCall(request).execute().printResponse()
+
+            if (response.isSuccessful) {
+                response.use {
+                    val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
+                    return Optional.of(authUser)
+                }
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
         return Optional.empty()
     }
@@ -67,12 +73,17 @@ class AuthServiceImpl : AuthService {
             body = body
         )
 
-        val response: Response = client.newCall(request).execute().printResponse()
-        if (response.isSuccessful) {
-            response.use {
-                val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
-                return Optional.of(authUser)
+        try {
+            val response: Response = client.newCall(request).execute().printResponse()
+
+            if (response.isSuccessful) {
+                response.use {
+                    val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
+                    return Optional.of(authUser)
+                }
             }
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
         return Optional.empty()
     }

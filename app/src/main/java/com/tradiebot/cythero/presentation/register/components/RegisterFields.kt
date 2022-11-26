@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
@@ -32,7 +33,7 @@ fun ColumnScope.RegisterFields(
 
     var firstName by rememberSaveable { mutableStateOf("") }
     var lastName by rememberSaveable { mutableStateOf("") }
-    var mail by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
@@ -65,8 +66,8 @@ fun ColumnScope.RegisterFields(
     )
 
     OutlinedTextField(
-        value = mail,
-        onValueChange = { mail = it },
+        value = email,
+        onValueChange = { email = it },
         modifier = defaultContentModifier,
         label = { Text(stringResource(R.string.email)) },
         keyboardOptions = KeyboardOptions(
@@ -135,9 +136,34 @@ fun ColumnScope.RegisterFields(
     Button(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
-        onClick = { onClickUserRegister(UserRegister.testingInstance()) })
+        onClick = {
+            if(password != confirmPassword) {
+                firstName = "Passwords don't match"
+            } else if(
+                firstName.isBlank() ||
+                lastName.isBlank() ||
+                email.isBlank() ||
+                username.isBlank() ||
+                password.isBlank()) {
+                firstName = "Empty Field/s"
+            } else {
+                onClickUserRegister(
+                    //UserRegister.testingInstance()
+                    UserRegister(
+                        firstName = firstName,
+                        lastName = lastName,
+                        email = email,
+                        username = username,
+                        password = password,
+                    )
+                )
+            }
+        })
     {
-        Text(stringResource(R.string.action_confirm))
+        Text(
+            text = stringResource(R.string.action_register_user),
+            color = Color.White
+        )
     }
 
     Column(

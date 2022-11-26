@@ -4,10 +4,11 @@
     <string name="company_banner">Cythero Banner</string>
     <string name="company_logo">Cythero Logo</string>
 
-    <!-- fields -->
+    <!-- field -->
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">E-Mail</string>
+    <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
 
@@ -15,14 +16,20 @@
     <string name="info_sign_in_to_access">Sign in to access your account</string>
     <string name="info_sign_up_to_access">Sign up to access the future</string>
     <string name="info_do_not_have_account">Don\'t have account yet?</string>
+    <string name="info_do_have_account">Already have an account?</string>
 
-    <!-- actions -->
+    <!-- action -->
     <string name="action_hide_password">Hide Password</string>
     <string name="action_show_password">Show Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_log_in">Log in</string>
     <string name="action_sign_up">Sign up</string>
+    <string name="action_register_user">Register User</string>
     <string name="action_confirm">Confirm</string>
+
+    <!-- error -->
+    <string name="error_password_do_not_match">Passwords don\'t match</string>
+    <string name="error_empty_field">Empty Field/s</string>
 
     <!-- placeholder -->
     <string name="placeholder_email">centaurus@example.com</string>
@@ -30,8 +37,6 @@
     <string name="placeholder_confirm_password">Confirm Password</string>
     <string name="placeholder_first_name">Cosmos</string>
     <string name="placeholder_last_name">Redshift</string>
-    <string name="username">Username</string>
     <string name="placeholder_username">Andromeda</string>
-    <string name="info_do_have_account">Already have an account?</string>
 
 </resources>
