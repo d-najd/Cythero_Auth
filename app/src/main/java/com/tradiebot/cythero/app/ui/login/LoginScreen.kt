@@ -10,6 +10,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.google.gson.Gson
 import com.tradiebot.cythero.app.ui.base.controller.pushController
 import com.tradiebot.cythero.app.ui.user_info.UserInfoController
 import com.tradiebot.cythero.presentation.login.LoginScreen

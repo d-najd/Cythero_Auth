@@ -22,6 +22,14 @@ class LoginScreenModel(
     private val authService: AuthService = Injekt.get()
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
+    init {
+        updateSuccessState {
+            LoginScreenState.Success(
+                user = null,
+            )
+        }
+    }
+
     private val _events: Channel<Event> = Channel(Int.MAX_VALUE)
     val events: Flow<Event> = _events.receiveAsFlow()
 

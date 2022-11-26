@@ -6,7 +6,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.tradiebot.cythero.app.ui.base.controller.FullComposeController
 import com.tradiebot.cythero.app.ui.base.presenter.RootController
 
-class LoginController() : FullComposeController(), RootController {
+class LoginController: FullComposeController(), RootController {
 
     @Composable
     override fun ComposeContent() {
