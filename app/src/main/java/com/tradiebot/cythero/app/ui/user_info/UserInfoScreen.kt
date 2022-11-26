@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.login
+package com.tradiebot.cythero.app.ui.user_info
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,43 +10,27 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.google.gson.Gson
-import com.tradiebot.cythero.app.ui.base.controller.pushController
-import com.tradiebot.cythero.app.ui.user_info.UserInfoController
+import com.tradiebot.cythero.domain.user.model.User
 import com.tradiebot.cythero.presentation.login.LoginScreen
+import com.tradiebot.cythero.presentation.user_info.UserInfoScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import kotlinx.coroutines.flow.collectLatest
 
 
-object LoginScreen : Screen {
+data class UserInfoScreen(
+    private val user: User,
+) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
-        val screenModel = rememberScreenModel { LoginScreenModel(context) }
+        val screenModel = rememberScreenModel { UserInfoScreenModel(context, user) }
 
         val state by screenModel.state.collectAsState()
 
-        LoginScreen(
+        UserInfoScreen(
             presenter = state,
-            onLoginUser = screenModel::loginUser
         )
-
-        LaunchedEffect(Unit) {
-            screenModel.events.collectLatest { event ->
-                when (event) {
-                    is Event.UserLoggedIn -> {
-                        router.pushController(UserInfoController(event.user))
-                    }
-                }
-            }
-        }
-
-        //val onDismissRequest = { screenModel.dismissDialog = null }
-        /*
-        when (val dialog = (state as? LoginScreenState.Success)?.dialog) {
-            null -> {}
-         */
     }
 }

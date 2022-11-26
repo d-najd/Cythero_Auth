@@ -2,7 +2,7 @@ package com.tradiebot.cythero.domain
 
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.service.AuthService
-import com.tradiebot.cythero.network.user.AuthServiceImpl
+import com.tradiebot.cythero.network.auth.AuthServiceImpl
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {

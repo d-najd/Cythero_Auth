@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.theme
+package com.tradiebot.cythero.app.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

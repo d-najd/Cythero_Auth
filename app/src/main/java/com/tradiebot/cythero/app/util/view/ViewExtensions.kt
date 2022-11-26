@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.children
 import androidx.core.view.descendants
-import com.tradiebot.cythero.app.ui.theme.CytheroTheme
+import com.tradiebot.cythero.app.theme.CytheroTheme
 
 inline fun ComposeView.setComposeContent(crossinline content: @Composable () -> Unit) {
     consumeWindowInsets = false
