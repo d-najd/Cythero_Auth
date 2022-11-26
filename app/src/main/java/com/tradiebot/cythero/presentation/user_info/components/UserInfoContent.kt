@@ -10,16 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.login.LoginScreenState
 import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
-import com.tradiebot.cythero.domain.user.model.User
-import com.tradiebot.cythero.domain.user.model.UserLogin
-import com.tradiebot.cythero.presentation.components.Divider
-import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable

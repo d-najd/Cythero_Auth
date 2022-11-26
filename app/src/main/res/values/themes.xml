@@ -2,6 +2,8 @@
 <resources>
 
     <style name="Theme.Cythero" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:forceDarkAllowed">true</item> <!-- Doesn't seem to work -->
+
         <item name="colorPrimary">@color/lavender_primary</item>
         <item name="colorOnPrimary">@color/lavender_onPrimary</item>
         <item name="colorPrimaryContainer">@color/lavender_primaryContainer</item>

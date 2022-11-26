@@ -1,44 +1,36 @@
 @file:OptIn(ExperimentalUnitApi::class)
 
-package com.tradiebot.cythero.presentation.login.components
+package com.tradiebot.cythero.presentation.register.components
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserSign
+import com.tradiebot.cythero.app.ui.register.RegisterScreenState
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun LoginContent(
-    state: LoginScreenState.Success,
+fun RegisterContent(
+    state: RegisterScreenState.Success,
     contentPadding: PaddingValues,
-    onClickUserLogin: (UserSign) -> Unit,
-    onClickRegister: (UserSign) -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.cythero_banner),
         contentDescription = stringResource(R.string.company_banner),
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .blur(radius = 12.dp) // TODO fix the blur, it doesn't want to work for some reason
+            .blur(radius = 12.dp) // blur doesn't want to work
             .fillMaxWidth()
             .fillMaxHeight(),
     )
@@ -58,11 +50,9 @@ fun LoginContent(
                 .background(Color.Transparent)
                 .verticalScroll(rememberScrollState()),
         ) {
-            LoginCardContent(
+            RegisterCardContent(
                 state = state,
-                contentPadding = contentPadding,
-                onClickUserLogin = onClickUserLogin,
-                onClickRegister = onClickRegister,
+                contentPadding = contentPadding
             )
         }
     }

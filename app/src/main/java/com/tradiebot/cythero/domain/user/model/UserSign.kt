@@ -2,7 +2,10 @@ package com.tradiebot.cythero.domain.user.model
 
 import logcat.logcat
 
-data class UserLogin (
+/**
+ * Class used for signing in/up the user
+ */
+data class UserSign (
     val email: String? = null,
     val username: String? = null,
     val password: String,
@@ -21,15 +24,15 @@ data class UserLogin (
     }
 
     companion object {
-        fun testingInstance() = UserLogin(
+        fun testingInstance() = UserSign(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",
         )
     }
 }
 
-fun User.toUserLogin(): UserLogin {
-    return UserLogin(
+fun User.toUserLogin(): UserSign {
+    return UserSign(
         email = email,
         username = username,
         password = password!!,

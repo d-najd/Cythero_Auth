@@ -3,7 +3,7 @@ package com.tradiebot.cythero.network.auth
 import com.google.gson.Gson
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.auth.service.AuthService
-import com.tradiebot.cythero.domain.user.model.UserLogin
+import com.tradiebot.cythero.domain.user.model.UserSign
 import com.tradiebot.cythero.network.utils.POST
 import com.tradiebot.cythero.network.utils.addFormDataPartIfNotNull
 import com.tradiebot.cythero.network.utils.printResponse
@@ -17,7 +17,7 @@ class AuthServiceImpl : AuthService {
     private val client = OkHttpClient() // TODO replace with injekt
     private val gson = Gson() // TODO replace with injekt
 
-    override suspend fun loginUser(user: UserLogin): Optional<Auth> {
+    override suspend fun loginUser(user: UserSign): Optional<Auth> {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("password", user.password!!)
             .addFormDataPart("from_web", "true")

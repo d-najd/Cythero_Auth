@@ -1,6 +1,7 @@
-package com.tradiebot.cythero.presentation.login.components.fields
+package com.tradiebot.cythero.presentation.login.components
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -10,49 +11,55 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.User
-import com.tradiebot.cythero.domain.user.model.UserLogin
+import com.tradiebot.cythero.domain.user.model.UserSign
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginFields(
-    state: LoginScreenState, //.Success
-    onLoginUser: (UserLogin) -> Unit,
+fun ColumnScope.LoginFields(
+    state: LoginScreenState.Success,
+    onClickUserLogin: (UserSign) -> Unit,
+    onClickRegister: (UserSign) -> Unit,
 ) {
-    val defaultFieldModifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
+    val defaultContentModifier = Modifier
+        .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
+        .align(CenterHorizontally)
+        .fillMaxWidth()
 
     var mail by rememberSaveable { mutableStateOf("") }
-
     var password by rememberSaveable { mutableStateOf("") }
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     OutlinedTextField(
         value = mail,
         onValueChange = { mail = it },
-        modifier = defaultFieldModifier,
+        modifier = defaultContentModifier,
         label = { Text(stringResource(R.string.email)) },
-        // placeholder = { Text("example@gmail.com") },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
         ),
+        placeholder = { Text(stringResource(R.string.placeholder_email)) },
         singleLine = true,
     )
 
     OutlinedTextField(
         value = password,
         onValueChange = { password = it },
-        modifier = defaultFieldModifier,
+        modifier = defaultContentModifier,
         label = { Text(stringResource(R.string.password)) },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
             imeAction = ImeAction.Done,
         ),
+        placeholder = {
+            Text(stringResource(R.string.placeholder_password))
+        },
         trailingIcon = {
             val image = if (passwordVisible)
                 Icons.Filled.Visibility
@@ -68,14 +75,17 @@ fun LoginFields(
         singleLine = true,
     )
 
-    Button(onClick = {
+    Button(
+        modifier = defaultContentModifier
+            .padding(top = 20.dp),
+        onClick = {
         /*
         if(mail.isEmpty() || password.isEmpty()){
             mail = "Main or Password is empty, logs disabled"
         } else {
          */
-            onLoginUser(
-                UserLogin.testingInstance()
+            onClickUserLogin(
+                UserSign.testingInstance()
                 /*
                 UserLoginUpdate(
                     email = mail,
@@ -86,5 +96,35 @@ fun LoginFields(
        // }
     }) {
         Text(stringResource(R.string.action_confirm))
+    }
+
+    Column(
+        horizontalAlignment = CenterHorizontally
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = 24.dp, end = 24.dp, bottom = 8.dp)
+                .fillMaxWidth()
+                .width(300.dp),
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 18.dp),
+                text = stringResource(R.string.info_do_not_have_account),
+                fontWeight = FontWeight.Bold,
+            )
+            TextButton(
+                onClick = {
+                    onClickRegister(
+                        UserSign.testingInstance(),
+                    )
+                },
+            ) {
+                Text(
+                    text = stringResource(R.string.action_sign_up),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+        }
     }
 }

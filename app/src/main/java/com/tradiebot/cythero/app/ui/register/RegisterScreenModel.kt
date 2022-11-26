@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.user_info
+package com.tradiebot.cythero.app.ui.register
 
 import android.content.Context
 import androidx.compose.runtime.Immutable
@@ -8,28 +8,26 @@ import com.tradiebot.cythero.domain.user.model.User
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class UserInfoScreenModel(
+class RegisterScreenViewModel(
     val context: Context,
-    val user: User,
-) : StateScreenModel<UserInfoScreenState>(UserInfoScreenState.Loading) {
-
+) : StateScreenModel<RegisterScreenState>(RegisterScreenState.Loading) {
     init {
         coroutineScope.launch {
             mutableState.update {
-                UserInfoScreenState.Success(
-                    user = user,
+                RegisterScreenState.Success(
+                    user = null,
                 )
             }
         }
     }
 }
 
-sealed class UserInfoScreenState {
+sealed class RegisterScreenState {
     @Immutable
-    object Loading : UserInfoScreenState()
+    object Loading : RegisterScreenState()
 
     @Immutable
     data class Success(
         val user: User?,
-    ) : UserInfoScreenState()
+    ) : RegisterScreenState()
 }

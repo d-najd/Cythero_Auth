@@ -4,12 +4,11 @@ import android.content.Context
 import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
-import com.tradiebot.cythero.domain.auth.service.AuthService
-import com.tradiebot.cythero.domain.user.model.UserLogin
+import com.tradiebot.cythero.domain.user.model.UserSign
 import com.tradiebot.cythero.util.launchIO
-import com.tradiebot.cythero.util.launchNonCancellable
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -21,7 +20,7 @@ import java.util.Optional
 
 class LoginScreenModel(
     val context: Context,
-    private val authService: AuthService = Injekt.get()
+    private val loginUser: LoginUser = Injekt.get()
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
     init {
@@ -38,10 +37,10 @@ class LoginScreenModel(
     val events: Flow<Event> = _events.receiveAsFlow()
 
     fun loginUser(
-        user: UserLogin
+        user: UserSign
     ) {
         coroutineScope.launchIO {
-            val auth: Optional<Auth> = authService.loginUser(user)
+            val auth: Optional<Auth> = loginUser.await(user)
             if (auth.isPresent) {
                 mutableState.update {
                     LoginScreenState.Success(
@@ -61,7 +60,6 @@ sealed class Event {
 }
 
 sealed class LoginScreenState {
-    // TODO respect Loading
     @Immutable
     object Loading : LoginScreenState()
 
@@ -69,7 +67,5 @@ sealed class LoginScreenState {
     data class Success(
         val user: Auth?,
         //val dialog: LoginScreenModel.Dialog? = null,
-    ) : LoginScreenState() {
-        //TODO set the auth data
-    }
+    ) : LoginScreenState()
 }

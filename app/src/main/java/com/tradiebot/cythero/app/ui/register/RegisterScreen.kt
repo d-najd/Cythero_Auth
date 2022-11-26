@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.login
+package com.tradiebot.cythero.app.ui.register
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,54 +12,34 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.google.gson.Gson
 import com.tradiebot.cythero.app.ui.base.controller.pushController
-import com.tradiebot.cythero.app.ui.base.controller.setRoot
-import com.tradiebot.cythero.app.ui.base.controller.withFadeTransaction
-import com.tradiebot.cythero.app.ui.register.RegisterController
 import com.tradiebot.cythero.app.ui.user_info.UserInfoController
 import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.login.LoginScreen
+import com.tradiebot.cythero.presentation.register.RegisterScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import kotlinx.coroutines.flow.collectLatest
 
 
-object LoginScreen : Screen {
+object RegisterScreen : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
-        val screenModel = rememberScreenModel { LoginScreenModel(context) }
+        val screenModel = rememberScreenModel { RegisterScreenViewModel(context) }
 
         val state by screenModel.state.collectAsState()
 
-        if (state is LoginScreenState.Loading){
+        if (state is RegisterScreenState.Loading){
             LoadingScreen()
             return
         }
 
-        val successState = state as LoginScreenState.Success
+        val successState = state as RegisterScreenState.Success
 
-        LoginScreen(
+        RegisterScreen(
             presenter = successState,
-            onClickUserLogin = screenModel::loginUser,
-            onClickRegister = { router.setRoot(RegisterController().withFadeTransaction()) }
         )
-
-        LaunchedEffect(Unit) {
-            screenModel.events.collectLatest { event ->
-                when (event) {
-                    is Event.UserLoggedIn -> {
-                        router.pushController(UserInfoController(event.user))
-                    }
-                }
-            }
-        }
-
-        //val onDismissRequest = { screenModel.dismissDialog = null }
-        /*
-        when (val dialog = (state as? LoginScreenState.Success)?.dialog) {
-            null -> {}
-         */
     }
 }
