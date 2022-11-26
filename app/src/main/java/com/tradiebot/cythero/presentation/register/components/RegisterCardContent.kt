@@ -1,7 +1,6 @@
 package com.tradiebot.cythero.presentation.register.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -18,12 +17,14 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.register.RegisterScreenState
+import com.tradiebot.cythero.domain.user.model.UserRegister
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun ColumnScope.RegisterCardContent(
     state: RegisterScreenState.Success,
-    contentPadding: PaddingValues,
+    onClickUserRegister: (UserRegister) -> Unit,
+    onClickLogin: () -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.company_logo),
@@ -44,5 +45,9 @@ fun ColumnScope.RegisterCardContent(
             .padding(top = 12.dp),
     )
 
-    RegisterFields(state = state)
+    RegisterFields(
+        state = state,
+        onClickUserRegister = onClickUserRegister,
+        onClickLogin = onClickLogin,
+    )
 }

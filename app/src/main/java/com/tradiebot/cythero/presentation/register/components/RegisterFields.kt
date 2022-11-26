@@ -16,11 +16,14 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.register.RegisterScreenState
+import com.tradiebot.cythero.domain.user.model.UserRegister
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.RegisterFields(
-    state: RegisterScreenState.Success,
+    @Suppress("UNUSED_PARAMETER") state: RegisterScreenState.Success,
+    onClickUserRegister: (UserRegister) -> Unit,
+    onClickLogin: () -> Unit,
 ) {
     val defaultContentModifier = Modifier
         .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
@@ -132,7 +135,7 @@ fun ColumnScope.RegisterFields(
     Button(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
-        onClick = { })
+        onClick = { onClickUserRegister(UserRegister.testingInstance()) })
     {
         Text(stringResource(R.string.action_confirm))
     }
@@ -152,7 +155,7 @@ fun ColumnScope.RegisterFields(
                 fontWeight = FontWeight.Bold,
             )
             TextButton(
-                onClick = { },
+                onClick = { onClickLogin() },
             ) {
                 Text(
                     text = stringResource(R.string.action_log_in),

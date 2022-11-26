@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalUnitApi::class)
-
 package com.tradiebot.cythero.presentation.register.components
 
 import androidx.compose.foundation.*
@@ -14,16 +12,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.register.RegisterScreenState
+import com.tradiebot.cythero.domain.user.model.UserRegister
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun RegisterContent(
     state: RegisterScreenState.Success,
     contentPadding: PaddingValues,
+    onClickUserRegister: (UserRegister) -> Unit,
+    onClickLogin: () -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.cythero_banner),
@@ -52,7 +51,8 @@ fun RegisterContent(
         ) {
             RegisterCardContent(
                 state = state,
-                contentPadding = contentPadding
+                onClickUserRegister = onClickUserRegister,
+                onClickLogin = onClickLogin,
             )
         }
     }

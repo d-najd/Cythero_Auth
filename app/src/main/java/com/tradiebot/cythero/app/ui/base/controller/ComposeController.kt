@@ -6,8 +6,6 @@ import android.view.View
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.tradiebot.cythero.databinding.ComposeControllerBinding
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import com.tradiebot.cythero.app.util.view.setComposeContent

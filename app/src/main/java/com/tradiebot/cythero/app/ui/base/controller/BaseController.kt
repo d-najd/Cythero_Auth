@@ -6,8 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
 import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.ControllerChangeHandler
-import com.bluelinelabs.conductor.ControllerChangeType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -58,12 +56,6 @@ abstract class BaseController<VB : ViewBinding>(bundle: Bundle? = null) : Contro
     }
 
     open fun onViewCreated(view: View) {}
-
-    override fun onChangeStarted(handler: ControllerChangeHandler, type: ControllerChangeType) {
-        //Note keyboard may need to be hidden here
-
-        super.onChangeStarted(handler, type)
-    }
 
     private fun Controller.instance(): String {
         return "${javaClass.simpleName}@${Integer.toHexString(hashCode())}"

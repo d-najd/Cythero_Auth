@@ -2,7 +2,6 @@ package com.tradiebot.cythero.presentation.login.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -19,15 +18,14 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserSign
+import com.tradiebot.cythero.domain.user.model.UserLogin
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun ColumnScope.LoginCardContent(
     state: LoginScreenState.Success,
-    contentPadding: PaddingValues,
-    onClickUserLogin: (UserSign) -> Unit,
-    onClickRegister: (UserSign) -> Unit,
+    onClickUserLogin: (UserLogin) -> Unit,
+    onClickRegister: () -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.company_logo),

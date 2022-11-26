@@ -31,6 +31,7 @@ inline fun ComposeView.setComposeContent(crossinline content: @Composable () -> 
     }
 }
 
+@Suppress("unused")
 inline fun ComponentActivity.setComposeContent(
     parent: CompositionContext? = null,
     crossinline content: @Composable () -> Unit,
@@ -47,6 +48,7 @@ inline fun ComponentActivity.setComposeContent(
     }
 }
 
+@Suppress("unused")
 inline fun <reified T> ViewGroup.findChild(): T? {
     return children.find { it is T } as? T
 }
@@ -55,6 +57,7 @@ inline fun <reified T> ViewGroup.findChild(): T? {
 /**
  * Returns this ViewGroup's first descendant of specified class
  */
+@Suppress("unused")
 inline fun <reified T> ViewGroup.findDescendant(): T? {
     return descendants.find { it is T } as? T
 }

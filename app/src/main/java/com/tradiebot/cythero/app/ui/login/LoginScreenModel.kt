@@ -7,7 +7,7 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
-import com.tradiebot.cythero.domain.user.model.UserSign
+import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +23,9 @@ class LoginScreenModel(
     private val loginUser: LoginUser = Injekt.get()
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
+    private val _events: Channel<Event> = Channel(Int.MAX_VALUE)
+    val events: Flow<Event> = _events.receiveAsFlow()
+
     init {
         coroutineScope.launch {
             mutableState.update {
@@ -33,11 +36,8 @@ class LoginScreenModel(
         }
     }
 
-    private val _events: Channel<Event> = Channel(Int.MAX_VALUE)
-    val events: Flow<Event> = _events.receiveAsFlow()
-
     fun loginUser(
-        user: UserSign
+        user: UserLogin
     ) {
         coroutineScope.launchIO {
             val auth: Optional<Auth> = loginUser.await(user)
@@ -48,15 +48,16 @@ class LoginScreenModel(
                     )
                 }
                 _events.send(Event.UserLoggedIn(auth.get().user))
+            } else {
+                _events.send(Event.NetworkError)
             }
         }
     }
 }
 
-sealed class Dialog { }
-
 sealed class Event {
     data class UserLoggedIn(val user: User) : Event()
+    object NetworkError: Event()
 }
 
 sealed class LoginScreenState {
@@ -66,6 +67,5 @@ sealed class LoginScreenState {
     @Immutable
     data class Success(
         val user: Auth?,
-        //val dialog: LoginScreenModel.Dialog? = null,
     ) : LoginScreenState()
 }

@@ -1,10 +1,10 @@
+@file:Suppress("FunctionName")
+
 package com.tradiebot.cythero.network.utils
 
 import okhttp3.CacheControl
 import okhttp3.FormBody
 import okhttp3.Headers
-import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Request
 import okhttp3.RequestBody
 import java.util.concurrent.TimeUnit.MINUTES
@@ -13,6 +13,7 @@ private val DEFAULT_CACHE_CONTROL = CacheControl.Builder().maxAge(10, MINUTES).b
 private val DEFAULT_HEADERS = Headers.Builder().build()
 private val DEFAULT_BODY: RequestBody = FormBody.Builder().build()
 
+@Suppress("unused")
 fun GET(
     url: String,
     headers: Headers = DEFAULT_HEADERS,
@@ -39,6 +40,7 @@ fun POST(
         .build()
 }
 
+@Suppress("unused")
 fun PUT(
     url: String,
     headers: Headers = DEFAULT_HEADERS,
@@ -53,6 +55,7 @@ fun PUT(
         .build()
 }
 
+@Suppress("unused")
 fun DELETE(
     url: String,
     headers: Headers = DEFAULT_HEADERS,

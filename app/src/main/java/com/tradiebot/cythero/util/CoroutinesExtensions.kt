@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.tradiebot.cythero.util
 
 import kotlinx.coroutines.CoroutineScope

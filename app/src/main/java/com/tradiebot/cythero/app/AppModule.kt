@@ -11,7 +11,9 @@ class AppModule(val app: Application) : InjektModule {
     }
 }
 
+/*
 class PreferenceModule(val application: Application) : InjektModule {
     override fun InjektRegistrar.registerInjectables() {
     }
 }
+ */

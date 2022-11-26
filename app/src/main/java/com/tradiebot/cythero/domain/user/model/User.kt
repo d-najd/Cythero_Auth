@@ -24,6 +24,7 @@ data class User(
     val application_id:Long? = null,
 ) : Serializable{
     companion object {
+        @Suppress("unused")
         fun testingInstance() = User(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",

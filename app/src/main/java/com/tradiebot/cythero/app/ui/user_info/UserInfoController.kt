@@ -1,14 +1,11 @@
 package com.tradiebot.cythero.app.ui.user_info
 
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.core.os.bundleOf
 import cafe.adriel.voyager.navigator.Navigator
 import com.google.gson.Gson
 import com.tradiebot.cythero.app.ui.base.controller.FullComposeController
-import com.tradiebot.cythero.app.ui.login.LoginScreen
 import com.tradiebot.cythero.domain.user.model.User
 
 class UserInfoController: FullComposeController {

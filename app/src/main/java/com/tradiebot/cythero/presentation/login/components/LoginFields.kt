@@ -16,14 +16,14 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserSign
+import com.tradiebot.cythero.domain.user.model.UserLogin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.LoginFields(
-    state: LoginScreenState.Success,
-    onClickUserLogin: (UserSign) -> Unit,
-    onClickRegister: (UserSign) -> Unit,
+    @Suppress("UNUSED_PARAMETER") state: LoginScreenState.Success,
+    onClickUserLogin: (UserLogin) -> Unit,
+    onClickRegister: () -> Unit,
 ) {
     val defaultContentModifier = Modifier
         .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
@@ -85,7 +85,7 @@ fun ColumnScope.LoginFields(
         } else {
          */
             onClickUserLogin(
-                UserSign.testingInstance()
+                UserLogin.testingInstance()
                 /*
                 UserLoginUpdate(
                     email = mail,
@@ -113,11 +113,7 @@ fun ColumnScope.LoginFields(
                 fontWeight = FontWeight.Bold,
             )
             TextButton(
-                onClick = {
-                    onClickRegister(
-                        UserSign.testingInstance(),
-                    )
-                },
+                onClick = { onClickRegister() },
             ) {
                 Text(
                     text = stringResource(R.string.action_sign_up),
