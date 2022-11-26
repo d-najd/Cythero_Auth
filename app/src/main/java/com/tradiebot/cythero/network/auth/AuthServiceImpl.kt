@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.network.user
+package com.tradiebot.cythero.network.auth
 
 import com.google.gson.Gson
 import com.tradiebot.cythero.domain.auth.model.Auth

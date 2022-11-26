@@ -6,14 +6,11 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.tradiebot.cythero.app.ui.base.controller.FullComposeController
 import com.tradiebot.cythero.app.ui.base.presenter.RootController
 
-class LoginController(
-    bundle: Bundle? = null,
-) : FullComposeController(), RootController {
-    // override fun createPresenter(): LoginPresenter = LoginPresenter()
+class LoginController() : FullComposeController(), RootController {
 
     @Composable
     override fun ComposeContent() {
-        Navigator(screen = LoginScreen())
+        Navigator(screen = LoginScreen)
     }
 
 }
