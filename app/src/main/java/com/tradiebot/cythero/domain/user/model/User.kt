@@ -6,20 +6,27 @@ import java.io.Serializable
  * @constructor containing all possible possible parameters for a user.
  * @property sign_up_date should be possible to be replaced with 'Date'
  */
-data class UserComplete(
-    val id: Long,
-    val archived: Long?,
-    val email: String?,
-    val firstName: String?,
-    val lastName: String?,
-    val organization_id: Long?,
-    val sign_up_date: String?,
-    val type_id: Long?,
-    val username: String?,
-    val password: String?,
-    val pin: Int?,
-    val device_number: String?,
-    val device_nickname: String?,
-    val from_web: Boolean?,
-    val application_id:Long?,
-) : Serializable
+data class User(
+    val id: Long? = null,
+    val archived: Long? = null,
+    val email: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val organization_id: Long? = null,
+    val sign_up_date: String? = null,
+    val type_id: Long? = null,
+    val username: String? = null,
+    val password: String? = null,
+    val pin: Int? = null,
+    val device_number: String? = null,
+    val device_nickname: String? = null,
+    val from_web: Boolean? = null,
+    val application_id:Long? = null,
+) : Serializable{
+    companion object {
+        fun testingInstance() = User(
+            email = "dimitar.najdovski.example@gmail.com",
+            password = "Dimitar123",
+        )
+    }
+}

@@ -3,15 +3,15 @@ package com.tradiebot.cythero.presentation.login
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
+import com.tradiebot.cythero.domain.user.model.User
+import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.presentation.login.components.LoginContent
-import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     presenter: LoginScreenState, //.Success
-    onLoginUser: (UserLoginUpdate) -> Unit,
+    onLoginUser: (UserLogin) -> Unit,
 ) {
     Scaffold(
     ) { contentPadding ->

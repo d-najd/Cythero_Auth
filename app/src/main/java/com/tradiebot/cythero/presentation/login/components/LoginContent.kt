@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
+import com.tradiebot.cythero.domain.user.model.User
+import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.presentation.components.Divider
 import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 
@@ -24,7 +25,7 @@ import com.tradiebot.cythero.presentation.login.components.fields.LoginFields
 fun LoginContent(
     state: LoginScreenState, //.Success
     contentPadding: PaddingValues,
-    onLoginUser: (UserLoginUpdate) -> Unit,
+    onLoginUser: (UserLogin) -> Unit,
 ) {
     Column(
         horizontalAlignment = CenterHorizontally,

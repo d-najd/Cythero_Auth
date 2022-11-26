@@ -67,6 +67,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
 
     implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.1'
 
     // voyager
     implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"

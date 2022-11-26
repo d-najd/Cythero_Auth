@@ -14,13 +14,14 @@ import androidx.compose.ui.text.input.*
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
-import com.tradiebot.cythero.domain.user.model.UserLoginUpdate
+import com.tradiebot.cythero.domain.user.model.User
+import com.tradiebot.cythero.domain.user.model.UserLogin
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginFields(
     state: LoginScreenState, //.Success
-    onLoginUser: (UserLoginUpdate) -> Unit,
+    onLoginUser: (UserLogin) -> Unit,
 ) {
     val defaultFieldModifier = Modifier.padding(top = 12.dp, bottom = 12.dp)
 
@@ -72,10 +73,9 @@ fun LoginFields(
         if(mail.isEmpty() || password.isEmpty()){
             mail = "Main or Password is empty, logs disabled"
         } else {
-
          */
             onLoginUser(
-                UserLoginUpdate.testingInstance()
+                UserLogin.testingInstance()
                 /*
                 UserLoginUpdate(
                     email = mail,

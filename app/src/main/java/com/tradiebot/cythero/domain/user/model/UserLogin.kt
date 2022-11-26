@@ -2,8 +2,7 @@ package com.tradiebot.cythero.domain.user.model
 
 import logcat.logcat
 
-//TODO this may be redundant
-data class UserLoginUpdate (
+data class UserLogin (
     val email: String? = null,
     val username: String? = null,
     val password: String,
@@ -22,15 +21,15 @@ data class UserLoginUpdate (
     }
 
     companion object {
-        fun testingInstance() = UserLoginUpdate(
+        fun testingInstance() = UserLogin(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",
         )
     }
 }
 
-fun UserComplete.toUserLoginUpdate(): UserLoginUpdate {
-    return UserLoginUpdate(
+fun User.toUserLogin(): UserLogin {
+    return UserLogin(
         email = email,
         username = username,
         password = password!!,
