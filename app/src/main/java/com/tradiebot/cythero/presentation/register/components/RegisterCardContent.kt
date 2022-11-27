@@ -25,9 +25,12 @@ fun ColumnScope.RegisterCardContent(
     state: RegisterScreenState.Success,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
+
+    onMissingFields: () -> Unit,
+    onNotMatchingPassword: () -> Unit,
 ) {
     Image(
-        painter = painterResource(R.drawable.company_logo),
+        painter = painterResource(R.drawable.company_logo_with_name),
         contentDescription = stringResource(R.string.company_logo),
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
@@ -49,5 +52,7 @@ fun ColumnScope.RegisterCardContent(
         state = state,
         onClickUserRegister = onClickUserRegister,
         onClickLogin = onClickLogin,
+        onMissingFields = onMissingFields,
+        onNotMatchingPassword = onNotMatchingPassword,
     )
 }

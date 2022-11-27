@@ -23,6 +23,9 @@ fun RegisterContent(
     contentPadding: PaddingValues,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
+
+    onMissingFields: () -> Unit,
+    onNotMatchingPassword: () -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.cythero_banner),
@@ -53,6 +56,8 @@ fun RegisterContent(
                 state = state,
                 onClickUserRegister = onClickUserRegister,
                 onClickLogin = onClickLogin,
+                onMissingFields = onMissingFields,
+                onNotMatchingPassword = onNotMatchingPassword,
             )
         }
     }

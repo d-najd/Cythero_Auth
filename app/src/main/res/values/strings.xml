@@ -17,6 +17,7 @@
     <string name="info_sign_up_to_access">Sign up to access the future</string>
     <string name="info_do_not_have_account">Don\'t have account yet?</string>
     <string name="info_do_have_account">Already have an account?</string>
+    <string name="info_successfully_registered">User successfully registered</string>
 
     <!-- action -->
     <string name="action_hide_password">Hide Password</string>
@@ -30,6 +31,7 @@
     <!-- error -->
     <string name="error_password_do_not_match">Passwords don\'t match</string>
     <string name="error_empty_field">Empty Field/s</string>
+    <string name="error_network">Network Error</string>
 
     <!-- placeholder -->
     <string name="placeholder_email">centaurus@example.com</string>

@@ -9,6 +9,7 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.bluelinelabs.conductor.asTransaction
+import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.register.RegisterScreen
@@ -38,17 +39,19 @@ object RegisterScreen : Screen {
             presenter = successState,
             onClickUserRegister = screenModel::registerUser,
             onClickLogin = { router.setRoot(LoginController().asTransaction()) },
+            onMissingFields = { screenModel.showLocalizedEvent(RegisterEvent.MissingFields) },
+            onNotMatchingPassword = { screenModel.showLocalizedEvent(RegisterEvent.NotMatchingPassword) },
         )
 
         LaunchedEffect(Unit) {
             screenModel.events.collectLatest { event ->
                 when (event) {
-                    is Event.UserRegistered -> {
-                        context.toast("User Successfully registered")
+                    is RegisterEvent.UserRegistered -> {
+                        context.toast(context.getString(R.string.info_successfully_registered))
                         router.setRoot(LoginController().asTransaction())
                     }
-                    is Event.NetworkError -> {
-                        context.toast("Network Error")
+                    is RegisterEvent.LocalizedMessage -> {
+                        context.toast(event.stringRes)
                     }
                 }
             }

@@ -12,6 +12,8 @@ fun LoginScreen(
     presenter: LoginScreenState.Success,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,
+
+    onMissingFields: () -> Unit,
 ) {
     Scaffold { contentPadding ->
         LoginContent(
@@ -19,6 +21,7 @@ fun LoginScreen(
             contentPadding = contentPadding,
             onClickUserLogin = onClickUserLogin,
             onClickRegister = onClickRegister,
+            onMissingFields = onMissingFields,
         )
     }
 }

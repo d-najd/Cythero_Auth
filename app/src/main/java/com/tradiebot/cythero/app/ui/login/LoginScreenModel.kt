@@ -1,9 +1,11 @@
 package com.tradiebot.cythero.app.ui.login
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
@@ -23,8 +25,8 @@ class LoginScreenModel(
     private val loginUser: LoginUser = Injekt.get()
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
-    private val _events: Channel<Event> = Channel(Int.MAX_VALUE)
-    val events: Flow<Event> = _events.receiveAsFlow()
+    private val _events: Channel<LoginEvent> = Channel(Int.MAX_VALUE)
+    val events: Flow<LoginEvent> = _events.receiveAsFlow()
 
     init {
         coroutineScope.launch {
@@ -36,9 +38,7 @@ class LoginScreenModel(
         }
     }
 
-    fun loginUser(
-        user: UserLogin,
-    ) {
+    fun loginUser(user: UserLogin) {
         coroutineScope.launchIO {
             val auth: Optional<Auth> = loginUser.await(user)
             if (auth.isPresent) {
@@ -47,17 +47,28 @@ class LoginScreenModel(
                         user = auth.get(),
                     )
                 }
-                _events.send(Event.UserLoggedIn(auth.get().user))
+                _events.send(LoginEvent.UserLoggedIn(auth.get().user))
             } else {
-                _events.send(Event.NetworkError)
+                showLocalizedEvent(LoginEvent.NetworkError)
             }
+        }
+    }
+
+    fun showLocalizedEvent(event: LoginEvent.LocalizedMessage) {
+        coroutineScope.launch{
+            _events.send(event)
         }
     }
 }
 
-sealed class Event {
-    data class UserLoggedIn(val user: User) : Event()
-    object NetworkError: Event()
+sealed class LoginEvent {
+    data class UserLoggedIn(val user: User) : LoginEvent()
+
+    sealed class LocalizedMessage(@StringRes val stringRes: Int) : LoginEvent()
+    object NetworkError: LocalizedMessage(R.string.error_network)
+
+    //this may not belong here
+    object MissingFields: LocalizedMessage(R.string.error_empty_field)
 }
 
 sealed class LoginScreenState {

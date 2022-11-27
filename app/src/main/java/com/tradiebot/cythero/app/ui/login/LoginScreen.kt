@@ -43,26 +43,21 @@ object LoginScreen : Screen {
         LoginScreen(
             presenter = successState,
             onClickUserLogin = screenModel::loginUser,
-            onClickRegister = { router.setRoot(RegisterController().asTransaction()) }
+            onClickRegister = { router.setRoot(RegisterController().asTransaction()) },
+            onMissingFields = { screenModel.showLocalizedEvent(LoginEvent.MissingFields) },
         )
 
         LaunchedEffect(Unit) {
             screenModel.events.collectLatest { event ->
                 when (event) {
-                    is Event.UserLoggedIn -> {
+                    is LoginEvent.UserLoggedIn -> {
                         router.pushController(UserInfoController(event.user))
                     }
-                    is Event.NetworkError -> {
-                        context.toast("Network Error")
+                    is LoginEvent.LocalizedMessage -> {
+                        context.toast(event.stringRes)
                     }
                 }
             }
         }
-
-        //val onDismissRequest = { screenModel.dismissDialog = null }
-        /*
-        when (val dialog = (state as? LoginScreenState.Success)?.dialog) {
-            null -> {}
-         */
     }
 }

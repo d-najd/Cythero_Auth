@@ -26,9 +26,11 @@ fun ColumnScope.LoginCardContent(
     state: LoginScreenState.Success,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,
+
+    onMissingFields: () -> Unit,
 ) {
     Image(
-        painter = painterResource(R.drawable.company_logo),
+        painter = painterResource(R.drawable.company_logo_with_name),
         contentDescription = stringResource(R.string.company_logo),
         modifier = Modifier
             .align(Alignment.CenterHorizontally)
@@ -50,5 +52,6 @@ fun ColumnScope.LoginCardContent(
         state = state,
         onClickUserLogin = onClickUserLogin,
         onClickRegister = onClickRegister,
+        onMissingFields = onMissingFields,
     )
 }

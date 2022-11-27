@@ -24,6 +24,8 @@ fun LoginContent(
     contentPadding: PaddingValues,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,
+
+    onMissingFields: () -> Unit,
 ) {
     Image(
         painter = painterResource(R.drawable.cythero_banner),
@@ -54,6 +56,7 @@ fun LoginContent(
                 state = state,
                 onClickUserLogin = onClickUserLogin,
                 onClickRegister = onClickRegister,
+                onMissingFields = onMissingFields,
             )
         }
     }

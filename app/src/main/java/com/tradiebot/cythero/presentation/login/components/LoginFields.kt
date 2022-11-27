@@ -25,6 +25,8 @@ fun ColumnScope.LoginFields(
     @Suppress("UNUSED_PARAMETER") state: LoginScreenState.Success,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,
+
+    onMissingFields: () -> Unit,
 ) {
     val defaultContentModifier = Modifier
         .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
@@ -82,10 +84,9 @@ fun ColumnScope.LoginFields(
             .padding(top = 20.dp),
         onClick = {
         if(email.isBlank() || password.isBlank()){
-            email = "Empty Field/s"
+            onMissingFields()
         } else {
             onClickUserLogin(
-                //UserLogin.testingInstance()
                 UserLogin(
                     email = email,
                     password = password,

@@ -13,6 +13,9 @@ fun RegisterScreen(
     presenter: RegisterScreenState.Success,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
+
+    onMissingFields: () -> Unit,
+    onNotMatchingPassword: () -> Unit,
 ) {
     Scaffold { contentPadding ->
         RegisterContent(
@@ -20,6 +23,8 @@ fun RegisterScreen(
             contentPadding = contentPadding,
             onClickUserRegister = onClickUserRegister,
             onClickLogin = onClickLogin,
+            onMissingFields = onMissingFields,
+            onNotMatchingPassword = onNotMatchingPassword,
         )
     }
 }

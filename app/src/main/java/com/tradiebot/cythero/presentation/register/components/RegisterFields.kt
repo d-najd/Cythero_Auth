@@ -25,6 +25,9 @@ fun ColumnScope.RegisterFields(
     @Suppress("UNUSED_PARAMETER") state: RegisterScreenState.Success,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
+
+    onMissingFields: () -> Unit,
+    onNotMatchingPassword: () -> Unit,
 ) {
     val defaultContentModifier = Modifier
         .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
@@ -137,14 +140,23 @@ fun ColumnScope.RegisterFields(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
         onClick = {
-            if(password != confirmPassword) {
-                firstName = "Passwords don't match"
-            } else if(
+            if (
                 firstName.isBlank() ||
                 lastName.isBlank() ||
                 email.isBlank() ||
                 username.isBlank() ||
-                password.isBlank()) {
+                password.isBlank()
+            ) {
+                onMissingFields()
+            } else if (password != confirmPassword) {
+                onNotMatchingPassword()
+            } else if (
+                firstName.isBlank() ||
+                lastName.isBlank() ||
+                email.isBlank() ||
+                username.isBlank() ||
+                password.isBlank()
+            ) {
                 firstName = "Empty Field/s"
             } else {
                 onClickUserRegister(
