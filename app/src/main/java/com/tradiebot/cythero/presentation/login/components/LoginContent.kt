@@ -8,7 +8,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -32,7 +31,6 @@ fun LoginContent(
         contentDescription = stringResource(R.string.company_banner),
         contentScale = ContentScale.Crop,
         modifier = Modifier
-            .blur(radius = 12.dp) // TODO fix the blur, it doesn't want to work for some reason
             .fillMaxWidth()
             .fillMaxHeight(),
     )
