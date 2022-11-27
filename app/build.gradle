@@ -56,6 +56,7 @@ dependencies {
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.compose.material3:material3:1.1.0-alpha02'
     implementation 'com.google.firebase:protolite-well-known-types:18.0.0'
+    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
@@ -66,18 +67,17 @@ dependencies {
     // Project Specific
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.10")
     implementation 'androidx.appcompat:appcompat:1.5.1'
-
-    implementation("org.kodein.di:kodein-di-framework-android-x:7.16.0")
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.1'
+    implementation 'com.github.shenguojun:renderscript-intrinsics-replacement-toolkit:main-SNAPSHOT'
 
     // voyager
     implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"
     implementation "cafe.adriel.voyager:voyager-androidx:$voyager_version"
+
+    /*
     implementation "cafe.adriel.voyager:voyager-tab-navigator:$voyager_version"
     implementation "cafe.adriel.voyager:voyager-transitions:$voyager_version"
     implementation "cafe.adriel.voyager:voyager-bottom-sheet-navigator:$voyager_version"
-
-    /*
     implementation "cafe.adriel.voyager:voyager-koin:$voyager_version"
     implementation "cafe.adriel.voyager:voyager-kodein:$voyager_version"
     implementation "cafe.adriel.voyager:voyager-hilt:$voyager_version"
@@ -91,11 +91,6 @@ dependencies {
     implementation "com.bluelinelabs:conductor:3.1.8"
     implementation "com.squareup.logcat:logcat:0.1"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
-    implementation 'info.android15.nucleus:nucleus:6.0.0' //should be able to get rid of
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-process:2.5.1'
     implementation "uy.kohesive.injekt:injekt-core:1.16.+"
     implementation 'androidx.compose.material3:material3:1.1.0-alpha02'
     implementation 'com.google.android.material:material:1.7.0'
