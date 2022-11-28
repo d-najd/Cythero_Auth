@@ -49,6 +49,12 @@ data class UserRegister(
     val pin: Int? = null,
     val from_web: Boolean = true,
 ){
+    init {
+        if(!from_web){
+            logcat { "from_web is false, this is probably unintended behaviour" }
+        }
+    }
+
     companion object {
         fun testingInstance() = UserRegister (
             firstName = "Dimitar",
