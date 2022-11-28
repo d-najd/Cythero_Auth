@@ -3,8 +3,10 @@ package com.tradiebot.cythero.domain.user.model
 import java.io.Serializable
 
 /**
- * @constructor containing all possible possible parameters for a user.
+ * data class containing all possible possible parameters for a user.
  * @property sign_up_date should be possible to be replaced with 'Date'
+ * @see UserLogin constructor used in requests for logging in users
+ * @see UserRegister constructor used in requests for registering users
  */
 data class User(
     val id: Long? = null,
@@ -21,7 +23,7 @@ data class User(
     val device_number: String? = null,
     val device_nickname: String? = null,
     val from_web: Boolean? = null,
-    val application_id:Long? = null,
+    val application_id: Long? = null,
 ) : Serializable{
     companion object {
         @Suppress("unused")

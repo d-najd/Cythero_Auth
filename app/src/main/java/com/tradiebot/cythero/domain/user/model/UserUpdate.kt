@@ -3,7 +3,9 @@ package com.tradiebot.cythero.domain.user.model
 import logcat.logcat
 
 /**
- * Class used for logging in
+ * Data class used for logging in user
+ * @see User more general constructor
+ * @see UserRegister constructor used in requests for registering users
  */
 data class UserLogin (
     val email: String? = null,
@@ -32,7 +34,9 @@ data class UserLogin (
 }
 
 /**
- * Class used for registering user
+ * Data class used for registering user
+ * @see User more general constructor
+ * @see UserLogin constructor used in requests for registering users
  */
 data class UserRegister(
     val type_id: Long = 1,
