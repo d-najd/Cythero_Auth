@@ -43,6 +43,7 @@ data class UserRegister(
     val username: String,
     val password: String,
     val pin: Int? = null,
+    val from_web: Boolean = true,
 ){
     companion object {
         fun testingInstance() = UserRegister (
@@ -79,5 +80,6 @@ fun User.toUserRegister(): UserRegister {
         username = username!!,
         password = password!!,
         pin = pin,
+        from_web = from_web ?: true,
     )
 }

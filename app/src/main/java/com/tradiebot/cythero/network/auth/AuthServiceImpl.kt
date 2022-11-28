@@ -5,10 +5,7 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.auth.service.AuthService
 import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.domain.user.model.UserRegister
-import com.tradiebot.cythero.network.utils.POST
-import com.tradiebot.cythero.network.utils.Urls
-import com.tradiebot.cythero.network.utils.addFormDataPartIfNotNull
-import com.tradiebot.cythero.network.utils.printResponse
+import com.tradiebot.cythero.network.utils.*
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -23,7 +20,7 @@ class AuthServiceImpl : AuthService {
     override suspend fun loginUser(user: UserLogin): Optional<Auth> {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
             .addFormDataPart("password", user.password)
-            .addFormDataPart("from_web", user.from_web.toString())
+            .addFormDataPart("from_web", user.from_web)
             .addFormDataPartIfNotNull("email", user.email)
             .addFormDataPartIfNotNull("username", user.username)
             .addFormDataPartIfNotNull("device_number", user.device_number)
@@ -57,7 +54,8 @@ class AuthServiceImpl : AuthService {
       */
     override suspend fun registerUser(user: UserRegister): Optional<Auth> {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
-            .addFormDataPart("type_id", user.type_id.toString())
+            .addFormDataPart("type_id", user.type_id)
+            .addFormDataPart("from_web", user.from_web)
             .addFormDataPart("firstName", user.firstName)
             .addFormDataPart("lastName", user.lastName)
             .addFormDataPart("email", user.email)
