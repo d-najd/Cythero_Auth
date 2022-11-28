@@ -16,6 +16,9 @@ class UserInfoController: FullComposeController {
         ),
     )
 
+    /**
+     * TODO test if this causes performance issues
+     */
     constructor(user: User): super(
         bundleOf(
             USER_STRING_EXTRA to Gson().toJson(user),

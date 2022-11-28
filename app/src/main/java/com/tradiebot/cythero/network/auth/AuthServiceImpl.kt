@@ -13,7 +13,7 @@ import okhttp3.Response
 import java.io.IOException
 import java.util.*
 
-class AuthServiceImpl : AuthService {
+object AuthServiceImpl : AuthService {
     private val client = OkHttpClient() // TODO replace with injekt
     private val gson = Gson() // TODO replace with injekt
 

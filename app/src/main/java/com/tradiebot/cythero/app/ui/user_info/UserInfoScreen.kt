@@ -12,7 +12,7 @@ import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.user_info.UserInfoScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
 
-data class UserInfoScreen(
+class UserInfoScreen(
     private val user: User,
 ) : Screen {
     @Composable
@@ -24,7 +24,7 @@ data class UserInfoScreen(
 
         val state by screenModel.state.collectAsState()
 
-        if (state is UserInfoScreenState.Loading){
+        if (state is UserInfoScreenState.Loading) {
             LoadingScreen()
             return
         }

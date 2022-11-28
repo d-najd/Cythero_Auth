@@ -9,7 +9,7 @@ import uy.kohesive.injekt.api.*
 class DomainModule : InjektModule {
 
     override fun InjektRegistrar.registerInjectables() {
-        addSingletonFactory<AuthService> { AuthServiceImpl() }
+        addSingletonFactory<AuthService> { AuthServiceImpl }
         addFactory { LoginUser(get()) }
         addFactory { RegisterUser(get()) }
     }
