@@ -83,17 +83,19 @@ fun ColumnScope.LoginFields(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
         onClick = {
-        if(email.isBlank() || password.isBlank()){
-            onMissingFields()
-        } else {
-            onClickUserLogin(
-                UserLogin(
-                    email = email,
-                    password = password,
+            email = UserLogin.testingInstance().email.toString()
+            password = UserLogin.testingInstance().password
+            if (email.isBlank() || password.isBlank()) {
+                onMissingFields()
+            } else {
+                onClickUserLogin(
+                    UserLogin(
+                        email = email,
+                        password = password,
+                    )
                 )
-            )
-        }
-    }) {
+            }
+        }) {
         Text(
             text = stringResource(R.string.action_sign_in),
             color = Color.White
