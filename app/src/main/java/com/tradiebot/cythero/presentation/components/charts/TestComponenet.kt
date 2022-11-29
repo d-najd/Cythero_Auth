@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.components
+package com.tradiebot.cythero.presentation.components.charts
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +11,10 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
+/**
+ * Testing component to see if MPAndroidChart was viable
+ */
+@Deprecated(message = "")
 @Composable
 fun PieChartComponent() {
 
