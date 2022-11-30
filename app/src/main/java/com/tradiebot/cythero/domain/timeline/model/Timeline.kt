@@ -3,6 +3,7 @@ package com.tradiebot.cythero.domain.timeline.model
 import com.google.gson.Gson
 import java.io.Serializable
 
+@Deprecated("")
 data class Timeline (
     val timeline: List<TimelineEntry>,
 ): Serializable {
@@ -11,6 +12,7 @@ data class Timeline (
     }
 }
 
+@Deprecated("")
 data class TimelineEntry (
     val application_id: Long,
     val session_end: String,
@@ -19,7 +21,7 @@ data class TimelineEntry (
     val user_id: Long,
 ): Serializable
 
-const val TESTING_TIMELINE_JSON =
+private const val TESTING_TIMELINE_JSON =
             "{\n" +
             "  \"timeline\": [\n" +
             "    {\n" +
