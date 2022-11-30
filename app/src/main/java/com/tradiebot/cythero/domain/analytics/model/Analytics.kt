@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/*
 data class UserAnalytics(
     val users: List<Analytics>
 ): Serializable {
@@ -11,6 +12,7 @@ data class UserAnalytics(
         fun testingInstance() = Gson().fromJson(TESTING_USER_ANALYTICS, UserAnalytics::class.java)!!
     }
 }
+ */
 
 
 data class Analytics(
@@ -60,6 +62,7 @@ data class AnalyticsTable(
     }
 }
 
+@Suppress("unused")
 private const val TESTING_USER_ANALYTICS =
             "{\n" +
             "  \"4\": {\n" +

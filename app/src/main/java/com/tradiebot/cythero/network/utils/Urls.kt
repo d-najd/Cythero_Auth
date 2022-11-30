@@ -21,4 +21,10 @@ object Urls {
     const val AUTH_LOGIN = "$AUTH/login"
     const val AUTH_REFRESH_USER_SESSION = "$AUTH/refresh"
     //endregion
+
+    //region Analytics
+    const val ANALYTICS_RAW = "/analytics"
+    const val ANALYTICS = API + ANALYTICS_RAW
+
+    const val ANALYTICS_SPRAYVERSE = "$ANALYTICS/sprayverse_user_report"
 }

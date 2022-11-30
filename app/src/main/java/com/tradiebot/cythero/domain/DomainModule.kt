@@ -1,8 +1,10 @@
 package com.tradiebot.cythero.domain
 
+import com.tradiebot.cythero.domain.analytics.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.service.AuthService
+import com.tradiebot.cythero.network.analytics.AnalyticsServiceImpl
 import com.tradiebot.cythero.network.auth.AuthServiceImpl
 import uy.kohesive.injekt.api.*
 
@@ -12,6 +14,8 @@ class DomainModule : InjektModule {
         addSingletonFactory<AuthService> { AuthServiceImpl }
         addFactory { LoginUser(get()) }
         addFactory { RegisterUser(get()) }
+
+        addSingletonFactory<AnalyticsService> { AnalyticsServiceImpl }
     }
 
 }

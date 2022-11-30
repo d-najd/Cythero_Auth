@@ -6,6 +6,7 @@ import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.domain.analytics.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
@@ -22,7 +23,7 @@ import java.util.*
 
 class RegisterScreenViewModel(
     val context: Context,
-    private val registerUser: RegisterUser = Injekt.get()
+    private val registerUser: RegisterUser = Injekt.get(),
 ) : StateScreenModel<RegisterScreenState>(RegisterScreenState.Loading) {
 
     private val _events: Channel<RegisterEvent> = Channel(Int.MAX_VALUE)
