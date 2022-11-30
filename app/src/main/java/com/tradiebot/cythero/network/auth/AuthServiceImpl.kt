@@ -10,13 +10,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
-import java.util.*
 
 object AuthServiceImpl : AuthService {
     private val client = OkHttpClient() // TODO replace with injekt
     private val gson = Gson() // TODO replace with injekt
 
-    override suspend fun loginUser(user: UserLogin): Optional<Auth> {
+    override suspend fun loginUser(user: UserLogin): Auth? {
         val body = MultipartBodyBuilder()
             .addFormDataPart("password", user.password)
             .addFormDataPart("from_web", user.from_web)
@@ -37,20 +36,19 @@ object AuthServiceImpl : AuthService {
 
             if (response.isSuccessful) {
                 response.use {
-                    val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
-                    return Optional.of(authUser)
+                    return gson.fromJson(response.body.string(), Auth::class.java)
                 }
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return Optional.empty()
+        return null
     }
 
     /**
      * TODO I am assuming that the response is auth object, need to confirm this somehow without spamming
       */
-    override suspend fun registerUser(user: UserRegister): Optional<Auth> {
+    override suspend fun registerUser(user: UserRegister): Auth? {
         val body = MultipartBodyBuilder()
             .addFormDataPart("type_id", user.type_id)
             .addFormDataPart("from_web", user.from_web)
@@ -73,13 +71,12 @@ object AuthServiceImpl : AuthService {
 
             if (response.isSuccessful) {
                 response.use {
-                    val authUser: Auth = gson.fromJson(response.body.string(), Auth::class.java)
-                    return Optional.of(authUser)
+                    return gson.fromJson(response.body.string(), Auth::class.java)
                 }
             }
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return Optional.empty()
+        return null
     }
 }

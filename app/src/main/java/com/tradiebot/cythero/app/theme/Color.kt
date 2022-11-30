@@ -66,5 +66,4 @@ val cythero_theme_dark_surfaceTint = Color(0xFF87D98A)
 val cythero_theme_dark_outlineVariant = Color(0xFF424940)
 val cythero_theme_dark_scrim = Color(0xFF000000)
 
-
 val seed = Color(0xFF58A85F)

@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.Optional
 
 class LoginScreenModel(
     val context: Context,
@@ -39,14 +38,14 @@ class LoginScreenModel(
 
     fun loginUser(user: UserLogin) {
         coroutineScope.launchIO {
-            val auth: Optional<Auth> = loginUser.await(user)
-            if (auth.isPresent) {
+            val auth = loginUser.await(user)
+            if(auth != null){
                 mutableState.update {
                     LoginScreenState.Success(
-                        auth = auth.get(),
+                        auth = auth,
                     )
                 }
-                _events.send(LoginEvent.UserLoggedIn(auth.get()))
+                _events.send(LoginEvent.UserLoggedIn(auth))
             } else {
                 showLocalizedEvent(LoginEvent.NetworkError)
             }

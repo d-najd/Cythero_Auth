@@ -8,14 +8,14 @@ import java.util.*
 class RequestAnalytics(
     private val analyticsService: AnalyticsService,
 ) {
-    
+
     @Suppress("unused")
     suspend fun await(userAuth: Auth, userIDs: List<Long>): Map<Long, Analytics> {
         return analyticsService.getUserAnalytics(userAuth, userIDs)
     }
 
-    suspend fun await(userAuth: Auth, userID: Long): Optional<Analytics> {
-        return Optional.ofNullable(analyticsService.getUserAnalytics(userAuth, listOf(userID)).getOrDefault(userID, null))
+    suspend fun await(userAuth: Auth, userID: Long): Analytics? {
+        return analyticsService.getUserAnalytics(userAuth, listOf(userID))[userID]
     }
 
 }

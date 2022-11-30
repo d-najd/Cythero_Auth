@@ -6,7 +6,6 @@ import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.domain.analytics.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
@@ -19,7 +18,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.*
 
 class RegisterScreenViewModel(
     val context: Context,
@@ -41,14 +39,14 @@ class RegisterScreenViewModel(
 
     fun registerUser(user: UserRegister) {
         coroutineScope.launchIO {
-            val auth: Optional<Auth> = registerUser.await(user)
-            if (auth.isPresent) {
+            val auth = registerUser.await(user)
+            if (auth != null) {
                 mutableState.update {
                     RegisterScreenState.Success(
-                        user = auth.get()
+                        user = auth
                     )
                 }
-                _events.send(RegisterEvent.UserRegistered(auth.get().user))
+                _events.send(RegisterEvent.UserRegistered(auth.user))
             } else {
                 showLocalizedEvent(RegisterEvent.NetworkError)
             }

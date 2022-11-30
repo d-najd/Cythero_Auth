@@ -1,8 +1,8 @@
 package com.tradiebot.cythero.presentation.user_info.components
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Card
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -18,18 +18,41 @@ fun UserInfoContent(
         horizontalAlignment = CenterHorizontally,
         modifier = Modifier
             .padding(contentPadding)
-            .fillMaxWidth()
+            .padding(horizontal = 24.dp, vertical = 24.dp)
+            .fillMaxSize(),
     ) {
+        val cardContentPadding = USER_INFO_CARD_CONTENT_PADDING
 
+        /**
+         * TODO move strings to string resources
+         */
+        UserInfoCard(
+            title = "Analytics",
+            modifier = Modifier
+                .height(200.dp)
+        ) {
+            Text(
+                text = "Get User Data",
+                modifier = Modifier
+                    .padding(cardContentPadding)
+                    .padding(top = 12.dp),
+            )
+        }
+
+        UserInfoGeneralCard()
+
+
+        /*
         Card(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
                 .fillMaxWidth()
                 .height(500.dp)
         ) {
 
             //LineChartComponent()
         }
+        
+         */
 
 
         // PieChartComponent()

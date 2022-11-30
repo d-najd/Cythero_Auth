@@ -1,6 +1,9 @@
 package com.tradiebot.cythero.app.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -11,14 +14,14 @@ fun CytheroTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val layoutDirection = LocalLayoutDirection.current
 
-    val (colorScheme, typography) = createMdc3Theme(
-        context = context,
-        layoutDirection = layoutDirection,
-    )
+    val colors = if (!isSystemInDarkTheme()) {
+        LightColors
+    } else {
+        DarkColors
+    }
 
     MaterialTheme(
-        colorScheme = colorScheme!!,
-        typography = typography!!,
+        colorScheme = colors,
         content = content,
     )
 }
@@ -49,6 +52,7 @@ fun CytheroTheme(
         content = content
     )
 }
+ */
 
 private val LightColors = lightColorScheme(
     primary = cythero_theme_light_primary,
@@ -114,4 +118,3 @@ private val DarkColors = darkColorScheme(
     outlineVariant = cythero_theme_dark_outlineVariant,
     scrim = cythero_theme_dark_scrim,
 )
- */

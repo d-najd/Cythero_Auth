@@ -8,7 +8,7 @@ import java.util.*
 class LoginUser(
     private val authService: AuthService,
 ) {
-    suspend fun await(user: UserLogin): Optional<Auth> {
+    suspend fun await(user: UserLogin): Auth? {
         return authService.loginUser(user)
     }
 }
