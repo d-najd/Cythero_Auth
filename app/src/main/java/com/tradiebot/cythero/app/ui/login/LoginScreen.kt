@@ -51,7 +51,7 @@ object LoginScreen : Screen {
             screenModel.events.collectLatest { event ->
                 when (event) {
                     is LoginEvent.UserLoggedIn -> {
-                        router.pushController(UserInfoController(event.user))
+                        router.pushController(UserInfoController(event.auth))
                     }
                     is LoginEvent.LocalizedMessage -> {
                         context.toast(event.stringRes)

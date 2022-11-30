@@ -8,8 +8,6 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
-import com.tradiebot.cythero.domain.analytics.model.AnalyticsCalculated
-import com.tradiebot.cythero.domain.analytics.model.AnalyticsTable
 
 @Composable
 fun UserInfoContent(
@@ -29,10 +27,6 @@ fun UserInfoContent(
                 .fillMaxWidth()
                 .height(500.dp)
         ) {
-            val testCalculated = AnalyticsCalculated.testingInstance()
-            val testTable = AnalyticsTable.testingInstance()
-
-            val re = "re"
 
             //LineChartComponent()
         }

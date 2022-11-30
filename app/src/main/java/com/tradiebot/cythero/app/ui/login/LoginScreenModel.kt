@@ -8,7 +8,6 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
-import com.tradiebot.cythero.domain.user.model.User
 import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.channels.Channel
@@ -32,7 +31,7 @@ class LoginScreenModel(
         coroutineScope.launch {
             mutableState.update {
                 LoginScreenState.Success(
-                    user = null,
+                    auth = null,
                 )
             }
         }
@@ -44,10 +43,10 @@ class LoginScreenModel(
             if (auth.isPresent) {
                 mutableState.update {
                     LoginScreenState.Success(
-                        user = auth.get(),
+                        auth = auth.get(),
                     )
                 }
-                _events.send(LoginEvent.UserLoggedIn(auth.get().user))
+                _events.send(LoginEvent.UserLoggedIn(auth.get()))
             } else {
                 showLocalizedEvent(LoginEvent.NetworkError)
             }
@@ -62,7 +61,7 @@ class LoginScreenModel(
 }
 
 sealed class LoginEvent {
-    data class UserLoggedIn(val user: User) : LoginEvent()
+    data class UserLoggedIn(val auth: Auth) : LoginEvent()
 
     sealed class LocalizedMessage(@StringRes val stringRes: Int) : LoginEvent()
     object NetworkError: LocalizedMessage(R.string.error_network)
@@ -77,6 +76,6 @@ sealed class LoginScreenState {
 
     @Immutable
     data class Success(
-        val user: Auth?,
+        val auth: Auth?,
     ) : LoginScreenState()
 }
