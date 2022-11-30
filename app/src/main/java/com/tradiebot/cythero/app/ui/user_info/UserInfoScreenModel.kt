@@ -14,7 +14,6 @@ import uy.kohesive.injekt.api.get
 class UserInfoScreenModel(
     val context: Context,
     val user: User,
-    private val analyticsService: AnalyticsService = Injekt.get(),
 ) : StateScreenModel<UserInfoScreenState>(UserInfoScreenState.Loading) {
 
     init {

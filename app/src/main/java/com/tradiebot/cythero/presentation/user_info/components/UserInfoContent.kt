@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
 import com.tradiebot.cythero.domain.analytics.model.AnalyticsCalculated
 import com.tradiebot.cythero.domain.analytics.model.AnalyticsTable
-import com.tradiebot.cythero.domain.analytics.model.UserAnalytics
 
 @Composable
 fun UserInfoContent(
@@ -32,7 +31,6 @@ fun UserInfoContent(
         ) {
             val testCalculated = AnalyticsCalculated.testingInstance()
             val testTable = AnalyticsTable.testingInstance()
-            val testUserAnalytics = UserAnalytics.testingInstance()
 
             val re = "re"
 

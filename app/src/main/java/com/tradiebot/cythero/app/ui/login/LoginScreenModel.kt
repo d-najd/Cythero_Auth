@@ -22,7 +22,7 @@ import java.util.Optional
 
 class LoginScreenModel(
     val context: Context,
-    private val loginUser: LoginUser = Injekt.get()
+    private val loginUser: LoginUser = Injekt.get(),
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
     private val _events: Channel<LoginEvent> = Channel(Int.MAX_VALUE)

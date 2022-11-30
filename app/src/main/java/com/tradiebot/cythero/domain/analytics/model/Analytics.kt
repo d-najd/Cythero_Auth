@@ -4,17 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-/*
-data class UserAnalytics(
-    val users: List<Analytics>
-): Serializable {
-    companion object {
-        fun testingInstance() = Gson().fromJson(TESTING_USER_ANALYTICS, UserAnalytics::class.java)!!
-    }
-}
- */
-
-
 data class Analytics(
     @SerializedName("calculated_data") val calculatedData: AnalyticsCalculated,
     @SerializedName("table") val analyticsTable: AnalyticsTable,

@@ -1,5 +1,6 @@
 package com.tradiebot.cythero.domain
 
+import com.tradiebot.cythero.domain.analytics.interactor.RequestAnalytics
 import com.tradiebot.cythero.domain.analytics.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
@@ -16,6 +17,7 @@ class DomainModule : InjektModule {
         addFactory { RegisterUser(get()) }
 
         addSingletonFactory<AnalyticsService> { AnalyticsServiceImpl }
+        addFactory { RequestAnalytics(get()) }
     }
 
 }
