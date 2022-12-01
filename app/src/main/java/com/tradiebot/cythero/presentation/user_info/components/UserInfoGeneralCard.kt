@@ -1,28 +1,44 @@
 package com.tradiebot.cythero.presentation.user_info.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradiebot.cythero.R
+import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun UserInfoGeneralCard(){
+fun UserInfoGeneralCard(
+    state: UserInfoScreenState.Success,
+){
     val cardContentPadding = USER_INFO_CARD_CONTENT_PADDING
 
-    /**
-     * TODO move strings to string resources
-     */
+    val username = state.auth.user.firstName!!
+    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
+    val timesPlayed = analyticsTable.sessionID.size.toString()
+    val mostPaintedPart = analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key
+    val totalTimePlayedSec = analyticsTable.totalTimePlayedSec.sum().toLong()
+    val totalTimePlayedString = if (totalTimePlayedSec >= 3600){
+        "${totalTimePlayedSec/3600}  ${pluralStringResource(id = R.plurals.hours, count = (totalTimePlayedSec/3600).toInt())}"
+    } else if (totalTimePlayedSec >= 60) {
+        "${totalTimePlayedSec/60}  ${pluralStringResource(id = R.plurals.minutes, count = (totalTimePlayedSec/60).toInt())}"
+    } else {
+        "$totalTimePlayedSec  ${pluralStringResource(id = R.plurals.hours, count = totalTimePlayedSec.toInt())}"
+    }
+
     UserInfoCard(
-        title = "General",
+        title = stringResource(R.string.field_general),
     ) {
         Row(
             modifier = Modifier
@@ -31,12 +47,12 @@ fun UserInfoGeneralCard(){
             Text(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                text = "User:",
+                text = "${stringResource(R.string.field_user)}:",
                 modifier = Modifier
                     .padding(cardContentPadding),
             )
             Text(
-                text = "Konstantin",
+                text = username,
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .padding(cardContentPadding)
@@ -52,12 +68,12 @@ fun UserInfoGeneralCard(){
             Text(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                text = "Times Played:",
+                text = "${stringResource(R.string.field_times_played)}:",
                 modifier = Modifier
                     .padding(cardContentPadding),
             )
             Text(
-                text = "7",
+                text = timesPlayed,
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .padding(cardContentPadding)
@@ -73,12 +89,12 @@ fun UserInfoGeneralCard(){
             Text(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                text = "Most Painted Part:",
+                text = "${stringResource(R.string.field_most_painted_part)}:",
                 modifier = Modifier
                     .padding(cardContentPadding),
             )
             Text(
-                text = "Fender",
+                text = mostPaintedPart,
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .padding(cardContentPadding)
@@ -94,12 +110,12 @@ fun UserInfoGeneralCard(){
             Text(
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                text = "Total Time Painted:",
+                text = "${stringResource(R.string.field_total_time_played)}:",
                 modifier = Modifier
                     .padding(cardContentPadding),
             )
             Text(
-                text = "19 min.",
+                text = totalTimePlayedString,
                 textAlign = TextAlign.End,
                 modifier = Modifier
                     .padding(cardContentPadding)
@@ -115,7 +131,7 @@ fun UserInfoGeneralCard(){
                 .padding(cardContentPadding)
                 .padding(top = 8.dp),
         ) {
-            Text(text = "Export to PDF")
+            Text(text = stringResource(R.string.action_export_to_pdf))
         }
     }
 }

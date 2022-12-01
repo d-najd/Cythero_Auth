@@ -46,7 +46,7 @@ fun ColumnScope.RegisterFields(
         value = firstName,
         onValueChange = { firstName = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.first_name)) },
+        label = { Text(stringResource(R.string.field_first_name)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
@@ -59,7 +59,7 @@ fun ColumnScope.RegisterFields(
         value = lastName,
         onValueChange = { lastName = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.last_name)) },
+        label = { Text(stringResource(R.string.field_last_name)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
@@ -72,7 +72,7 @@ fun ColumnScope.RegisterFields(
         value = email,
         onValueChange = { email = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.email)) },
+        label = { Text(stringResource(R.string.field_email)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
@@ -85,7 +85,7 @@ fun ColumnScope.RegisterFields(
         value = username,
         onValueChange = { username = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.username)) },
+        label = { Text(stringResource(R.string.field_username)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
@@ -98,7 +98,7 @@ fun ColumnScope.RegisterFields(
         value = password,
         onValueChange = { password = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.password)) },
+        label = { Text(stringResource(R.string.field_password)) },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
@@ -126,7 +126,7 @@ fun ColumnScope.RegisterFields(
         value = confirmPassword,
         onValueChange = { confirmPassword = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.confirm_password)) },
+        label = { Text(stringResource(R.string.field_confirm_password)) },
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,

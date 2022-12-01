@@ -5,12 +5,21 @@
     <string name="company_logo">Cythero Logo</string>
 
     <!-- field -->
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="email">E-Mail</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="field_first_name">First Name</string>
+    <string name="field_last_name">Last Name</string>
+    <string name="field_email">E-Mail</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="field_confirm_password">Confirm Password</string>
+
+
+    <string name="field_analytics">Analytics</string>
+
+    <string name="field_general">General</string>
+    <string name="field_user">User</string>
+    <string name="field_times_played">Times Played</string>
+    <string name="field_most_painted_part">Most Painted Part</string>
+    <string name="field_total_time_played">Total Time Played</string>
 
     <!-- info -->
     <string name="info_sign_in_to_access">Sign in to access your account</string>
@@ -27,6 +36,8 @@
     <string name="action_sign_up">Sign up</string>
     <string name="action_register_user">Register User</string>
     <string name="action_confirm">Confirm</string>
+
+    <string name="action_export_to_pdf">Export to PDF</string>
 
     <!-- error -->
     <string name="error_password_do_not_match">Passwords don\'t match</string>

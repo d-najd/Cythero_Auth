@@ -21,12 +21,13 @@ class UserInfoScreenModel(
 
     init {
         coroutineScope.launchIO {
-            val userAnalytics = requestAnalytics.await(auth, 4)
+            val userAnalytics = requestAnalytics.await(auth, 4L)
             if(userAnalytics != null) {
                 mutableState.update {
                     UserInfoScreenState.Success(
                         auth = auth,
-                        userAnalytics = listOf(userAnalytics),
+                        //FIXME passing the user id here is not correct
+                        userAnalytics = mapOf(auth.user.id!! to userAnalytics),
                     )
                 }
             } else {
@@ -44,6 +45,6 @@ sealed class UserInfoScreenState {
     @Immutable
     data class Success(
         val auth: Auth,
-        val userAnalytics: List<Analytics>,
+        val userAnalytics: Map<Long, Analytics>,
     ) : UserInfoScreenState()
 }

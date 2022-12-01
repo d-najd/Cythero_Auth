@@ -45,9 +45,6 @@ object AuthServiceImpl : AuthService {
         return null
     }
 
-    /**
-     * TODO I am assuming that the response is auth object, need to confirm this somehow without spamming
-      */
     override suspend fun registerUser(user: UserRegister): Auth? {
         val body = MultipartBodyBuilder()
             .addFormDataPart("type_id", user.type_id)

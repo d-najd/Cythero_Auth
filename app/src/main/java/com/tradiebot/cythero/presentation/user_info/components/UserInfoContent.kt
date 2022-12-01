@@ -6,7 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
 
 @Composable
@@ -23,11 +25,8 @@ fun UserInfoContent(
     ) {
         val cardContentPadding = USER_INFO_CARD_CONTENT_PADDING
 
-        /**
-         * TODO move strings to string resources
-         */
         UserInfoCard(
-            title = "Analytics",
+            title = stringResource(R.string.field_analytics),
             modifier = Modifier
                 .height(200.dp)
         ) {
@@ -39,7 +38,9 @@ fun UserInfoContent(
             )
         }
 
-        UserInfoGeneralCard()
+        UserInfoGeneralCard(
+            state = state,
+        )
 
 
         /*

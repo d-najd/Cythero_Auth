@@ -13,6 +13,7 @@ import com.tradiebot.cythero.domain.timeline.model.Timeline
 import com.tradiebot.cythero.domain.timeline.model.TimelineEntry
 
 @Composable
+@Deprecated("This class needs rework if its to be used")
 fun LineChartComponent(
     timeline: Timeline = Timeline.testingInstance(),
 ) {
@@ -36,8 +37,6 @@ fun LineChartComponent(
 
 /**
  * converts TimelineEntry to charting Entry
- *
- * TODO avoid this.indexOf() call
  *
  * @return list of charting Entries
  */

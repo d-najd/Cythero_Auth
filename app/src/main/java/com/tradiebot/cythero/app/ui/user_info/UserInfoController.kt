@@ -18,7 +18,8 @@ class UserInfoController: FullComposeController {
     )
 
     /**
-     * TODO test if this causes performance issues
+     * TODO auth should be saved as shared preference instead, this has the benefit of being able to read
+     *  it after the app is closed and probably has better performance
      */
     constructor(auth: Auth): super(
         bundleOf(
