@@ -19,7 +19,7 @@ import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-internal fun AnalyticsGeneralCard(
+fun AnalyticsGeneralCard(
     state: AnalyticsScreenState.Success,
 ){
     val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING

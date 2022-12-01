@@ -15,7 +15,7 @@ import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-internal fun AnalyticsBasicFields(
+fun AnalyticsBasicFields(
     state: AnalyticsScreenState.Success,
 ){
     Text(
