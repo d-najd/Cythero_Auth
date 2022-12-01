@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.user_info.components
+package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun UserInfoCard(
+internal fun AnalyticsCard(
     title: String,
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit,
@@ -17,19 +17,19 @@ fun UserInfoCard(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(USER_INFO_CARD_PADDING),
+            .padding(ANALYTICS_CARD_PADDING),
     ) {
         Text(
             text = title,
             // fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
             modifier = Modifier
-                .padding(USER_INFO_CARD_CONTENT_PADDING)
+                .padding(ANALYTICS_CARD_CONTENT_PADDING)
                 .padding(vertical = 16.dp),
         )
         content()
     }
 }
 
-val USER_INFO_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
-private val USER_INFO_CARD_PADDING = PaddingValues(vertical = 12.dp)
+val ANALYTICS_CARD_CONTENT_PADDING = PaddingValues(horizontal = 16.dp, vertical = 6.dp)
+private val ANALYTICS_CARD_PADDING = PaddingValues(vertical = 12.dp)

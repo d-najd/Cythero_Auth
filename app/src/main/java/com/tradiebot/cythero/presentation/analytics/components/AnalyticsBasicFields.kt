@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.user_info.components
+package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
-fun UserInfoBasicFields(
-    state: UserInfoScreenState.Success,
+internal fun AnalyticsBasicFields(
+    state: AnalyticsScreenState.Success,
 ){
     Text(
         textAlign = TextAlign.Center,

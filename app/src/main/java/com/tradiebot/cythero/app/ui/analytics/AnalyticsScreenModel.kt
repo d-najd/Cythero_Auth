@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.app.ui.user_info
+package com.tradiebot.cythero.app.ui.analytics
 
 import android.content.Context
 import androidx.compose.runtime.Immutable
@@ -13,18 +13,18 @@ import logcat.logcat
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
-class UserInfoScreenModel(
+class AnalyticsScreenModel(
     val context: Context,
     val auth: Auth,
     private val requestAnalytics: RequestAnalytics = Injekt.get(),
-) : StateScreenModel<UserInfoScreenState>(UserInfoScreenState.Loading) {
+) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
 
     init {
         coroutineScope.launchIO {
             val userAnalytics = requestAnalytics.await(auth, 4L)
             if(userAnalytics != null) {
                 mutableState.update {
-                    UserInfoScreenState.Success(
+                    AnalyticsScreenState.Success(
                         auth = auth,
                         //FIXME passing the user id here is not correct
                         userAnalytics = mapOf(auth.user.id!! to userAnalytics),
@@ -38,13 +38,13 @@ class UserInfoScreenModel(
 
 }
 
-sealed class UserInfoScreenState {
+sealed class AnalyticsScreenState {
     @Immutable
-    object Loading : UserInfoScreenState()
+    object Loading : AnalyticsScreenState()
 
     @Immutable
     data class Success(
         val auth: Auth,
         val userAnalytics: Map<Long, Analytics>,
-    ) : UserInfoScreenState()
+    ) : AnalyticsScreenState()
 }

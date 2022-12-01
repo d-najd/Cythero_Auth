@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.user_info
+package com.tradiebot.cythero.presentation.analytics
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -9,13 +9,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
-import com.tradiebot.cythero.presentation.user_info.components.UserInfoContent
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserInfoScreen(
-    presenter: UserInfoScreenState.Success,
+fun AnalyticsScreen(
+    presenter: AnalyticsScreenState.Success,
     onBackClicked: () -> Unit
 ) {
     Scaffold { contentPadding ->
@@ -28,7 +28,7 @@ fun UserInfoScreen(
                 .background(MaterialTheme.colorScheme.primary)
         )
 
-        UserInfoContent(
+        AnalyticsContent(
             state = presenter,
             contentPadding = contentPadding,
         )

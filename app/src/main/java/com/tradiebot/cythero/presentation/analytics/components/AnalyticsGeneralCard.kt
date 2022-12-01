@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.user_info.components
+package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,14 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun UserInfoGeneralCard(
-    state: UserInfoScreenState.Success,
+internal fun AnalyticsGeneralCard(
+    state: AnalyticsScreenState.Success,
 ){
-    val cardContentPadding = USER_INFO_CARD_CONTENT_PADDING
+    val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
 
     val username = state.auth.user.firstName!!
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
@@ -37,7 +37,7 @@ fun UserInfoGeneralCard(
         "$totalTimePlayedSec  ${pluralStringResource(id = R.plurals.hours, count = totalTimePlayedSec.toInt())}"
     }
 
-    UserInfoCard(
+    AnalyticsCard(
         title = stringResource(R.string.field_general),
     ) {
         Row(

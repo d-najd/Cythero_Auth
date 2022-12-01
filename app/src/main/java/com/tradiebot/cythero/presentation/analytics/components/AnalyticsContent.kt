@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.user_info.components
+package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.user_info.UserInfoScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
 @Composable
-fun UserInfoContent(
-    state: UserInfoScreenState.Success,
+fun AnalyticsContent(
+    state: AnalyticsScreenState.Success,
     contentPadding: PaddingValues,
 ) {
     Column(
@@ -23,9 +23,9 @@ fun UserInfoContent(
             .padding(horizontal = 24.dp, vertical = 24.dp)
             .fillMaxSize(),
     ) {
-        val cardContentPadding = USER_INFO_CARD_CONTENT_PADDING
+        val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
 
-        UserInfoCard(
+        AnalyticsCard(
             title = stringResource(R.string.field_analytics),
             modifier = Modifier
                 .height(200.dp)
@@ -38,7 +38,7 @@ fun UserInfoContent(
             )
         }
 
-        UserInfoGeneralCard(
+        AnalyticsGeneralCard(
             state = state,
         )
 
@@ -63,7 +63,7 @@ fun UserInfoContent(
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
         )
 
-        UserInfoBasicFields(
+        AnalyticsBasicFields(
             state = state,
         )
     }
