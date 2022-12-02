@@ -1,13 +1,22 @@
 package com.tradiebot.cythero.domain.analytics.model
 
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
 
 data class Analytics(
     @SerializedName("calculated_data") val calculatedData: AnalyticsCalculated,
     @SerializedName("table") val analyticsTable: AnalyticsTable,
-): Serializable
+): Serializable {
+    companion object{
+        fun testingInstance(): Map<Long, Analytics> {
+            val analyticsType = object : TypeToken<Map<Long, Analytics>>() {}.type
+            return Gson().fromJson(TESTING_USER_ANALYTICS, analyticsType)
+        }
+    }
+}
 
 data class AnalyticsCalculated(
     @SerializedName("Average Paint") val averagePaint: Double,
@@ -17,11 +26,7 @@ data class AnalyticsCalculated(
     @SerializedName("Most Paint") val mostPaint: Double,
     @SerializedName("Shortest Time") val shortestTime: Float,
     @SerializedName("User IDs") val userIDs: List<Long>,
-): Serializable {
-    companion object {
-        // fun testingInstance() = Gson().fromJson(TESTING_ANALYTICS_CALCULATED, AnalyticsCalculated::class.java)!!
-    }
-}
+): Serializable
 
 /**
  *
@@ -49,12 +54,7 @@ data class AnalyticsTable(
     @SerializedName("Total Time Played") val totalTimePlayedSec: List<Double>,
     @SerializedName("Total Time Spent") val totalTimeSpentMin: List<Double>,
     @SerializedName("User ID") val userIDs: List<Long>,
-    ): Serializable {
-    companion object {
-        // fun testingInstance() =
-        //    Gson().fromJson(TESTING_ANALYTICS_TABLE_JSON, AnalyticsTable::class.java)!!
-    }
-}
+    ): Serializable
 
 @Suppress("unused")
 private const val TESTING_USER_ANALYTICS =
@@ -133,6 +133,7 @@ private const val TESTING_USER_ANALYTICS =
             "        \"C\",\n" +
             "        \"B\",\n" +
             "        \"B\",\n" +
+            "        \"A\",\n" +
             "        \"A\"\n" +
             "      ],\n" +
             "      \"Part\": [\n" +

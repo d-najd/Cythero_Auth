@@ -42,6 +42,10 @@ fun AnalyticsContent(
             state = state,
         )
 
+        AnalyticsGradeCard(
+            state = state,
+        )
+
 
         /*
         Card(

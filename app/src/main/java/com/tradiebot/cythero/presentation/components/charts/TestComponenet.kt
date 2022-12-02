@@ -14,9 +14,10 @@ import com.github.mikephil.charting.data.BarEntry
 /**
  * Testing component to see if MPAndroidChart was viable
  */
+/*
 @Deprecated(message = "")
 @Composable
-fun PieChartComponent() {
+fun BarChartComponent() {
 
     Box {
         Text(text = "Pie Chart Below")
@@ -57,6 +58,7 @@ fun PieChartComponent() {
             })
     }
 }
+ */
 
 
 /*
