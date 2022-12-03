@@ -77,4 +77,4 @@ fun AnalyticsPairField(
 }
 
 val ANALYTICS_CARD_CONTENT_PADDING = PaddingValues(vertical = 6.dp)
-private val ANALYTICS_CARD_PADDING = PaddingValues(vertical = 12.dp)
+private val ANALYTICS_CARD_PADDING = PaddingValues(horizontal = 24.dp, vertical = 12.dp)

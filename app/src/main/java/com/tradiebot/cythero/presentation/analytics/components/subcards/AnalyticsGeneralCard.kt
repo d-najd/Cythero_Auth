@@ -5,34 +5,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
+import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AnalyticsGeneralCard(
     state: AnalyticsScreenState.Success,
 ){
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
 
-    val username = state.auth.user.firstName!!
+    val username = state.auth.user.username!!
     val timesPlayed = analyticsTable.sessionID.size.toString()
     val mostPaintedPart = analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key
     val totalTimePlayedSec = analyticsTable.totalTimePlayedSec.sum().toLong()
-    val totalTimePlayedString = if (totalTimePlayedSec >= 3600){
-        "${totalTimePlayedSec/3600} ${pluralStringResource(id = R.plurals.hours, count = (totalTimePlayedSec/3600).toInt())}"
-    } else if (totalTimePlayedSec >= 60) {
-        "${totalTimePlayedSec/60} ${pluralStringResource(id = R.plurals.minutes, count = (totalTimePlayedSec/60).toInt())}"
-    } else {
-        "$totalTimePlayedSec ${pluralStringResource(id = R.plurals.hours, count = totalTimePlayedSec.toInt())}"
-    }
+    val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
 
     AnalyticsCard(
         title = stringResource(R.string.field_general),

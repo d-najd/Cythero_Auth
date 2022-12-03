@@ -21,13 +21,6 @@ fun AnalyticsScreen(
     Scaffold { contentPadding ->
         BackHandler{ onBackClicked() }
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(175.dp)
-                .background(MaterialTheme.colorScheme.primary)
-        )
-
         AnalyticsContent(
             state = presenter,
             contentPadding = contentPadding,
