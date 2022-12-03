@@ -13,10 +13,17 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
 /**
+ * Creates a PieChart which fills max size and gets centered, currently there is no way to align the
+ * chart and doing so requires rework of some components in the library.
+ *
+ * @param pieDataSet data set for the chart
+ * @param offsetLeft offset to the left on the chart in <b>DP</b. use negative values for offset to the right
+ * @param offsetTop offset to the top on the chart in <b>DP</b. use negative values for offset to the bottom
+ * @param isLegendEnabled whether the legend is enabled or not on by default. <b>NOTE</b> enabling the
+ * legend changes the offset on the chart
  *
  * TODO while hovering a field in chart display number of overall grades
- *  in that category like in the webapp also round just the tip of the slices
- *
+ *  in that category like in the webapp also round just the tip of the slices and this needs a rework
  *
  */
 @Composable
@@ -89,8 +96,11 @@ object PieChartHelper {
         return pieDataSet
     }
 
+    /** default offset on the chart */
     const val PIE_CHART_OFFSET_TOP = 0f
+    /** default offset on the chart */
     const val PIE_CHART_OFFSET_LEFT = -50f
 
+    /** default offset on the legend */
     const val PIE_CHART_LEGEND_X_OFFSET = 12.5f
 }
