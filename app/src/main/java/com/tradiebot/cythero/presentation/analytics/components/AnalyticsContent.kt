@@ -34,7 +34,6 @@ fun AnalyticsContent(
     state: AnalyticsScreenState.Success,
     contentPadding: PaddingValues,
 ) {
-
     val scrollState = rememberScrollState()
 
     Box(
@@ -49,7 +48,7 @@ fun AnalyticsContent(
         horizontalAlignment = CenterHorizontally,
         modifier = Modifier
             .padding(contentPadding)
-            .padding(vertical = 24.dp)
+            //.padding(vertical = 24.dp)
             .verticalScroll(scrollState)
             .fillMaxSize(),
     ) {
@@ -60,6 +59,7 @@ fun AnalyticsContent(
         AnalyticsCard(
             title = stringResource(R.string.field_analytics),
             modifier = Modifier
+                .padding(top = 24.dp)
                 .height(200.dp)
         ) {
             Text(

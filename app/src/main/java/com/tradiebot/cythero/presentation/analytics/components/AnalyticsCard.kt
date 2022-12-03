@@ -34,6 +34,7 @@ fun AnalyticsCard(
                     .padding(vertical = 16.dp),
             )
             content()
+
         }
     }
 }
