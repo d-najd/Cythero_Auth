@@ -13,15 +13,23 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 
 /**
- * TODO move legend into position and while hovering a field in chart display number of overall grades
+ *
+ * TODO while hovering a field in chart display number of overall grades
  *  in that category like in the webapp also round just the tip of the slices
+ *
+ *
  */
 @Composable
 fun PieChartComponent(
     pieDataSet: PieDataSet,
+    offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
+    offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
+    isLegendEnabled: Boolean = true,
 ) {
+
     AndroidView(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
         factory = { context ->
             PieChart(context)
         },
@@ -38,13 +46,22 @@ fun PieChartComponent(
                 setTransparentCircleAlpha(0)
                 description.isEnabled = false
 
-                val legend = pieChart.legend
+                legend.isEnabled = isLegendEnabled
+
                 legend.form = Legend.LegendForm.CIRCLE
+                legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+                legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+                legend.orientation = Legend.LegendOrientation.VERTICAL
+                legend.yEntrySpace = 15f
+                legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
                 legend.textSize = 12f
-                legend.formSize = 20f
-                legend.formToTextSpace = 2f
+                legend.formSize = 15f
+
+                extraTopOffset = offsetTop
+                extraLeftOffset = offsetLeft
 
                 data = PieData(pieDataSet)
+
                 invalidate()
             }
         })
@@ -71,4 +88,9 @@ object PieChartHelper {
 
         return pieDataSet
     }
+
+    const val PIE_CHART_OFFSET_TOP = 0f
+    const val PIE_CHART_OFFSET_LEFT = -50f
+
+    const val PIE_CHART_LEGEND_X_OFFSET = 12.5f
 }

@@ -21,8 +21,8 @@ fun AnalyticsGradeCard(
     
     AnalyticsCard(
         title = stringResource(R.string.field_grades_breakdown),
-        modifier = Modifier.height(300.dp)
+        modifier = Modifier.height(275.dp)
     ) {
-        PieChartComponent(pieDataSet)
+        PieChartComponent(pieDataSet = pieDataSet)
     }
 }
