@@ -29,8 +29,6 @@ fun AnalyticsContent(
             .verticalScroll(rememberScrollState())
             .fillMaxSize(),
     ) {
-        val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
-
         AnalyticsCard(
             title = stringResource(R.string.field_analytics),
             modifier = Modifier
@@ -39,7 +37,6 @@ fun AnalyticsContent(
             Text(
                 text = "Get User Data",
                 modifier = Modifier
-                    .padding(cardContentPadding)
                     .padding(top = 12.dp),
             )
         }
@@ -55,25 +52,6 @@ fun AnalyticsContent(
         AnalyticsLatestSessionCard(
             state = state,
         )
-
-
-
-
-        /*
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(500.dp)
-        ) {
-
-            //LineChartComponent()
-        }
-        
-         */
-
-
-        // PieChartComponent()
-
 
         Divider(
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)

@@ -1,6 +1,5 @@
 package com.tradiebot.cythero.presentation.analytics.components.subcards
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -10,13 +9,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.ANALYTICS_CARD_CONTENT_PADDING
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
@@ -25,7 +20,6 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 fun AnalyticsGeneralCard(
     state: AnalyticsScreenState.Success,
 ){
-    val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
 
     val username = state.auth.user.firstName!!
@@ -67,8 +61,8 @@ fun AnalyticsGeneralCard(
             onClick = { },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(cardContentPadding)
-                .padding(top = 8.dp),
+                .padding(vertical = 8.dp)
+                .padding(top = 12.dp),
         ) {
             Text(text = stringResource(R.string.action_export_to_pdf))
         }
