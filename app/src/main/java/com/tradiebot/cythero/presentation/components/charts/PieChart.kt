@@ -11,12 +11,13 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import java.util.SortedMap
 
 /**
  * Creates a PieChart which fills max size and gets centered, currently there is no way to align the
  * chart and doing so requires rework of some components in the library.
  *
- * @param pieDataSet data set for the chart
+ * @param dataSet data set for the chart
  * @param offsetLeft offset to the left on the chart in <b>DP</b. use negative values for offset to the right
  * @param offsetTop offset to the top on the chart in <b>DP</b. use negative values for offset to the bottom
  * @param isLegendEnabled whether the legend is enabled or not on by default. <b>NOTE</b> enabling the
@@ -27,8 +28,8 @@ import com.github.mikephil.charting.data.PieEntry
  *
  */
 @Composable
-fun PieChartComponent(
-    pieDataSet: PieDataSet,
+fun PieChart(
+    dataSet: PieDataSet,
     offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
     offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
     isLegendEnabled: Boolean = true,
@@ -43,8 +44,8 @@ fun PieChartComponent(
 
         update = { pieChart ->
             pieChart.apply {
-                pieDataSet.setDrawValues(false)
-                pieDataSet.sliceSpace = 5f
+                dataSet.setDrawValues(false)
+                dataSet.sliceSpace = 5f
 
                 setDrawEntryLabels(false)
                 setUsePercentValues(false)
@@ -67,7 +68,7 @@ fun PieChartComponent(
                 extraTopOffset = offsetTop
                 extraLeftOffset = offsetLeft
 
-                data = PieData(pieDataSet)
+                data = PieData(dataSet)
 
                 invalidate()
             }
@@ -75,12 +76,12 @@ fun PieChartComponent(
 }
 
 object PieChartHelper {
-    fun generateDataFromGrades(grades: Map<String, Int>): PieDataSet {
-        val pieEntries = mutableListOf<PieEntry>()
+    fun generateDataFromGrades(grades: SortedMap<String, Int>): PieDataSet {
+        val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
 
         for (grade in grades) {
-            pieEntries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
+            entries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
             colors.add(
                 when (grade.key){
                     "A" -> android.graphics.Color.parseColor("#00A83D")
@@ -90,10 +91,10 @@ object PieChartHelper {
                 }
             )
         }
-        val pieDataSet = PieDataSet(pieEntries, "")
-        pieDataSet.colors = colors
+        val dataSet = PieDataSet(entries, "")
+        dataSet.colors = colors
 
-        return pieDataSet
+        return dataSet
     }
 
     /** default offset on the chart */

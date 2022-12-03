@@ -1,18 +1,14 @@
 package com.tradiebot.cythero.presentation.analytics.components.subcards
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
-import com.tradiebot.cythero.presentation.components.charts.PieChartComponent
+import com.tradiebot.cythero.presentation.components.charts.PieChart
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 
 @Composable
@@ -27,6 +23,6 @@ fun AnalyticsGradeCard(
         title = stringResource(R.string.field_grades_breakdown),
         modifier = Modifier.height(275.dp),
     ) {
-        PieChartComponent(pieDataSet = pieDataSet)
+        PieChart(dataSet = pieDataSet)
     }
 }

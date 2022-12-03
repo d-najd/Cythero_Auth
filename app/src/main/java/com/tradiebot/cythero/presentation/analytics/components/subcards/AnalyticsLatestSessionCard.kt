@@ -1,11 +1,7 @@
 package com.tradiebot.cythero.presentation.analytics.components.subcards
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
@@ -52,7 +48,5 @@ fun AnalyticsLatestSessionCard(
             key = stringResource(R.string.field_time_taken),
             value = lastTimePlayedString
         )
-        
-        Box(modifier = Modifier.padding(bottom = 12.dp))
     }
 }

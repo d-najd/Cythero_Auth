@@ -1,17 +1,54 @@
 package com.tradiebot.cythero.presentation.components.charts
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.tradiebot.cythero.domain.timeline.model.Timeline
+import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.domain.timeline.model.TimelineEntry
 
+@Composable
+fun LineChart(
+    dataSet: LineDataSet,
+    // offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
+    // offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
+    isLegendEnabled: Boolean = true,
+){
+    AndroidView(
+        modifier = Modifier
+            .fillMaxSize(),
+        factory = { context ->
+            LineChart(context)
+        },
+
+        update = { lineChart ->
+            lineChart.apply {
+                data = LineData(dataSet)
+
+                invalidate()
+            }
+        }
+    )
+}
+
+object LineChartHelper{
+    fun generateDataFromParts(parts: List<Pair<Float, String>>): LineDataSet {
+        val entries = mutableListOf<Entry>()
+
+        for ((index, part) in parts.withIndex()) {
+            entries.add(Entry(index.toFloat(), part.first, part.second))
+        }
+
+        return LineDataSet(entries, "")
+    }
+}
+
+
+
+
+
+/*
 @Composable
 @Deprecated("This class needs rework if its to be used")
 fun LineChartComponent(
@@ -34,6 +71,7 @@ fun LineChartComponent(
         }
     )
 }
+ */
 
 /**
  * converts TimelineEntry to charting Entry

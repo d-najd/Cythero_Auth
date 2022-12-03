@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsCoverageGraph
 import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGeneralCard
 import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGradeCard
 import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsLatestSessionCard
@@ -79,6 +80,10 @@ fun AnalyticsContent(
 
         AnalyticsLatestSessionCard(
             state = state,
+        )
+
+        AnalyticsCoverageGraph(
+            state = state
         )
 
         Divider(

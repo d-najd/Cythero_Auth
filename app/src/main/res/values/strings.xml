@@ -59,5 +59,6 @@
     <string name="placeholder_first_name">Cosmos</string>
     <string name="placeholder_last_name">Redshift</string>
     <string name="placeholder_username">Andromeda</string>
+    <string name="field_coverage_graph_last_sessions">Coverage Graph (Last 10 sessions)</string>
 
 </resources>
