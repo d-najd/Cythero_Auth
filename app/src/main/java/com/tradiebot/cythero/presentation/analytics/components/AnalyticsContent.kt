@@ -1,6 +1,8 @@
 package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -10,6 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGeneralCard
+import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGradeCard
+import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsLatestSessionCard
 
 @Composable
 fun AnalyticsContent(
@@ -21,6 +26,7 @@ fun AnalyticsContent(
         modifier = Modifier
             .padding(contentPadding)
             .padding(horizontal = 24.dp, vertical = 24.dp)
+            .verticalScroll(rememberScrollState())
             .fillMaxSize(),
     ) {
         val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
@@ -45,6 +51,12 @@ fun AnalyticsContent(
         AnalyticsGradeCard(
             state = state,
         )
+
+        AnalyticsLatestSessionCard(
+            state = state,
+        )
+
+
 
 
         /*

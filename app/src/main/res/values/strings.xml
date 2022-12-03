@@ -14,12 +14,20 @@
 
 
     <string name="field_analytics">Analytics</string>
-
     <string name="field_general">General</string>
     <string name="field_user">User</string>
     <string name="field_times_played">Times Played</string>
     <string name="field_most_painted_part">Most Painted Part</string>
     <string name="field_total_time_played">Total Time Played</string>
+
+    <string name="field_grades_breakdown">Grades Breakdown</string>
+
+    <string name="field_latest_session">Latest Session</string>
+    <string name="field_part">Part</string>
+    <string name="field_grade">Grade</string>
+    <string name="field_coverage">Coverage</string>
+    <string name="field_paint_used">Paint Used</string>
+    <string name="field_time_taken">Time Taken</string>
 
     <!-- info -->
     <string name="info_sign_in_to_access">Sign in to access your account</string>
