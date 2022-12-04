@@ -5,10 +5,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 /**
- * Single horizontal scrollable item
+ * Single horizontally scrollable tab row
+ *
+ * @param modifier modifier that will be applied to the row
+ * @param content the tab row content
  */
 @Composable
-fun ScrollableHorizontalRow(
+fun ScrollableHorizontalItem(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {

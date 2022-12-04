@@ -1,30 +1,21 @@
 package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsCoverageGraph
-import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGeneralCard
-import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsGradeCard
-import com.tradiebot.cythero.presentation.analytics.components.subcards.AnalyticsLatestSessionCard
+import com.tradiebot.cythero.presentation.analytics.components.subcards.*
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -53,22 +44,10 @@ fun AnalyticsContent(
             .verticalScroll(scrollState)
             .fillMaxSize(),
     ) {
-        /*
 
-         */
-
-        AnalyticsCard(
-            title = stringResource(R.string.field_analytics),
-            modifier = Modifier
-                .padding(top = 24.dp)
-                .height(200.dp)
-        ) {
-            Text(
-                text = "Get User Data",
-                modifier = Modifier
-                    .padding(top = 12.dp),
-            )
-        }
+        AnalyticsGetAnalyticsCard(
+            state = state,
+        )
 
         AnalyticsGeneralCard(
             state = state,

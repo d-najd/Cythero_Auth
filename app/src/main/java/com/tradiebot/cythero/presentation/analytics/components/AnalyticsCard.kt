@@ -27,7 +27,6 @@ fun AnalyticsCard(
         ) {
             Text(
                 text = title,
-                // fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 modifier = Modifier
                     .padding(ANALYTICS_CARD_CONTENT_PADDING)

@@ -11,6 +11,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.tradiebot.cythero.presentation.util.ChartsHelper
 import java.util.SortedMap
 
 /**
@@ -84,9 +85,9 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
             colors.add(
                 when (grade.key){
-                    "A" -> android.graphics.Color.parseColor("#00A83D")
-                    "B" -> android.graphics.Color.parseColor("#0078AA")
-                    "C" -> android.graphics.Color.parseColor("#D3212C")
+                    "A" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
+                    "B" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
+                    "C" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )
