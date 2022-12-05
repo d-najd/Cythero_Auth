@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
+import com.tradiebot.cythero.presentation.components.CytheroMultipurposeMenu
 
 @Composable
 fun AnalyticsGetAnalyticsCard(
@@ -21,9 +21,8 @@ fun AnalyticsGetAnalyticsCard(
             .padding(top = 24.dp)
             .height(200.dp)
     ) {
-        CytheroDropdownMenu(
-            text = "User Report",
-        )
+
+
     }
 }
 

@@ -54,7 +54,7 @@ private fun AnalyticsCardPreview(){
             key = "key2",
             value = "value2"
         )
-        CytheroDropdownMenu(
+        CytheroMultipurposeMenu(
             title = "Top Title",
             text = "Selected Item",
         ) {
