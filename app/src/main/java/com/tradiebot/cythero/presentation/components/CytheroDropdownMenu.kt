@@ -12,15 +12,16 @@ import androidx.compose.ui.unit.dp
 /**
  * extension of [DropdownMenu] with the style of [CytheroMultipurposeMenu]
  *
+ * @param modifier modifier for the dropdown menu
  * @param title optional title located on top of [text]
  * @param text the text of the dropdown menu
  * @param expanded whether the menu is expanded or not
  * possible to change the text with the text of the selected item or some other text
  * @param includeDropdownArrow if enabled an dropdown arrow will be put at the end, this arrow will
  * spin up and point upwards when the menu is expanded, on by default
+ * @param offset [DpOffset] to be added to the position of the menu
  * @param onDismissRequest called when the user requests to dismiss the menu, such as by tapping
  * outside the menu's bounds
- * @param offset [DpOffset] to be added to the position of the menu
  * @param onClick gets triggered when [text] is clicked
  * @param dropdownContent content of the dropdown menu,
  * @see [CytheroDropdownMenu]
@@ -31,12 +32,13 @@ import androidx.compose.ui.unit.dp
  */
 @Composable
 fun CytheroDropdownMenu(
+    modifier: Modifier = Modifier,
     title: String? = null,
     text: String,
     expanded: Boolean,
     includeDropdownArrow: Boolean = true,
-    onDismissRequest: () -> Unit,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
+    onDismissRequest: () -> Unit,
     onClick: () -> Unit,
     dropdownContent: @Composable ColumnScope.() -> Unit,
 ) {
@@ -50,7 +52,7 @@ fun CytheroDropdownMenu(
 
     DropdownMenu(
         expanded = expanded,
-        modifier = Modifier
+        modifier = modifier
             .background(MaterialTheme.colorScheme.primaryContainer),
         onDismissRequest = onDismissRequest,
         offset = offset,
@@ -65,21 +67,21 @@ fun CytheroDropdownMenu(
 )
 @Composable
 private fun CytheroDropdownMenuPreview(){
-    var dismissMenu by remember { mutableStateOf(false) }
+    var expanded by remember { mutableStateOf(false) }
 
     CytheroCard(title = "Example") {
         CytheroDropdownMenu(
-            onClick = { dismissMenu = !dismissMenu },
-            expanded = dismissMenu,
+            onClick = { expanded = !expanded },
+            expanded = expanded,
             title = "Top Title",
             text = "Selected Item",
             onDismissRequest = {
-                dismissMenu = false
+                expanded = false
             },
         ) {
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { dismissMenu = false })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { dismissMenu = false })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { dismissMenu = false })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { expanded = false })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { expanded = false })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { expanded = false })
         }
     }
 }

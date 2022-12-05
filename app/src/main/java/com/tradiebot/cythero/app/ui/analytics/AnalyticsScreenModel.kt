@@ -21,12 +21,13 @@ class AnalyticsScreenModel(
 
     init {
         coroutineScope.launchIO {
+            // TODO replace this with user id when done
             val userAnalytics = requestAnalytics.await(auth, 4L)
             if(userAnalytics != null) {
                 mutableState.update {
                     AnalyticsScreenState.Success(
                         auth = auth,
-                        //FIXME passing the user id here is not correct
+                        // FIXME passing the user id here is not correct
                         userAnalytics = mapOf(auth.user.id!! to userAnalytics),
                     )
                 }

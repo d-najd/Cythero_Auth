@@ -12,7 +12,6 @@
     <string name="field_password">Password</string>
     <string name="field_confirm_password">Confirm Password</string>
 
-
     <string name="field_analytics">Analytics</string>
     <string name="field_general">General</string>
     <string name="field_user">User</string>
@@ -35,6 +34,7 @@
     <string name="info_do_not_have_account">Don\'t have account yet?</string>
     <string name="info_do_have_account">Already have an account?</string>
     <string name="info_successfully_registered">User successfully registered</string>
+    <string name="info_select_report_type">Select Report Type</string>
 
     <!-- action -->
     <string name="action_hide_password">Hide Password</string>
@@ -46,6 +46,10 @@
     <string name="action_confirm">Confirm</string>
 
     <string name="action_export_to_pdf">Export to PDF</string>
+
+    <string name="action_select_user_report">User Report</string>
+    <string name="action_select_part">Part Report</string>
+    <string name="action_select_usage">Usage Report</string>
 
     <!-- error -->
     <string name="error_password_do_not_match">Passwords don\'t match</string>
