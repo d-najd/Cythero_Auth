@@ -161,9 +161,9 @@ private fun CytheroDropdownMenuPreview1(){
             title = "Top Title",
             text = "Selected Item",
         ) {
-            DropdownMenuItem(text = { Text(text = "Dropdown Item1") }, onClick = { /*TODO*/ })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item2") }, onClick = { /*TODO*/ })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item3") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { /*TODO*/ })
         }
     }
 }
@@ -179,7 +179,7 @@ private fun CytheroDropdownMenuPreview2(){
 
     CytheroCard(title = "Example") {
         CytheroDropdownMenu(
-            text = "Selected Item",
+            text = "Show Dialog",
             expanded = false,
             includeDropdownArrow = false,
             onCustomAction = {
