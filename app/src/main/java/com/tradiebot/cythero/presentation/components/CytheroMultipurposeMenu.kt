@@ -77,7 +77,6 @@ fun CytheroMultipurposeMenu(
 
 
 @Preview(
-
     widthDp = 300,
     heightDp = 175,
 )

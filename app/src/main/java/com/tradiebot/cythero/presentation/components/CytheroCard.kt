@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -13,8 +13,8 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 
 @Composable
 fun CytheroCard(
-    title: String? = null,
     modifier: Modifier = Modifier,
+    title: String? = null,
     content: @Composable ColumnScope.() -> Unit,
     ) {
     Card(
@@ -45,6 +45,8 @@ fun CytheroCard(
 )
 @Composable
 private fun AnalyticsCardPreview(){
+    var dismissMenu by remember { mutableStateOf(false) }
+
     CytheroCard(title = "title") {
         AnalyticsPairField(
             key = "key1",
@@ -54,13 +56,18 @@ private fun AnalyticsCardPreview(){
             key = "key2",
             value = "value2"
         )
-        CytheroMultipurposeMenu(
+        CytheroDropdownMenu(
+            onClick = { dismissMenu = !dismissMenu },
+            expanded = dismissMenu,
             title = "Top Title",
             text = "Selected Item",
+            onDismissRequest = {
+                dismissMenu = false
+            },
         ) {
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { /*TODO*/ })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { /*TODO*/ })
-            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { dismissMenu = false })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { dismissMenu = false })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { dismissMenu = false })
         }
     }
 }
