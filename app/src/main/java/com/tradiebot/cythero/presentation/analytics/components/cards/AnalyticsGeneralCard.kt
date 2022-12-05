@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
+import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
@@ -26,7 +26,7 @@ fun AnalyticsGeneralCard(
     val totalTimePlayedSec = analyticsTable.totalTimePlayedSec.sum().toLong()
     val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
 
-    AnalyticsCard(
+    CytheroCard(
         title = stringResource(R.string.field_general),
     ) {
         AnalyticsPairField(

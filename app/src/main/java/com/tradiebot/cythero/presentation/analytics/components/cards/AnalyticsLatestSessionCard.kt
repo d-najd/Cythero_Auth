@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
+import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
@@ -21,7 +21,7 @@ fun AnalyticsLatestSessionCard(
     val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.last().toLong()
     val lastTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
 
-    AnalyticsCard(
+    CytheroCard(
         title = stringResource(R.string.field_latest_session),
     ) {
         AnalyticsPairField(

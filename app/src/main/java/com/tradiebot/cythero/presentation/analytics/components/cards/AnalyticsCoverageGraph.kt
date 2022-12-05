@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsCard
+import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
 import com.tradiebot.cythero.presentation.components.charts.LineChart
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
@@ -18,7 +18,7 @@ fun AnalyticsCoverageGraph(
     state: AnalyticsScreenState.Success,
 ) {
     ScrollableHorizontalItem {
-        AnalyticsCard(
+        CytheroCard(
             modifier = Modifier
                 .height(400.dp)
                 .width(750.dp),

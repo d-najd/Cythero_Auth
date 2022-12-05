@@ -11,6 +11,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tradiebot.cythero.presentation.components.ANALYTICS_CARD_CONTENT_PADDING
+import com.tradiebot.cythero.presentation.components.CytheroCard
 
 /**
  * creates a key value pair where the key is located at the left and the value at right
@@ -49,14 +51,24 @@ fun AnalyticsPairField(
     }
 }
 
-@Preview
+@Preview(
+    widthDp = 300
+)
 @Composable
 private fun AnalyticsPartFieldPreview(
 ){
-    val key = "key"
-    val value = "value"
-    AnalyticsPairField(
-        key = key,
-        value = value
-    )
+    CytheroCard {
+        AnalyticsPairField(
+            key = "key1",
+            value = "value1"
+        )
+        AnalyticsPairField(
+            key = "key2",
+            value = "value2"
+        )
+        AnalyticsPairField(
+            key = "key3",
+            value = "value3"
+        )
+    }
 }
