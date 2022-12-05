@@ -2,6 +2,7 @@ package com.tradiebot.cythero.presentation.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -53,10 +54,14 @@ private fun AnalyticsCardPreview(){
             key = "key2",
             value = "value2"
         )
-        AnalyticsPairField(
-            key = "key3",
-            value = "value3"
-        )
+        CytheroDropdownMenu(
+            title = "Top Title",
+            text = "Selected Item",
+        ) {
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 1") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 2") }, onClick = { /*TODO*/ })
+            DropdownMenuItem(text = { Text(text = "Dropdown Item 3") }, onClick = { /*TODO*/ })
+        }
     }
 }
 

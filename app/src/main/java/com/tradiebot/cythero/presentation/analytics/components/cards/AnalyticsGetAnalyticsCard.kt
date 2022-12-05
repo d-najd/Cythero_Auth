@@ -21,8 +21,6 @@ fun AnalyticsGetAnalyticsCard(
             .padding(top = 24.dp)
             .height(200.dp)
     ) {
-
-
         CytheroDropdownMenu(
             text = "User Report",
         )
