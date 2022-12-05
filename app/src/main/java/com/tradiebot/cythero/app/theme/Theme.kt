@@ -54,7 +54,7 @@ fun CytheroTheme(
 }
  */
 
-private val LightColors = lightColorScheme(
+val LightColors = lightColorScheme(
     primary = cythero_theme_light_primary,
     onPrimary = cythero_theme_light_onPrimary,
     primaryContainer = cythero_theme_light_primaryContainer,
@@ -87,7 +87,7 @@ private val LightColors = lightColorScheme(
 )
 
 
-private val DarkColors = darkColorScheme(
+val DarkColors = darkColorScheme(
     primary = cythero_theme_dark_primary,
     onPrimary = cythero_theme_dark_onPrimary,
     primaryContainer = cythero_theme_dark_primaryContainer,

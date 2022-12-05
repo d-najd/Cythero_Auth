@@ -8,12 +8,13 @@ import com.tradiebot.cythero.domain.auth.service.AuthService
 import com.tradiebot.cythero.network.analytics.AnalyticsServiceImpl
 import com.tradiebot.cythero.network.analytics.AnalyticsServiceMock
 import com.tradiebot.cythero.network.auth.AuthServiceImpl
+import com.tradiebot.cythero.network.auth.AuthServiceMock
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
 
     override fun InjektRegistrar.registerInjectables() {
-        addSingletonFactory<AuthService> { AuthServiceImpl }
+        addSingletonFactory<AuthService> { AuthServiceMock }
         // addSingletonFactory<AuthService> { AuthServiceImpl }
         addFactory { LoginUser(get()) }
         addFactory { RegisterUser(get()) }

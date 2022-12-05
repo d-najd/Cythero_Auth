@@ -83,8 +83,8 @@ fun ColumnScope.LoginFields(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
         onClick = {
-            email = UserLogin.testingInstance().email.toString()
-            password = UserLogin.testingInstance().password
+            // email = UserLogin.testingInstance().email.toString()
+            // password = UserLogin.testingInstance().password
             if (email.isBlank() || password.isBlank()) {
                 onMissingFields()
             } else {

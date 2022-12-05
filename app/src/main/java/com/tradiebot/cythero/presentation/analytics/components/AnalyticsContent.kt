@@ -15,7 +15,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.subcards.*
+import com.tradiebot.cythero.presentation.analytics.components.cards.*
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
