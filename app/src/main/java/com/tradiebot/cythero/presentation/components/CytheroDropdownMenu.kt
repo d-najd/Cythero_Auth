@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
  * @param dropdownContent content of the dropdown menu,
  * @see [CytheroDropdownMenu]
  * @see [DropdownMenu]
- * @see [Cythero]
+ * @see [CytheroDropdownMenuPreview]
  *
  * TODO animate the arrow
  */
@@ -64,7 +64,7 @@ fun CytheroDropdownMenu(
     heightDp = 175,
 )
 @Composable
-private fun Cythero(){
+private fun CytheroDropdownMenuPreview(){
     var dismissMenu by remember { mutableStateOf(false) }
 
     CytheroCard(title = "Example") {
