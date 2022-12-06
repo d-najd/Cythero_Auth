@@ -11,7 +11,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.bluelinelabs.conductor.asTransaction
 import com.tradiebot.cythero.app.ui.base.controller.pushController
 import com.tradiebot.cythero.app.ui.register.RegisterController
-import com.tradiebot.cythero.app.ui.user_info.UserInfoController
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.login.LoginScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
@@ -51,7 +51,7 @@ object LoginScreen : Screen {
             screenModel.events.collectLatest { event ->
                 when (event) {
                     is LoginEvent.UserLoggedIn -> {
-                        router.pushController(UserInfoController(event.user))
+                        router.pushController(AnalyticsController(event.auth))
                     }
                     is LoginEvent.LocalizedMessage -> {
                         context.toast(event.stringRes)

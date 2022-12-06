@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         //TODO move this to the app module, doing so will crash the app because the presenter's will
         // get instantiated before the DomainModule gets called
         Injekt.importModule(DomainModule())
+        Injekt.importModule(MainActivityModule(this))
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         // if there is no controller (in other words starting the app) set a root controller
         if(router.backstack.firstOrNull() == null) {
+            // router.setRoot(AnalyticsController(auth = Auth.testingInstance()).asTransaction())
             router.setRoot(LoginController().asTransaction())
         }
     }

@@ -18,11 +18,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.*
 
 class RegisterScreenViewModel(
     val context: Context,
-    private val registerUser: RegisterUser = Injekt.get()
+    private val registerUser: RegisterUser = Injekt.get(),
 ) : StateScreenModel<RegisterScreenState>(RegisterScreenState.Loading) {
 
     private val _events: Channel<RegisterEvent> = Channel(Int.MAX_VALUE)
@@ -40,14 +39,14 @@ class RegisterScreenViewModel(
 
     fun registerUser(user: UserRegister) {
         coroutineScope.launchIO {
-            val auth: Optional<Auth> = registerUser.await(user)
-            if (auth.isPresent) {
+            val auth = registerUser.await(user)
+            if (auth != null) {
                 mutableState.update {
                     RegisterScreenState.Success(
-                        user = auth.get()
+                        user = auth
                     )
                 }
-                _events.send(RegisterEvent.UserRegistered(auth.get().user))
+                _events.send(RegisterEvent.UserRegistered(auth.user))
             } else {
                 showLocalizedEvent(RegisterEvent.NetworkError)
             }

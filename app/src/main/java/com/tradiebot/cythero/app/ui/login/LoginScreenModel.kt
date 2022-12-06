@@ -8,7 +8,6 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
-import com.tradiebot.cythero.domain.user.model.User
 import com.tradiebot.cythero.domain.user.model.UserLogin
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.channels.Channel
@@ -18,11 +17,10 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.Optional
 
 class LoginScreenModel(
     val context: Context,
-    private val loginUser: LoginUser = Injekt.get()
+    private val loginUser: LoginUser = Injekt.get(),
 ) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
 
     private val _events: Channel<LoginEvent> = Channel(Int.MAX_VALUE)
@@ -32,7 +30,7 @@ class LoginScreenModel(
         coroutineScope.launch {
             mutableState.update {
                 LoginScreenState.Success(
-                    user = null,
+                    auth = null,
                 )
             }
         }
@@ -40,14 +38,14 @@ class LoginScreenModel(
 
     fun loginUser(user: UserLogin) {
         coroutineScope.launchIO {
-            val auth: Optional<Auth> = loginUser.await(user)
-            if (auth.isPresent) {
+            val auth = loginUser.await(user)
+            if(auth != null){
                 mutableState.update {
                     LoginScreenState.Success(
-                        user = auth.get(),
+                        auth = auth,
                     )
                 }
-                _events.send(LoginEvent.UserLoggedIn(auth.get().user))
+                _events.send(LoginEvent.UserLoggedIn(auth))
             } else {
                 showLocalizedEvent(LoginEvent.NetworkError)
             }
@@ -62,7 +60,7 @@ class LoginScreenModel(
 }
 
 sealed class LoginEvent {
-    data class UserLoggedIn(val user: User) : LoginEvent()
+    data class UserLoggedIn(val auth: Auth) : LoginEvent()
 
     sealed class LocalizedMessage(@StringRes val stringRes: Int) : LoginEvent()
     object NetworkError: LocalizedMessage(R.string.error_network)
@@ -77,6 +75,6 @@ sealed class LoginScreenState {
 
     @Immutable
     data class Success(
-        val user: Auth?,
+        val auth: Auth?,
     ) : LoginScreenState()
 }

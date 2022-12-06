@@ -5,12 +5,28 @@
     <string name="company_logo">Cythero Logo</string>
 
     <!-- field -->
-    <string name="first_name">First Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="email">E-Mail</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="field_first_name">First Name</string>
+    <string name="field_last_name">Last Name</string>
+    <string name="field_email">E-Mail</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="field_confirm_password">Confirm Password</string>
+
+    <string name="field_analytics">Analytics</string>
+    <string name="field_general">General</string>
+    <string name="field_user">User</string>
+    <string name="field_times_played">Times Played</string>
+    <string name="field_most_painted_part">Most Painted Part</string>
+    <string name="field_total_time_played">Total Time Played</string>
+
+    <string name="field_grades_breakdown">Grades Breakdown</string>
+
+    <string name="field_latest_session">Latest Session</string>
+    <string name="field_part">Part</string>
+    <string name="field_grade">Grade</string>
+    <string name="field_coverage">Coverage</string>
+    <string name="field_paint_used">Paint Used</string>
+    <string name="field_time_taken">Time Taken</string>
 
     <!-- info -->
     <string name="info_sign_in_to_access">Sign in to access your account</string>
@@ -18,6 +34,9 @@
     <string name="info_do_not_have_account">Don\'t have account yet?</string>
     <string name="info_do_have_account">Already have an account?</string>
     <string name="info_successfully_registered">User successfully registered</string>
+
+    <string name="info_select_report_type">Select Report Type</string>
+    <string name="info_select_date_range">Select Date Range</string>
 
     <!-- action -->
     <string name="action_hide_password">Hide Password</string>
@@ -27,6 +46,12 @@
     <string name="action_sign_up">Sign up</string>
     <string name="action_register_user">Register User</string>
     <string name="action_confirm">Confirm</string>
+
+    <string name="action_export_to_pdf">Export to PDF</string>
+
+    <string name="action_select_user_report">User Report</string>
+    <string name="action_select_part">Part Report</string>
+    <string name="action_select_usage">Usage Report</string>
 
     <!-- error -->
     <string name="error_password_do_not_match">Passwords don\'t match</string>
@@ -40,5 +65,6 @@
     <string name="placeholder_first_name">Cosmos</string>
     <string name="placeholder_last_name">Redshift</string>
     <string name="placeholder_username">Andromeda</string>
+    <string name="field_coverage_graph_last_sessions">Coverage Graph (Last 10 sessions)</string>
 
 </resources>

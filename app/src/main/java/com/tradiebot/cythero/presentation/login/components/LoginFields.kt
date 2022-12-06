@@ -41,7 +41,7 @@ fun ColumnScope.LoginFields(
         value = email,
         onValueChange = { email = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.email)) },
+        label = { Text(stringResource(R.string.field_email)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
@@ -54,7 +54,7 @@ fun ColumnScope.LoginFields(
         value = password,
         onValueChange = { password = it },
         modifier = defaultContentModifier,
-        label = { Text(stringResource(R.string.password)) },
+        label = { Text(stringResource(R.string.field_password)) },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
@@ -83,17 +83,19 @@ fun ColumnScope.LoginFields(
         modifier = defaultContentModifier
             .padding(top = 20.dp),
         onClick = {
-        if(email.isBlank() || password.isBlank()){
-            onMissingFields()
-        } else {
-            onClickUserLogin(
-                UserLogin(
-                    email = email,
-                    password = password,
+            // email = UserLogin.testingInstance().email.toString()
+            // password = UserLogin.testingInstance().password
+            if (email.isBlank() || password.isBlank()) {
+                onMissingFields()
+            } else {
+                onClickUserLogin(
+                    UserLogin(
+                        email = email,
+                        password = password,
+                    )
                 )
-            )
-        }
-    }) {
+            }
+        }) {
         Text(
             text = stringResource(R.string.action_sign_in),
             color = Color.White
