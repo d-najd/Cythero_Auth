@@ -34,7 +34,11 @@ fun CytheroMultipurposeMenu(
     onClick: () -> Unit,
 ) {
     if(title != null) {
-        Text(text = title)
+        Text(
+            modifier = Modifier
+                .padding(start = MULTIPURPOSE_MENU_TEXT_START_PADDING),
+            text = title,
+        )
     }
 
     Row(
@@ -49,7 +53,7 @@ fun CytheroMultipurposeMenu(
                 .padding(
                     top = 3.5.dp,
                     bottom = 8.dp,
-                    start = 1.dp
+                    start = MULTIPURPOSE_MENU_TEXT_START_PADDING + 2.dp
                 ),
             fontWeight = FontWeight.Bold,
             fontSize = 16.sp,
@@ -74,6 +78,9 @@ fun CytheroMultipurposeMenu(
         color = MaterialTheme.colorScheme.onPrimaryContainer,
     )
 }
+
+/** start padding for the text so the text isn't right at the beginning */
+private val MULTIPURPOSE_MENU_TEXT_START_PADDING = 2.5.dp
 
 
 @Preview(
