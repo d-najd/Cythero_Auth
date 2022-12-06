@@ -34,7 +34,9 @@
     <string name="info_do_not_have_account">Don\'t have account yet?</string>
     <string name="info_do_have_account">Already have an account?</string>
     <string name="info_successfully_registered">User successfully registered</string>
+
     <string name="info_select_report_type">Select Report Type</string>
+    <string name="info_select_date_range">Select Date Range</string>
 
     <!-- action -->
     <string name="action_hide_password">Hide Password</string>

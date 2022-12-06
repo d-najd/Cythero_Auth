@@ -8,6 +8,7 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.asTransaction
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
+import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.databinding.MainActivityBinding
 import com.tradiebot.cythero.domain.DomainModule
 import com.tradiebot.cythero.domain.auth.model.Auth

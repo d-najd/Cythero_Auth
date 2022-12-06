@@ -1,3 +1,4 @@
+
 package com.tradiebot.cythero.presentation.components
 
 import androidx.compose.foundation.background
@@ -12,7 +13,8 @@ import androidx.compose.ui.unit.dp
 /**
  * extension of [DropdownMenu] with the style of [CytheroMultipurposeMenu]
  *
- * @param modifier modifier for the dropdown menu
+ * @param modifier modifier for the [CytheroMultipurposeMenu]
+ * @param dropdownModifier for the dropdown menu
  * @param title optional title located on top of [text]
  * @param text the text of the dropdown menu
  * @param expanded whether the menu is expanded or not
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CytheroDropdownMenu(
     modifier: Modifier = Modifier,
+    dropdownModifier: Modifier = Modifier,
     title: String? = null,
     text: String,
     expanded: Boolean,
@@ -42,22 +45,24 @@ fun CytheroDropdownMenu(
     onClick: () -> Unit,
     dropdownContent: @Composable ColumnScope.() -> Unit,
 ) {
+    Column {
+        CytheroMultipurposeMenu(
+            modifier = modifier,
+            text = text,
+            title = title,
+            includeDropdownArrow = includeDropdownArrow,
+            onClick = onClick,
+        )
 
-    CytheroMultipurposeMenu(
-        text = text,
-        title = title,
-        includeDropdownArrow = includeDropdownArrow,
-        onClick = onClick,
-    )
-
-    DropdownMenu(
-        expanded = expanded,
-        modifier = modifier
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        onDismissRequest = onDismissRequest,
-        offset = offset,
-    ) {
-        dropdownContent()
+        DropdownMenu(
+            expanded = expanded,
+            modifier = dropdownModifier
+                .background(MaterialTheme.colorScheme.primaryContainer),
+            onDismissRequest = onDismissRequest,
+            offset = offset,
+        ) {
+            dropdownContent()
+        }
     }
 }
 
