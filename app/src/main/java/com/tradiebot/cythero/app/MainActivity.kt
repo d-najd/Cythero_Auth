@@ -3,6 +3,7 @@ package com.tradiebot.cythero.app
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.asTransaction
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         //TODO move this to the app module, doing so will crash the app because the presenter's will
         // get instantiated before the DomainModule gets called
         Injekt.importModule(DomainModule())
+        Injekt.importModule(AppModule(this))
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

@@ -12,7 +12,6 @@ class App : Application(), DefaultLifecycleObserver
     override fun onCreate() {
         super<Application>.onCreate()
 
-        Injekt.importModule(AppModule(this))
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }

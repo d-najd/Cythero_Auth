@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
@@ -14,8 +13,8 @@ import com.tradiebot.cythero.presentation.util.ChartsHelper
 
 @Composable
 fun LineChart(
-    dataSet: List<LineDataSet>,
     modifier: Modifier = Modifier,
+    dataSet: List<LineDataSet>,
     // offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
     // offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
     isLegendEnabled: Boolean = true,

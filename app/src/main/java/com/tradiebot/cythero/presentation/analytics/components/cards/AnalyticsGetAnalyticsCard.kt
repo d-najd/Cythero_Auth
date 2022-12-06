@@ -7,10 +7,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
+import com.tradiebot.cythero.presentation.components.CytheroDatePicker
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
+import java.text.SimpleDateFormat
 
 @Composable
 fun AnalyticsGetAnalyticsCard(
@@ -24,6 +27,9 @@ fun AnalyticsGetAnalyticsCard(
     ) {
         var expanded by remember { mutableStateOf(false) }
         var selectedReportType by remember { mutableStateOf(SelectedReportType.USER) }
+        // var selectDateRange by remember { mutableStateOf(SimpleDateFormat()) }
+
+        CytheroDatePicker()
 
         CytheroDropdownMenu(
             title = stringResource(R.string.info_select_report_type),

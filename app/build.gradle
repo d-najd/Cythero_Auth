@@ -27,6 +27,9 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -71,6 +74,11 @@ dependencies {
     implementation 'com.github.shenguojun:renderscript-intrinsics-replacement-toolkit:main-SNAPSHOT'
     // implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation "com.github.AppDevNext:MPAndroidChart:3.1.0.11"
+
+    // Compose dialogs not official
+    implementation "io.github.vanpra.compose-material-dialogs:core:0.8.1-rc"
+    implementation "io.github.vanpra.compose-material-dialogs:datetime:0.8.1-rc"
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.9'
 
     // voyager
     implementation "cafe.adriel.voyager:voyager-navigator:$voyager_version"

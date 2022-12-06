@@ -30,6 +30,7 @@ import java.util.SortedMap
  */
 @Composable
 fun PieChart(
+    modifier: Modifier = Modifier,
     dataSet: PieDataSet,
     offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
     offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
@@ -37,7 +38,7 @@ fun PieChart(
 ) {
 
     AndroidView(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize(),
         factory = { context ->
             PieChart(context)
