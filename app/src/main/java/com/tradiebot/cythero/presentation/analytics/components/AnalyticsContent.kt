@@ -76,6 +76,8 @@ fun AnalyticsContent(
 }
 
 object AnalyticsContentHelper {
+    // TODO round milliliters to liters as well
+
     @Composable
     @OptIn(ExperimentalComposeUiApi::class)
     fun generateStringFromTimePlayed(timePlayedSec: Long): String{

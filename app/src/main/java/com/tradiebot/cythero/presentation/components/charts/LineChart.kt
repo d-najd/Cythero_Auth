@@ -14,7 +14,7 @@ import com.tradiebot.cythero.presentation.util.ChartsHelper
 @Composable
 fun LineChart(
     modifier: Modifier = Modifier,
-    dataSet: List<LineDataSet>,
+    dataSets: List<LineDataSet>,
     // offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
     // offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
     isLegendEnabled: Boolean = true,
@@ -29,9 +29,34 @@ fun LineChart(
 
         update = { lineChart ->
             lineChart.apply {
-                data = LineData(dataSet)
+
+                for(dataSet in dataSets) {
+                    dataSet.lineWidth = 1.8f
+                    dataSet.circleRadius = 4f
+                    dataSet.cubicIntensity = .1f
+                    dataSet.setDrawValues(false)
+
+                    dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+                }
 
 
+
+                data = LineData(dataSets)
+
+
+                description.isEnabled = false
+
+                setTouchEnabled(false)
+                setPinchZoom(false)
+
+                isDragEnabled = false
+                setScaleEnabled(false)
+
+
+                maxHighlightDistance = 150f
+
+
+                legend.isEnabled = false // TODO re-enable this
                 // lineChart.setGridBackgroundColor(Color.Blue.toArgb())
 
 

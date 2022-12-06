@@ -25,7 +25,7 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 @Composable
 fun DateRangePickerDialog(
-    @StringRes title: Int = R.string.action_select_part,
+    @StringRes title: Int,
     select: Pair<Date?, Date?>? = null,
     bounds: CalendarConstraints? = null,
     onDateSelected: (Date, Date) -> Unit = { _, _ -> },

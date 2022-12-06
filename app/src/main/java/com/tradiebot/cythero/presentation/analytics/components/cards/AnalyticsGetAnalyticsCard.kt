@@ -81,7 +81,7 @@ private fun SelectDateRange(){
             first = dateFormat.parse(date.first.text),
             second = dateFormat.parse(date.second.text)
         ),
-        title = R.string.action_select_part,
+        title = R.string.info_select_date_range,
         onDateSelected = { f, s ->
             date = Pair(
                 first = TextFieldValue(dateFormat.format(f)),
@@ -92,7 +92,7 @@ private fun SelectDateRange(){
 
     CytheroMultipurposeMenu(
         modifier = Modifier
-            .padding(top = 16.dp, bottom = 12.dp),
+            .padding(top = 20.dp, bottom = 16.dp),
         title = stringResource(R.string.info_select_date_range),
         text = "${date.first.text} - ${date.second.text}",
         onClick = {

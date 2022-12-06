@@ -20,7 +20,7 @@ import java.util.*
 @SuppressLint("ComposableNaming")
 @Composable
 fun DatePickerDialog(
-    @StringRes title: Int = R.string.action_select_part,
+    @StringRes title: Int,
     select: Date? = null,
     bounds: CalendarConstraints? = null,
     onDateSelected: (Date) -> Unit = {},

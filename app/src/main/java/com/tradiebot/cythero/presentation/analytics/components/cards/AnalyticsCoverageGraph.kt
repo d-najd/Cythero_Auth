@@ -27,7 +27,7 @@ fun AnalyticsCoverageGraph(
            val dataSet = LineChartHelper.generatePartsDataSet(state.userAnalytics[state.auth.user.id]!!)
 
             LineChart(
-                dataSet = dataSet,
+                dataSets = dataSet,
             )
         }
     }

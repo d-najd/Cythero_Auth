@@ -22,8 +22,8 @@ fun AnalyticsGeneralCard(
 
     val username = state.auth.user.username!!
     val timesPlayed = analyticsTable.sessionID.size.toString()
-    val mostPaintedPart = analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key
-    val totalTimePlayedSec = analyticsTable.totalTimePlayedSec.sum().toLong()
+    val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else "Nan"
+    val totalTimePlayedSec = if(analyticsTable.totalTimePlayedSec.isNotEmpty()) analyticsTable.totalTimePlayedSec.sum().toLong() else 0L
     val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
 
     CytheroCard(

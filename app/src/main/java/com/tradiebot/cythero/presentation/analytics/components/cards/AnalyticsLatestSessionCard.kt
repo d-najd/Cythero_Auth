@@ -14,11 +14,11 @@ fun AnalyticsLatestSessionCard(
 ){
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
 
-    val lastPart = analyticsTable.part.last()
-    val lastGrade = analyticsTable.grade.last()
-    val lastPaintUsed = "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.last().toFloat())} ml"
+    val lastPart = analyticsTable.part.lastOrNull() ?: ""
+    val lastGrade = analyticsTable.grade.lastOrNull() ?: ""
+    val lastPaintUsed = "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull()?.toFloat() ?: 0f)} ml"
 
-    val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.last().toLong()
+    val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.lastOrNull()?.toLong() ?: 0L
     val lastTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
 
     CytheroCard(
