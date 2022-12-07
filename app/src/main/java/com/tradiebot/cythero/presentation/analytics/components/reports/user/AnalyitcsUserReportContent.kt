@@ -1,6 +1,5 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.user
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
@@ -13,7 +12,6 @@ import com.tradiebot.cythero.presentation.analytics.components.reports.user.card
 @Composable
 fun AnalyticsUserReportContent(
     state: AnalyticsUserReportScreenState.Success,
-    scrollState: ScrollState,
     contentPadding: PaddingValues,
 ) {
     AnalyticsGeneralCard(

@@ -59,8 +59,7 @@ fun AnalyticsContent(
         if (userReportState is AnalyticsUserReportScreenState.Success) {
             AnalyticsUserReportContent(
                 state = userReportState,
-                scrollState = scrollState,
-                contentPadding = contentPadding
+                contentPadding = contentPadding,
             )
         } else if (userReportState is AnalyticsUserReportScreenState.Loading) {
             LoadingScreen()
