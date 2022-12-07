@@ -17,6 +17,9 @@ import com.tradiebot.cythero.presentation.components.dialogs.DateRangePickerDial
 import com.tradiebot.cythero.presentation.util.show
 import com.tradiebot.cythero.util.CytheroDateFormat
 import java.util.*
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.ExperimentalTime
 
 @Composable
 fun AnalyticsGetAnalyticsCard(
@@ -68,11 +71,15 @@ private fun ReportType(){
     }
 }
 
+@OptIn(ExperimentalTime::class)
 @Composable
 private fun SelectDateRange(){
     val dateFormat = CytheroDateFormat.defaultDateFormat()
     var date by remember { mutableStateOf(Pair(
-        first = TextFieldValue(dateFormat.format(Date())),
+        first = TextFieldValue(dateFormat.format(Date(
+            Date().time -
+                    Duration.Companion.convert(168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()
+        ))),
         second = TextFieldValue(dateFormat.format(Date()))
     )) }
 
