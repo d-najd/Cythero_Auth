@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
+package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -10,7 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
 import com.tradiebot.cythero.presentation.components.CytheroMultipurposeMenu
@@ -24,18 +25,25 @@ import kotlin.time.ExperimentalTime
 
 @Composable
 fun AnalyticsGetAnalyticsCard(
-    state: AnalyticsScreenState,
+    state: AnalyticsReportTypeScreenState.Success,
+    onGenerateReportClicked: (AnalyticsScreen.SelectedReportType) -> Unit,
 ) {
+    var selectedReportType by remember { mutableStateOf(AnalyticsScreen.SelectedReportType.USER) }
+
     CytheroCard(
         title = stringResource(R.string.field_analytics),
         modifier = Modifier
             .padding(top = 24.dp)
     ) {
-        ReportType()
+        ReportType(
+            selectedReportType = selectedReportType,
+            onChangeReportType = { selectedReportType = it },
+        )
+
         SelectDateRange()
 
         Button(
-            onClick = { },
+            onClick = { onGenerateReportClicked(selectedReportType) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
@@ -47,9 +55,11 @@ fun AnalyticsGetAnalyticsCard(
 }
 
 @Composable
-private fun ReportType(){
+private fun ReportType(
+    selectedReportType: AnalyticsScreen.SelectedReportType,
+    onChangeReportType: (AnalyticsScreen.SelectedReportType) -> Unit,
+){
     var expanded by remember { mutableStateOf(false) }
-    var selectedReportType by remember { mutableStateOf(SelectedReportType.USER) }
 
     CytheroDropdownMenu(
         title = stringResource(R.string.info_select_report_type),
@@ -59,23 +69,23 @@ private fun ReportType(){
         onClick = { expanded = !expanded },
     ) {
         DropdownMenuItem(
-            text = { Text(text = stringResource(SelectedReportType.USER.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.USER.reportTypeId)) },
             onClick = {
-                selectedReportType = SelectedReportType.USER
+                onChangeReportType(AnalyticsScreen.SelectedReportType.USER)
                 expanded = false
             }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(SelectedReportType.PART.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.PART.reportTypeId)) },
             onClick = {
-                selectedReportType = SelectedReportType.PART
+                onChangeReportType(AnalyticsScreen.SelectedReportType.PART)
                 expanded = false
             }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(SelectedReportType.USAGE.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.USAGE.reportTypeId)) },
             onClick = {
-                selectedReportType = SelectedReportType.USAGE
+                onChangeReportType(AnalyticsScreen.SelectedReportType.USAGE)
                 expanded = false
             }
         )
@@ -117,11 +127,4 @@ private fun SelectDateRange(){
             dateRangePicker.show()
         }
     )
-}
-
-// TODO this will probably have to be moved to AnalyticsScreenState
-private enum class SelectedReportType(val reportTypeId: Int) {
-    USER(R.string.action_select_user_report),
-    PART(R.string.action_select_part),
-    USAGE(R.string.action_select_usage),
 }

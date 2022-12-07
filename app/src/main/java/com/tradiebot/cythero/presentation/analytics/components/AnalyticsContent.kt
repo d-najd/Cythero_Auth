@@ -3,17 +3,22 @@ package com.tradiebot.cythero.presentation.analytics.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
+import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -21,8 +26,12 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AnalyticsContent(
-    state: AnalyticsScreenState,
+    reportTypeState: AnalyticsReportTypeScreenState.Success,
+    userReportState: AnalyticsUserReportScreenState,
     contentPadding: PaddingValues,
+
+    //Report Type Content
+    onGenerateReportClicked: (AnalyticsScreen.SelectedReportType) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -34,17 +43,30 @@ fun AnalyticsContent(
             .background(MaterialTheme.colorScheme.primary)
     )
 
-    AnalyticsGetAnalyticsCard(
-        state = state,
-    )
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            //.padding(vertical = 24.dp)
+            .verticalScroll(scrollState)
+            .fillMaxSize(),
+    ) {
 
-    if(state is AnalyticsScreenState.Success) {
-        AnalyticsUserReportContent(
-            state = state,
-            scrollState = scrollState,
-            contentPadding = contentPadding
+        AnalyticsGetAnalyticsCard(
+            state = reportTypeState,
+            onGenerateReportClicked = onGenerateReportClicked,
         )
+
+        if (userReportState is AnalyticsUserReportScreenState.Success) {
+            AnalyticsUserReportContent(
+                state = userReportState,
+                scrollState = scrollState,
+                contentPadding = contentPadding
+            )
+        } else if (userReportState is AnalyticsUserReportScreenState.Loading) {
+            LoadingScreen()
+        }
     }
+
 }
 
 object AnalyticsContentHelper {

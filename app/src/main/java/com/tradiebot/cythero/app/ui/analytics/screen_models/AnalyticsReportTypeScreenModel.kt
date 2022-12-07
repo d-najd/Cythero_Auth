@@ -1,27 +1,24 @@
-package com.tradiebot.cythero.app.ui.analytics
+package com.tradiebot.cythero.app.ui.analytics.screen_models
 
 import android.content.Context
 import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.tradiebot.cythero.domain.analytics.interactor.RequestAnalytics
-import com.tradiebot.cythero.domain.analytics.model.Analytics
 import com.tradiebot.cythero.domain.auth.model.Auth
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
 
-class AnalyticsScreenModel(
+class AnalyticsReportTypeScreenModel(
     val context: Context,
     val auth: Auth,
-    private val requestAnalytics: RequestAnalytics = Injekt.get(),
-) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
+) : StateScreenModel<AnalyticsReportTypeScreenState>(AnalyticsReportTypeScreenState.Loading) {
 
     init {
         coroutineScope.launch {
             mutableState.update {
-                AnalyticsScreenState.SelectingData
+                AnalyticsReportTypeScreenState.Success(
+                    auth = auth
+                )
             }
         }
 
@@ -45,27 +42,15 @@ class AnalyticsScreenModel(
     }
 
 }
-sealed class AnalyticsScreenState {
 
-    /** The Screen is loading */
-    @Immutable
-    object Loading : AnalyticsScreenState()
+sealed class AnalyticsReportTypeScreenState {
 
-    /** The Screen has loaded but the user has not requested data report, this happens after [Loading] */
     @Immutable
-    object SelectingData: AnalyticsScreenState()
-
-    /** The Screen has loaded and the report type is being requested,
-     * this happens after is after [SelectingData] */
-    @Immutable
-    data class RequestingData(
-        // TODO Should have enum report type, user ids (list), start date, end date
-        val test: String,
-    ) : AnalyticsScreenState()
+    object Loading : AnalyticsReportTypeScreenState()
 
     @Immutable
     data class Success(
         val auth: Auth,
-        val userAnalytics: Map<Long, Analytics>,
-    ) : AnalyticsScreenState()
+        // val userAnalytics: Map<Long, Analytics>,
+    ) : AnalyticsReportTypeScreenState()
 }

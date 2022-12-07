@@ -9,14 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
 @Composable
 fun AnalyticsGeneralCard(
-    state: AnalyticsScreenState.Success,
+    state: AnalyticsUserReportScreenState.Success,
 ){
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
 

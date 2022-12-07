@@ -3,14 +3,15 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.user.car
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
 @Composable
 fun AnalyticsLatestSessionCard(
-    state: AnalyticsScreenState.Success,
+    state: AnalyticsUserReportScreenState.Success,
 ){
     val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
 
