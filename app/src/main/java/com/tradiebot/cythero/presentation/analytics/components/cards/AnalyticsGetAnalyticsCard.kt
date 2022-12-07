@@ -1,6 +1,7 @@
 package com.tradiebot.cythero.presentation.analytics.components.cards
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -32,6 +33,16 @@ fun AnalyticsGetAnalyticsCard(
     ) {
         ReportType()
         SelectDateRange()
+
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+                .padding(top = 12.dp),
+        ) {
+            Text(text = stringResource(R.string.action_generate_report))
+        }
     }
 }
 

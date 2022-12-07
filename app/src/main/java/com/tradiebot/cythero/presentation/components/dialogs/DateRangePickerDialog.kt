@@ -32,9 +32,11 @@ fun DateRangePickerDialog(
 ): MaterialDatePicker<androidx.core.util.Pair<Long, Long>> {
 
     val formattedSelection = Pair(
-        first = ((select?.first?.time ?: (Date().time -
-                Duration.Companion.convert(24.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS)
-                    .toLong()))),
+        first = select?.first?.time ?: (Date().time - Duration.Companion.convert(
+            24.0,
+            DurationUnit.HOURS,
+            DurationUnit.MILLISECONDS
+        ).toLong()),
         second = (select?.second?.time ?: Date().time)
     ).toAndroidXPair()
 
