@@ -10,7 +10,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenModel
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserTypeScreenModel
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenModel
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.analytics.AnalyticsScreen
@@ -25,7 +25,7 @@ class AnalyticsScreen(
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
         val reportTypeScreenModel = rememberScreenModel { AnalyticsReportTypeScreenModel(context, auth) }
-        val userReportScreenModel = rememberScreenModel { AnalyticsUserTypeScreenModel(context, auth) }
+        val userReportScreenModel = rememberScreenModel { AnalyticsUserScreenModel(context, auth) }
 
         val reportTypeState by reportTypeScreenModel.state.collectAsState()
         val userReportState by userReportScreenModel.state.collectAsState()

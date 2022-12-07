@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
-import com.tradiebot.cythero.domain.analytics.interactor.RequestAnalytics
-import com.tradiebot.cythero.domain.analytics.model.Analytics
+import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
+import com.tradiebot.cythero.domain.analytics.user.model.Analytics
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.flow.update
@@ -17,10 +17,10 @@ import uy.kohesive.injekt.api.get
 /**
  * NOTE lazy injection can be used for performance
  */
-class AnalyticsUserTypeScreenModel(
+class AnalyticsUserScreenModel(
     val context: Context,
     val auth: Auth,
-    private val requestAnalytics: RequestAnalytics = Injekt.get()
+    private val requestUserAnalytics: RequestUserAnalytics = Injekt.get()
     // private val requestAnalytics: RequestAnalytics = Injekt.get(),
 ) : StateScreenModel<AnalyticsUserReportScreenState>(AnalyticsUserReportScreenState.AwaitingSelection),
     RequestedDifferentAnalytics {
@@ -29,7 +29,7 @@ class AnalyticsUserTypeScreenModel(
     fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsUserReportScreenState.Loading }
-            val userAnalytics = requestAnalytics.await(auth, userID)
+            val userAnalytics = requestUserAnalytics.await(auth, userID)
             if(userAnalytics != null) {
                 mutableState.update {
                     AnalyticsUserReportScreenState.Success(
@@ -45,10 +45,11 @@ class AnalyticsUserTypeScreenModel(
     }
 
     /** requesting analytics for multiple users and updates the state */
+    @Suppress("unused")
     fun requestAnalytics(auth: Auth, userIDs: List<Long>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsUserReportScreenState.Loading }
-            val userAnalytics = requestAnalytics.await(auth, userIDs)
+            val userAnalytics = requestUserAnalytics.await(auth, userIDs)
             if(userAnalytics.isNotEmpty()) {
                 mutableState.update {
                     AnalyticsUserReportScreenState.Success(

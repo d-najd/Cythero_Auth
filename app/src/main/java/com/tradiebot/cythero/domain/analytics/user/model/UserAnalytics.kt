@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.domain.analytics.model
+package com.tradiebot.cythero.domain.analytics.user.model
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName

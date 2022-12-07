@@ -1,9 +1,9 @@
-package com.tradiebot.cythero.domain.analytics.service
+package com.tradiebot.cythero.domain.analytics.user.service
 
-import com.tradiebot.cythero.domain.analytics.model.Analytics
+import com.tradiebot.cythero.domain.analytics.user.model.Analytics
 import com.tradiebot.cythero.domain.auth.model.Auth
 
-interface AnalyticsService {
+interface UserAnalyticsService {
 
     /**
      * returns map of user analytics the given userIDS,

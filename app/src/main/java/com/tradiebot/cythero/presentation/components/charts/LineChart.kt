@@ -9,7 +9,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
-import com.tradiebot.cythero.domain.analytics.model.Analytics
+import com.tradiebot.cythero.domain.analytics.user.model.Analytics
 import com.tradiebot.cythero.presentation.util.ChartsHelper
 
 /**
