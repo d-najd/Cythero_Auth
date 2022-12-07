@@ -27,6 +27,7 @@ import java.util.SortedMap
  * TODO while hovering a field in chart display number of overall grades
  *  in that category like in the webapp also round just the tip of the slices and this needs a rework
  *
+ * TODO this is not reusable at its current state
  */
 @Composable
 fun PieChart(
@@ -86,9 +87,9 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
             colors.add(
                 when (grade.key){
-                    "A" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
-                    "B" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
-                    "C" -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
+                    ChartsHelper.GradeToColor.A.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
+                    ChartsHelper.GradeToColor.B.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
+                    ChartsHelper.GradeToColor.C.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

@@ -7,10 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.domain.analytics.model.Analytics
 import com.tradiebot.cythero.presentation.util.ChartsHelper
 
+/**
+ * TODO this is not reusable at its current state
+ */
 @Composable
 fun LineChart(
     modifier: Modifier = Modifier,
@@ -31,34 +35,42 @@ fun LineChart(
             lineChart.apply {
 
                 for(dataSet in dataSets) {
-                    dataSet.lineWidth = 1.8f
+                    dataSet.lineWidth = 2f
                     dataSet.circleRadius = 4f
                     dataSet.cubicIntensity = .1f
-                    dataSet.setDrawValues(false)
+                    dataSet.setDrawCircleHole(false)
+                    dataSet.setDrawValues(true)
 
-                    dataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+                    dataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
                 }
-
-
 
                 data = LineData(dataSets)
 
+                lineChart.xAxis.axisMinimum = 0f
+                lineChart.xAxis.axisMaximum = 9f
+                lineChart.xAxis.setValueFormatter { value, _ -> "${value.toInt() + 1}" +
+                        " ${(dataSets[0].entries.getOrNull(value.toInt())?.data) ?: ""}"}
+                lineChart.xAxis.labelCount = 9
 
                 description.isEnabled = false
 
-                setTouchEnabled(false)
                 setPinchZoom(false)
 
                 isDragEnabled = false
                 setScaleEnabled(false)
 
+                maxHighlightDistance = 250f
 
-                maxHighlightDistance = 150f
+                legend.isEnabled = isLegendEnabled
 
-
-                legend.isEnabled = false // TODO re-enable this
-                // lineChart.setGridBackgroundColor(Color.Blue.toArgb())
-
+                legend.form = Legend.LegendForm.CIRCLE
+                legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+                legend.orientation = Legend.LegendOrientation.HORIZONTAL
+                legend.yEntrySpace = 15f
+                legend.xEntrySpace = 25f
+                legend.textSize = 12f
+                legend.formSize = 15f
 
                 invalidate()
             }
@@ -94,16 +106,19 @@ object LineChartHelper{
 
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
+            label = ChartsHelper.GradeToColor.C.longName,
             color = ChartsHelper.GradeToColor.C.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
+            label = ChartsHelper.GradeToColor.B.longName,
             color = ChartsHelper.GradeToColor.B.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
+            label = ChartsHelper.GradeToColor.A.longName,
             color = ChartsHelper.GradeToColor.A.rgb,
         )
 
