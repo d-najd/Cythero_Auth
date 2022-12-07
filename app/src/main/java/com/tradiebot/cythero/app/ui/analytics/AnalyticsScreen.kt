@@ -15,6 +15,7 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.analytics.AnalyticsScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
+import java.util.Date
 
 class AnalyticsScreen(
     private val auth: Auth,
@@ -35,7 +36,14 @@ class AnalyticsScreen(
             return
         }
 
-        fun changeReportScreenModel(reportType: SelectedReportType){
+        /**
+         * only a single function is called because { when(SelectedReportType) } provides safety when
+         * adding new report types and the function is located here for easy access to the screen models
+         */
+        fun changeReportScreenModel(
+            reportType: SelectedReportType,
+            dateRange: Pair<Date, Date>?,
+        ){
             when(reportType) {
                 SelectedReportType.USER -> {
                     userReportScreenModel.requestAnalytics(
@@ -58,7 +66,9 @@ class AnalyticsScreen(
             reportTypeState = reportTypeSuccessState,
             userReportState = userReportState,
             onBackClicked = router::popCurrentController,
-            onGenerateReportClicked = { changeReportScreenModel(it) }
+            onGenerateUserReportClicked = { reportType, dateRange ->
+                changeReportScreenModel(reportType, dateRange)
+            }
         )
     }
 

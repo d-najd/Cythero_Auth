@@ -43,7 +43,7 @@ data class AnalyticsTable(
     @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
     @SerializedName("Color Used (Milliliters)") val colorUsedMilliliters: List<Double>,
     @SerializedName("Grade") val grade: List<String>,
-    @SerializedName("Part") val part: List<String>,
+    @SerializedName("Part") val part: List<String>, //TODO replace this with enum
     @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
     @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
     @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,

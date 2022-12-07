@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
@@ -23,12 +22,20 @@ import kotlin.time.Duration
 import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 @Composable
 fun AnalyticsGetAnalyticsCard(
     state: AnalyticsReportTypeScreenState.Success,
-    onGenerateReportClicked: (AnalyticsScreen.SelectedReportType) -> Unit,
+    onGenerateUserReportClicked: (AnalyticsScreen.SelectedReportType, Pair<Date, Date>) -> Unit,
 ) {
     var selectedReportType by remember { mutableStateOf(AnalyticsScreen.SelectedReportType.USER) }
+    var dateRange by remember { mutableStateOf(Pair(
+        first = Date(
+            Date().time -
+                    Duration.Companion.convert(168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()
+        ),
+        second = Date()
+    )) }
 
     CytheroCard(
         title = stringResource(R.string.field_analytics),
@@ -40,10 +47,27 @@ fun AnalyticsGetAnalyticsCard(
             onChangeReportType = { selectedReportType = it },
         )
 
-        SelectDateRange()
+        when(selectedReportType) {
+            AnalyticsScreen.SelectedReportType.USER,
+            AnalyticsScreen.SelectedReportType.USAGE -> {
+                SelectDateRange(
+                    dateRange = dateRange,
+                    onChangeDateRange = { dateRange = it }
+                )
+            }
+
+            AnalyticsScreen.SelectedReportType.PART -> {
+
+            }
+        }
 
         Button(
-            onClick = { onGenerateReportClicked(selectedReportType) },
+            onClick = {
+                onGenerateUserReportClicked(
+                    selectedReportType,
+                    Pair(dateRange.first, dateRange.second),
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
@@ -92,37 +116,27 @@ private fun ReportType(
     }
 }
 
-@OptIn(ExperimentalTime::class)
 @Composable
-private fun SelectDateRange(){
+private fun SelectDateRange(
+    dateRange: Pair<Date, Date>,
+    onChangeDateRange: (Pair<Date, Date>) -> Unit,
+) {
     val dateFormat = CytheroDateFormat.defaultDateFormat()
-    var date by remember { mutableStateOf(Pair(
-        first = TextFieldValue(dateFormat.format(Date(
-            Date().time -
-                    Duration.Companion.convert(168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()
-        ))),
-        second = TextFieldValue(dateFormat.format(Date()))
-    )) }
 
     val dateRangePicker = DateRangePickerDialog(
         select = Pair(
-            first = dateFormat.parse(date.first.text),
-            second = dateFormat.parse(date.second.text)
+            first = dateRange.first,
+            second = dateRange.second
         ),
         title = R.string.info_select_date_range,
-        onDateSelected = { f, s ->
-            date = Pair(
-                first = TextFieldValue(dateFormat.format(f)),
-                second = TextFieldValue(dateFormat.format(s)),
-            )
-        }
+        onDateSelected = { f, s -> onChangeDateRange(Pair(f,s)) }
     )
 
     CytheroMultipurposeMenu(
         modifier = Modifier
             .padding(top = 20.dp),
         title = stringResource(R.string.info_select_date_range),
-        text = "${date.first.text} - ${date.second.text}",
+        text = "${dateFormat.format(dateRange.first)} - ${dateFormat.format(dateRange.second)}",
         onClick = {
             dateRangePicker.show()
         }

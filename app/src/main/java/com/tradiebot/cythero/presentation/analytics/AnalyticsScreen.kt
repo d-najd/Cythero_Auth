@@ -7,6 +7,7 @@ import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContent
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -16,7 +17,7 @@ fun AnalyticsScreen(
     onBackClicked: () -> Unit,
 
     //Report Type Content
-    onGenerateReportClicked: (AnalyticsScreen.SelectedReportType) -> Unit,
+    onGenerateUserReportClicked: (AnalyticsScreen.SelectedReportType, Pair<Date, Date>) -> Unit,
 ) {
     Scaffold { contentPadding ->
         BackHandler{ onBackClicked() }
@@ -25,7 +26,7 @@ fun AnalyticsScreen(
             reportTypeState = reportTypeState,
             userReportState = userReportState,
             contentPadding = contentPadding,
-            onGenerateReportClicked = onGenerateReportClicked,
+            onGenerateUserReportClicked = onGenerateUserReportClicked,
         )
     }
 }

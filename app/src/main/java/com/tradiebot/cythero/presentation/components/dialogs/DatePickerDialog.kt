@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
@@ -54,16 +53,16 @@ fun DatePickerDialog(
 @Composable
 fun DatePickerDialogPreview(){
     val dateFormat = CytheroDateFormat.defaultDateFormat()
-    var date by remember { mutableStateOf(TextFieldValue(dateFormat.format(Date()))) }
+    var date by remember { mutableStateOf(Date()) }
     val datePicker = DatePickerDialog(
-        select = dateFormat.parse(date.text),
+        select = date,
         title = R.string.action_select_part,
-        onDateSelected = { date = TextFieldValue(dateFormat.format(it)) },
+        onDateSelected = { date = it },
     )
 
     CytheroMultipurposeMenu(
         title = stringResource(R.string.info_select_date_range),
-        text = date.text,
+        text = dateFormat.format(date),
         onClick = {
             datePicker.show()
         }

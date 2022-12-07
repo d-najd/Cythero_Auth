@@ -2,9 +2,11 @@ package com.tradiebot.cythero.presentation.components.dialogs
 
 import android.annotation.SuppressLint
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.dp
 import androidx.core.util.toAndroidXPair
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -30,7 +32,6 @@ fun DateRangePickerDialog(
     bounds: CalendarConstraints? = null,
     onDateSelected: (Date, Date) -> Unit = { _, _ -> },
 ): MaterialDatePicker<androidx.core.util.Pair<Long, Long>> {
-
     val formattedSelection = Pair(
         first = select?.first?.time ?: (Date().time - Duration.Companion.convert(
             24.0,
@@ -68,31 +69,32 @@ fun DateRangePickerDialog(
  * but calling the function somewhere else (without preview) will work
  */
 // @Preview
+@OptIn(ExperimentalTime::class)
 @Composable
 fun DateRangePickerDialogPreview(){
     val dateFormat = CytheroDateFormat.defaultDateFormat()
-    var date by remember { mutableStateOf(Pair(
-        first = TextFieldValue(dateFormat.format(Date())),
-        second = TextFieldValue(dateFormat.format(Date()))
+    var dateRange by remember { mutableStateOf(Pair(
+        first = Date(
+            Date().time -
+                    Duration.Companion.convert(168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()
+        ),
+        second = Date()
     )) }
 
     val dateRangePicker = DateRangePickerDialog(
         select = Pair(
-            first = dateFormat.parse(date.first.text),
-            second = dateFormat.parse(date.second.text)
+            first = dateRange.first,
+            second = dateRange.second
         ),
-        title = R.string.action_select_part,
-        onDateSelected = { f, s ->
-            date = Pair(
-                first = TextFieldValue(dateFormat.format(f)),
-                second = TextFieldValue(dateFormat.format(s)),
-            )
-        }
+        title = R.string.info_select_date_range,
+        onDateSelected = { f, s -> dateRange = Pair(f,s) }
     )
 
     CytheroMultipurposeMenu(
+        modifier = Modifier
+            .padding(top = 20.dp),
         title = stringResource(R.string.info_select_date_range),
-        text = "${date.first.text} - ${date.second.text}",
+        text = "${dateFormat.format(dateRange.first)} - ${dateFormat.format(dateRange.second)}",
         onClick = {
             dateRangePicker.show()
         }

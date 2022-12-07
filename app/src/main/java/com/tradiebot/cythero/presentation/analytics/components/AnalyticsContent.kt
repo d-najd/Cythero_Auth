@@ -22,6 +22,7 @@ import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.Date
 import kotlin.math.roundToInt
 
 @Composable
@@ -31,7 +32,7 @@ fun AnalyticsContent(
     contentPadding: PaddingValues,
 
     //Report Type Content
-    onGenerateReportClicked: (AnalyticsScreen.SelectedReportType) -> Unit,
+    onGenerateUserReportClicked: (AnalyticsScreen.SelectedReportType, Pair<Date, Date>) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -53,7 +54,7 @@ fun AnalyticsContent(
 
         AnalyticsGetAnalyticsCard(
             state = reportTypeState,
-            onGenerateReportClicked = onGenerateReportClicked,
+            onGenerateUserReportClicked = onGenerateUserReportClicked,
         )
 
         if (userReportState is AnalyticsUserReportScreenState.Success) {
