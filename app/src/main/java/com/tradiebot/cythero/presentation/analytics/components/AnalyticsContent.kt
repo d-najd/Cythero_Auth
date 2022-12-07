@@ -96,8 +96,25 @@ object AnalyticsContentHelper {
      *
      * @param value input
      * @return string value with 1 decimal if { value < 10 } or no decimals if bigger
+     * @see [shouldIncludeDecimals]
      */
     fun shouldIncludeDecimals(value: Float): String {
+        return if (value < 10){
+            val df = DecimalFormat("#.#")
+            df.roundingMode = RoundingMode.HALF_UP
+            df.format(value)
+        } else value.roundToInt().toString()
+    }
+
+    /**
+     * decides if it is necessary to include decimals for a given value, if the given value is
+     * { value < 10 } then 1 decimal will be included, if not no decimals will be included
+     *
+     * @param value input
+     * @return string value with 1 decimal if { value < 10 } or no decimals if bigger
+     * @see [shouldIncludeDecimals]
+     */
+    fun shouldIncludeDecimals(value: Double): String {
         return if (value < 10){
             val df = DecimalFormat("#.#")
             df.roundingMode = RoundingMode.HALF_UP

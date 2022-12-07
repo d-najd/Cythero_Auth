@@ -16,7 +16,12 @@ fun AnalyticsLatestSessionCard(
 
     val lastPart = analyticsTable.part.lastOrNull() ?: ""
     val lastGrade = analyticsTable.grade.lastOrNull() ?: ""
-    val lastPaintUsed = "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull()?.toFloat() ?: 0f)} ml"
+    val lastCoverage = "${
+        AnalyticsContentHelper.shouldIncludeDecimals(
+                                ((analyticsTable.clearLowCoverage.lastOrNull() ?: 0.0) +
+                                (analyticsTable.clearGoodCoverage.lastOrNull() ?: 0.0) +
+                                (analyticsTable.clearHighCoverage.lastOrNull() ?: 0.0))/3.0)} ml"
+    val lastPaintUsed = "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull() ?: 0.0)} ml"
 
     val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.lastOrNull()?.toLong() ?: 0L
     val lastTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
@@ -36,7 +41,7 @@ fun AnalyticsLatestSessionCard(
 
         AnalyticsPairField(
             key = stringResource(R.string.field_coverage),
-            value = "TO DO"
+            value = lastCoverage
         )
 
         AnalyticsPairField(
