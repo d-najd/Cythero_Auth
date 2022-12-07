@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.cards
+package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -24,7 +24,7 @@ import kotlin.time.ExperimentalTime
 
 @Composable
 fun AnalyticsGetAnalyticsCard(
-    state: AnalyticsScreenState.Success,
+    state: AnalyticsScreenState,
 ) {
     CytheroCard(
         title = stringResource(R.string.field_analytics),
@@ -110,7 +110,7 @@ private fun SelectDateRange(){
 
     CytheroMultipurposeMenu(
         modifier = Modifier
-            .padding(top = 20.dp, bottom = 16.dp),
+            .padding(top = 20.dp),
         title = stringResource(R.string.info_select_date_range),
         text = "${date.first.text} - ${date.second.text}",
         onClick = {

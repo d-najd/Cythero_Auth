@@ -29,10 +29,8 @@ class AnalyticsScreen(
             return
         }
 
-        val successState = state as AnalyticsScreenState.Success
-
         AnalyticsScreen(
-            presenter = successState,
+            state = state,
             onBackClicked = router::popCurrentController
         )
     }

@@ -3,11 +3,8 @@ package com.tradiebot.cythero.presentation.analytics.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,7 +12,8 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
-import com.tradiebot.cythero.presentation.analytics.components.cards.*
+import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
+import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -23,7 +21,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AnalyticsContent(
-    state: AnalyticsScreenState.Success,
+    state: AnalyticsScreenState,
     contentPadding: PaddingValues,
 ) {
     val scrollState = rememberScrollState()
@@ -36,41 +34,15 @@ fun AnalyticsContent(
             .background(MaterialTheme.colorScheme.primary)
     )
 
-    Column(
-        horizontalAlignment = CenterHorizontally,
-        modifier = Modifier
-            .padding(contentPadding)
-            //.padding(vertical = 24.dp)
-            .verticalScroll(scrollState)
-            .fillMaxSize(),
-    ) {
+    AnalyticsGetAnalyticsCard(
+        state = state,
+    )
 
-        AnalyticsGetAnalyticsCard(
+    if(state is AnalyticsScreenState.Success) {
+        AnalyticsUserReportContent(
             state = state,
-        )
-
-        AnalyticsGeneralCard(
-            state = state,
-        )
-
-        AnalyticsGradeCard(
-            state = state,
-        )
-
-        AnalyticsLatestSessionCard(
-            state = state,
-        )
-
-        AnalyticsCoverageGraph(
-            state = state
-        )
-
-        Divider(
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 12.dp)
-        )
-
-        AnalyticsBasicFields(
-            state = state,
+            scrollState = scrollState,
+            contentPadding = contentPadding
         )
     }
 }

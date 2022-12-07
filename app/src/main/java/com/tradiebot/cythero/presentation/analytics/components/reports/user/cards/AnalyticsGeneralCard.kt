@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.cards
+package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

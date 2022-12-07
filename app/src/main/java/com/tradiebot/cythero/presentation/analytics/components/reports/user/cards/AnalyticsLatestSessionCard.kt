@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.cards
+package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.cards
+package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
