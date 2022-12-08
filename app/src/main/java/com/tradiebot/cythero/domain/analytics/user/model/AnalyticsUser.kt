@@ -6,14 +6,14 @@ import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
 
-data class UserAnalytics(
-    @SerializedName("calculated_data") val calculatedData: UserAnalyticsCalculated,
-    @SerializedName("table") val userAnalyticsTable: UserAnalyticsTable,
+data class AnalyticsUser(
+    @SerializedName("calculated_data") val calculatedData: AnalyticsUserCalculated,
+    @SerializedName("table") val analyticsUserTable: AnalyticsUserTable,
 ): Serializable {
     companion object{
-        fun mockInstance(): Map<Long, UserAnalytics> {
-            val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>() {}.type
-            return Gson().fromJson(MOCK_USER_ANALYTICS, userAnalyticsType)
+        fun mockInstance(): Map<Long, AnalyticsUser> {
+            val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>() {}.type
+            return Gson().fromJson(MOCK_USER_ANALYTICS, analyticsUserType)
         }
     }
 }

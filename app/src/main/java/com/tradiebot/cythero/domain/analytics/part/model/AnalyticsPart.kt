@@ -1,5 +1,101 @@
 package com.tradiebot.cythero.domain.analytics.part.model
 
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
+import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
+import java.io.Serializable
+
+
+/*
+data class UserAnalytics(
+    @SerializedName("calculated_data") val calculatedData: UserAnalyticsCalculated,
+    @SerializedName("table") val userAnalyticsTable: UserAnalyticsTable,
+): Serializable {
+    companion object{
+        fun mockInstance(): Map<Long, UserAnalytics> {
+            val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>() {}.type
+            return Gson().fromJson(MOCK_USER_ANALYTICS, userAnalyticsType)
+        }
+    }
+}
+*/
+
+data class AnalyticsPartTest(
+    @SerializedName("Parts") val AnalyticsPart: List<AnalyticsPart>
+){
+    companion object {
+        fun mockInstance(): AnalyticsPart {
+            return Gson().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsPart::class.java)
+        }
+    }
+}
+
+data class AnalyticsPart (
+    @SerializedName("Average Coverage Overall") val averageCoverageOverall: Double,
+    @SerializedName("Average Coverage Overall (Base)") val averageCoverageOverallBase: Double,
+    @SerializedName("Average Coverage Overall (Clear)") val averageCoverageOverallClear: Double,
+    @SerializedName("Average Coverage Overall (Primer)") val averageCoverageOverallPrimer: Double,
+    @SerializedName("Average Good Coverage (Base)") val averageGoodCoverageBase: Double,
+    @SerializedName("Average Good Coverage (Clear)") val averageGoodCoverageClear: Double,
+    @SerializedName("Average Good Coverage (Primer)") val averageGoodCoveragePrimer: Double,
+    @SerializedName("Average Grade Base") val averageGradeBase: String,
+    @SerializedName("Average Grade Clear") val averageGradeClear: String,
+    @SerializedName("Average Grade Overall") val averageGradeOverall: String,
+    @SerializedName("Average Grade Primer") val averageGradePrimer: String,
+    @SerializedName("Average High Coverage (Base)") val averageHighCoverageBase: Double,
+    @SerializedName("Average High Coverage (Clear)") val averageHighCoverageClear: Double,
+    @SerializedName("Average High Coverage (Primer)") val averageHighCoveragePrimer: Double,
+    @SerializedName("Average Low Coverage (Base)") val averageLowCoverageBase: Double,
+    @SerializedName("Average Low Coverage (Clear)") val averageLowCoverageClear: Double,
+    @SerializedName("Average Low Coverage (Primer)") val averageLowCoveragePrimer: Double,
+    @SerializedName("Base Coverage Improvement") val baseCoverageImprovement: Double,
+    @SerializedName("Base Good Coverage") val baseGoodCoverage: List<Double>,
+    @SerializedName("Base Grade") val baseGrade: List<String>,
+    @SerializedName("Base High Coverage") val baseHighCoverage: List<Double>,
+    @SerializedName("Base Low Coverage") val baseLowCoverage: List<Double>,
+    @SerializedName("Base Paint Used") val basePaintUsed: List<Double>,
+    @SerializedName("Base Time") val baseTime: List<Double>,
+    @SerializedName("Clear Coverage Improvement") val clearCoverageImprovement: Double,
+    @SerializedName("Clear Good Coverage") val clearGoodCoverage: List<Double>,
+    @SerializedName("Clear Grade") val clearGrade: List<String>,
+    @SerializedName("Clear High Coverage") val clearHighCoverage: List<Double>,
+    @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
+    @SerializedName("Clear Paint Used") val clearPaintUsed: List<Double>,
+    @SerializedName("Clear Time") val clearTime: List<Double>,
+    @SerializedName("Overall Coverage Improvement") val overallCoverageImprovement: Double,
+    @SerializedName("Overall Grade") val overallGrade: List<String>,
+    @SerializedName("Overall Paint Used") val overallPaintUsed: List<Double>,
+    @SerializedName("Overall Time") val overallTime: List<Double>,
+    @SerializedName("Overall Time Sum") val overallTimeSum: Double,
+    @SerializedName("Paint Used Base") val paintUsedBase: Double,
+    @SerializedName("Paint Used Clear") val paintUsedClear: Double,
+    @SerializedName("Paint Used Overall Sum") val paintUsedOverallSum: Double,
+    @SerializedName("Paint Used Primer") val paintUsedPrimer: Double,
+    @SerializedName("Parts") val parts: List<String>,
+    @SerializedName("Primer Coverage Improvement") val primerCoverageImprovement: Double,
+    @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
+    @SerializedName("Primer Grade") val primerGrade: List<String>,
+    @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
+    @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,
+    @SerializedName("Primer Paint Used") val primerPaintUsed: List<Double>,
+    @SerializedName("Primer Time") val primerTime: List<Double>,
+    @SerializedName("Session End") val sessionEnd: List<String>,
+    @SerializedName("Session Start") val sessionStart: List<String>,
+    @SerializedName("Times Played") val timesPlayed: Int,
+    @SerializedName("Total Base Time") val totalBaseTime: Double,
+    @SerializedName("Total Clear Time") val totalClearTime: Double,
+    @SerializedName("Total Primer Time") val totalPrimerTime: Double,
+    @SerializedName("User ID") val userID: List<Int>,
+        ): Serializable {
+            companion object {
+                fun mockInstance(): AnalyticsPart {
+                    val analyticsPartType = object : TypeToken<List<AnalyticsPart>>() {}.type
+                    return Gson().fromJson(MOCK_PARTS_ANALYTICS, analyticsPartType)
+                }
+            }
+        }
+
 private const val MOCK_PARTS_ANALYTICS =
         "{\n" +
         "    \"Parts\": [\n" +

@@ -16,6 +16,8 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
+import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
+import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPartTest
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 import com.tradiebot.cythero.presentation.components.LoadingScreen

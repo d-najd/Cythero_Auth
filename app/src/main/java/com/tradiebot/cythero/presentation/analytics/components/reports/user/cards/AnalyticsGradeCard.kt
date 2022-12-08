@@ -15,7 +15,7 @@ import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 fun AnalyticsGradeCard(
     state: AnalyticsUserReportScreenState.Success,
 ){
-    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.userAnalyticsTable
+    val analyticsTable = state.analyticsUser[state.auth.user.id]!!.analyticsUserTable
     val grades = analyticsTable.grade.groupingBy { it }.eachCount().toSortedMap()
     val pieDataSet = PieChartHelper.generateDataFromGrades(grades)
     

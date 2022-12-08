@@ -3,7 +3,7 @@ package com.tradiebot.cythero.domain.analytics.user.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class UserAnalyticsCalculated(
+data class AnalyticsUserCalculated(
     @SerializedName("Average Paint") val averagePaint: Double,
     @SerializedName("Average Time") val averageTime: Double,
     @SerializedName("Least Paint") val leastPaint: Double,

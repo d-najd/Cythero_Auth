@@ -2,7 +2,7 @@ package com.tradiebot.cythero.network.analytics.user
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.tradiebot.cythero.domain.analytics.user.model.UserAnalytics
+import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.user.service.UserAnalyticsService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
@@ -17,7 +17,7 @@ object UserAnalyticsServiceImpl: UserAnalyticsService {
     override suspend fun getUserAnalytics(
         userAuth: Auth,
         userIDs: List<Long>,
-    ): Map<Long, UserAnalytics> {
+    ): Map<Long, AnalyticsUser> {
         val body = MultipartBodyBuilder()
             .addFormDataPart("user_ids", userIDs)
             .build()
@@ -33,8 +33,8 @@ object UserAnalyticsServiceImpl: UserAnalyticsService {
 
             if (response.isSuccessful) {
                 response.use {
-                    val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>(){}.type
-                    return gson.fromJson(response.body.string(), userAnalyticsType)
+                    val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
+                    return gson.fromJson(response.body.string(), analyticsUserType)
                 }
             }
         } catch (e: IOException) {

@@ -12,7 +12,7 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 fun AnalyticsLatestSessionCard(
     state: AnalyticsUserReportScreenState.Success,
 ){
-    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.userAnalyticsTable
+    val analyticsTable = state.analyticsUser[state.auth.user.id]!!.analyticsUserTable
 
     val lastPart = analyticsTable.part.lastOrNull() ?: ""
     val lastGrade = analyticsTable.grade.lastOrNull() ?: ""

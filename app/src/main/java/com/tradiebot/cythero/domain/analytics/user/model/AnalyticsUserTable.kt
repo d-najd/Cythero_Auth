@@ -8,7 +8,7 @@ import java.io.Serializable
  * @param totalTimeSpentMin time played in minutes use [totalTimePlayedSec] for more accuracy
  * @param totalTimePlayedSec time played in seconds
  */
-data class UserAnalyticsTable(
+data class AnalyticsUserTable(
     @SerializedName("Base Good Coverage") val baseGoodCoverage: List<Double>,
     @SerializedName("Base High Coverage") val baseHighCoverage: List<Double>,
     @SerializedName("Base Low Coverage") val baseLowCoverage: List<Double>,

@@ -11,7 +11,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.domain.analytics.user.model.UserAnalytics
+import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.user.model.GradeHelper
 
 /**
@@ -83,9 +83,9 @@ fun LineChart(
 object LineChartHelper{
     @Composable
     fun generatePartsDataSet(
-        userAnalytics: UserAnalytics
+        analyticsUser: AnalyticsUser
     ): List<LineDataSet> {
-        val analyticsTable = userAnalytics.userAnalyticsTable
+        val analyticsTable = analyticsUser.analyticsUserTable
 
         val parts = analyticsTable.part.takeLast(10)
 
