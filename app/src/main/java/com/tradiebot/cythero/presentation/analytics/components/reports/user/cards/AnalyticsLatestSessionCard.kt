@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
+import com.tradiebot.cythero.domain.analytics.GradesEnum
+import com.tradiebot.cythero.domain.analytics.PartsEnum
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
@@ -14,8 +16,8 @@ fun AnalyticsLatestSessionCard(
 ){
     val analyticsTable = state.analyticsUser[state.auth.user.id]!!.analyticsUserTable
 
-    val lastPart = analyticsTable.part.lastOrNull() ?: ""
-    val lastGrade = analyticsTable.grade.lastOrNull() ?: ""
+    val lastPart = analyticsTable.part.lastOrNull() ?: PartsEnum.NAN
+    val lastGrade = analyticsTable.grade.lastOrNull() ?: GradesEnum.NAN
     val lastCoverage = "${
         AnalyticsContentHelper.shouldIncludeDecimals(
                                 ((analyticsTable.clearLowCoverage.lastOrNull() ?: 0.0) +
@@ -31,12 +33,12 @@ fun AnalyticsLatestSessionCard(
     ) {
         AnalyticsPairField(
             key = stringResource(R.string.field_part),
-            value = lastPart
+            value = stringResource(lastPart.nameId)
         )
 
         AnalyticsPairField(
             key = stringResource(R.string.field_grade),
-            value = lastGrade
+            value = stringResource(lastGrade.nameId)
         )
 
         AnalyticsPairField(

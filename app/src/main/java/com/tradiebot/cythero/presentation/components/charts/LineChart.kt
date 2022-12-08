@@ -12,7 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
-import com.tradiebot.cythero.domain.analytics.user.model.GradeHelper
+import com.tradiebot.cythero.domain.analytics.GradesEnum
 
 /**
  * TODO this is not reusable at its current state
@@ -110,19 +110,19 @@ object LineChartHelper{
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
             label = stringResource(R.string.field_coverage_low),
-            color = GradeHelper.C.rgb,
+            color = GradesEnum.C.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
             label = stringResource(R.string.field_coverage_good),
-            color = GradeHelper.B.rgb,
+            color = GradesEnum.B.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
             label = stringResource(R.string.field_coverage_high),
-            color = GradeHelper.A.rgb,
+            color = GradesEnum.A.rgb,
         )
 
         return listOf(lowCoverageDataSet, goodCoverageDataSet, highCoverageDataSet)
@@ -139,7 +139,7 @@ object LineChartHelper{
      */
     @Composable
     fun generateDataSet(
-        data: List<Pair<Float, String>>,
+        data: List<Pair<Float, Any>>,
         color: String,
         label: String = "",
     ): LineDataSet {

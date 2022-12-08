@@ -3,7 +3,7 @@ package com.tradiebot.cythero.domain.analytics.user.service
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 
-interface UserAnalyticsService {
+interface AnalyticsUserService {
 
     /**
      * returns map of user analytics the given userIDS,
@@ -18,6 +18,6 @@ interface UserAnalyticsService {
      * @return map of analytics where the key is the user id and the value is the analytics mapped for
      * that user, if there are no analytics or IOException had happened empty map will be returned instead
      */
-    suspend fun getUserAnalytics(userAuth: Auth, userIDs: List<Long>): Map<Long, AnalyticsUser>
+    suspend fun getAnalytics(userAuth: Auth, userIDs: List<Long>): Map<Long, AnalyticsUser>
 
 }

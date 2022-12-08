@@ -3,18 +3,18 @@ package com.tradiebot.cythero.network.analytics.user
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
-import com.tradiebot.cythero.domain.analytics.user.service.UserAnalyticsService
+import com.tradiebot.cythero.domain.analytics.user.service.AnalyticsUserService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.io.IOException
 
-object UserAnalyticsServiceImpl: UserAnalyticsService {
+object AnalyticsUserServiceImpl: AnalyticsUserService {
     private val client = OkHttpClient() // TODO replace with injekt
     private val gson = Gson() // TODO replace with injekt
 
-    override suspend fun getUserAnalytics(
+    override suspend fun getAnalytics(
         userAuth: Auth,
         userIDs: List<Long>,
     ): Map<Long, AnalyticsUser> {

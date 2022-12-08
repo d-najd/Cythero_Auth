@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
+import com.tradiebot.cythero.domain.analytics.PartsEnum
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
@@ -22,7 +23,7 @@ fun AnalyticsGeneralCard(
 
     val username = state.auth.user.username!!
     val timesPlayed = analyticsTable.sessionID.size.toString()
-    val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else "Nan"
+    val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else PartsEnum.NAN
     val totalTimePlayedSec = if(analyticsTable.totalTimePlayedSec.isNotEmpty()) analyticsTable.totalTimePlayedSec.sum().toLong() else 0L
     val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
 
@@ -41,7 +42,7 @@ fun AnalyticsGeneralCard(
 
         AnalyticsPairField(
             key = stringResource(R.string.field_most_painted_part),
-            value = mostPaintedPart
+            value = stringResource(mostPaintedPart.nameId)
         )
 
         AnalyticsPairField(

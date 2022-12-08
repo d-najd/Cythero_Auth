@@ -1,6 +1,8 @@
 package com.tradiebot.cythero.domain.analytics.user.model
 
 import com.google.gson.annotations.SerializedName
+import com.tradiebot.cythero.domain.analytics.GradesEnum
+import com.tradiebot.cythero.domain.analytics.PartsEnum
 import java.io.Serializable
 
 /**
@@ -17,8 +19,8 @@ data class AnalyticsUserTable(
     @SerializedName("Clear High Coverage") val clearHighCoverage: List<Double>,
     @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
     @SerializedName("Color Used (Milliliters)") val colorUsedMilliliters: List<Double>,
-    @SerializedName("Grade") val grade: List<String>,
-    @SerializedName("Part") val part: List<String>, //TODO replace this with enum
+    @SerializedName("Grade") val grade: List<GradesEnum>,
+    @SerializedName("Part") val part: List<PartsEnum>,
     @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
     @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
     @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,
@@ -29,4 +31,4 @@ data class AnalyticsUserTable(
     @SerializedName("Total Time Played") val totalTimePlayedSec: List<Double>,
     @SerializedName("Total Time Spent") val totalTimeSpentMin: List<Double>,
     @SerializedName("User ID") val userIDs: List<Long>,
-    ): Serializable
+)

@@ -1,11 +1,15 @@
-package com.tradiebot.cythero.domain.analytics.user.model
+package com.tradiebot.cythero.domain.analytics
 
 import androidx.annotation.StringRes
+import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.R
 
-enum class GradeHelper(val rgb: String, @StringRes val shortName: Int){
+enum class GradesEnum(val rgb: String, @StringRes val nameId: Int){
+    @SerializedName("A")
     A("#00A83D", R.string.field_grade_a),
+    @SerializedName("B")
     B("#0078AA", R.string.field_grade_b),
+    @SerializedName("C")
     C("#D3212C", R.string.field_grade_c),
     NAN("#AAAAAA", R.string.field_grade_nan) // used for stuff like no coverage
 }
