@@ -8,7 +8,7 @@ data class Timeline (
     val timeline: List<TimelineEntry>,
 ): Serializable {
     companion object {
-        fun testingInstance() = Gson().fromJson(TESTING_TIMELINE_JSON, Timeline::class.java)!!
+        fun mockInstance() = Gson().fromJson(MOCK_TIMELINE, Timeline::class.java)!!
     }
 }
 
@@ -21,7 +21,7 @@ data class TimelineEntry (
     val user_id: Long,
 ): Serializable
 
-private const val TESTING_TIMELINE_JSON =
+private const val MOCK_TIMELINE =
             "{\n" +
             "  \"timeline\": [\n" +
             "    {\n" +

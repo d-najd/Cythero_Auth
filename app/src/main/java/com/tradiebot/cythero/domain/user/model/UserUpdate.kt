@@ -26,7 +26,7 @@ data class UserLogin (
     }
 
     companion object {
-        fun testingInstance() = UserLogin(
+        fun mockInstance() = UserLogin(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",
         )
@@ -56,7 +56,7 @@ data class UserRegister(
     }
 
     companion object {
-        fun testingInstance() = UserRegister (
+        fun mockInstance() = UserRegister (
             firstName = "Dimitar",
             lastName = "Najdovski",
             username = "DimitarNajdovski",

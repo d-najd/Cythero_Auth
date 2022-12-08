@@ -27,7 +27,7 @@ data class User(
 ) : Serializable{
     companion object {
         @Suppress("unused")
-        fun testingInstance() = User(
+        fun mockInstance() = User(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",
         )

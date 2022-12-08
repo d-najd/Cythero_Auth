@@ -9,6 +9,6 @@ object UserAnalyticsServiceMock: UserAnalyticsService {
         userAuth: Auth,
         userIDs: List<Long>,
     ): Map<Long, UserAnalytics> {
-        return UserAnalytics.testingInstance()
+        return UserAnalytics.mockInstance()
     }
 }

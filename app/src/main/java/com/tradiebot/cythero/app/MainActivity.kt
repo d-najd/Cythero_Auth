@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         // if there is no controller (in other words starting the app) set a root controller
         if(router.backstack.firstOrNull() == null) {
-            router.setRoot(AnalyticsController(auth = Auth.testingInstance()).asTransaction())
+            router.setRoot(AnalyticsController(auth = Auth.mockInstance()).asTransaction())
             // router.setRoot(LoginController().asTransaction())
         }
     }

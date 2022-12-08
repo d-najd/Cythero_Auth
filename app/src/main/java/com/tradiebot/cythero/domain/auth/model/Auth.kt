@@ -11,13 +11,13 @@ data class Auth(
     val user: User,
 ) : Serializable {
     companion object{
-        fun testingInstance(): Auth {
-            return Gson().fromJson(TESTING_AUTH, Auth::class.java)
+        fun mockInstance(): Auth {
+            return Gson().fromJson(MOCK_AUTH, Auth::class.java)
         }
     }
 }
 
-private const val TESTING_AUTH =
+private const val MOCK_AUTH =
             "{\n" +
             "    \"organization\": \"Cythero VR\",\n" +
             "    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY3MDI2MDk5OSwianRpIjoiN2IxMDNlYjMtMjlkNy00Mzg1LWFkNGQtZGJmNTZmYWRmMmNkIiwidHlwZSI6InJlZnJlc2giLCJzdWIiOnsib3JnYW5pemF0aW9uX2lkIjoxLCJpZCI6NzAsImxhc3ROYW1lIjoiTmFqZG92c2tpIiwidXNlcm5hbWUiOiJEaW1pdGFyTmFqZG92c2tpMSIsInNpZ25fdXBfZGF0ZSI6IlNhdCwgMjYgTm92IDIwMjIgMjA6MDM6MjUgR01UIiwidHlwZV9pZCI6MywiZmlyc3ROYW1lIjoiRGltaXRhciIsImVtYWlsIjoiZGltaXRhci5uYWpkb3Zza2kuZXhhbXBsZTFAZ21haWwuY29tIiwiYXJjaGl2ZWQiOjB9LCJuYmYiOjE2NzAyNjA5OTksImV4cCI6MTY3Mjg1Mjk5OX0.C3eC7LOnZMRTeEKF1kz1lD3j5elnZvS3_M_gD7fLH50\",\n" +

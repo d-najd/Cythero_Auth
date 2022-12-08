@@ -9,10 +9,10 @@ import com.tradiebot.cythero.domain.user.model.UserRegister
 object AuthServiceMock : AuthService {
 
     override suspend fun loginUser(user: UserLogin): Auth? {
-        return Auth.testingInstance()
+        return Auth.mockInstance()
     }
 
     override suspend fun registerUser(user: UserRegister): Auth? {
-        return Auth.testingInstance()
+        return Auth.mockInstance()
     }
 }

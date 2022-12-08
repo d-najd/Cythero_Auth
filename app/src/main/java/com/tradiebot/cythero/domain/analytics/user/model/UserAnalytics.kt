@@ -11,15 +11,15 @@ data class UserAnalytics(
     @SerializedName("table") val userAnalyticsTable: UserAnalyticsTable,
 ): Serializable {
     companion object{
-        fun testingInstance(): Map<Long, UserAnalytics> {
+        fun mockInstance(): Map<Long, UserAnalytics> {
             val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>() {}.type
-            return Gson().fromJson(TESTING_USER_ANALYTICS, userAnalyticsType)
+            return Gson().fromJson(MOCK_USER_ANALYTICS, userAnalyticsType)
         }
     }
 }
 
 @Suppress("unused")
-private const val TESTING_USER_ANALYTICS =
+private const val MOCK_USER_ANALYTICS =
             "{\n" +
             "  \"4\": {\n" +
             "    \"calculated_data\": {\n" +
