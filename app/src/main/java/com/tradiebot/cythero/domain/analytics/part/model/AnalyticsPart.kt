@@ -2,31 +2,14 @@ package com.tradiebot.cythero.domain.analytics.part.model
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
-import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import java.io.Serializable
 
-
-/*
-data class UserAnalytics(
-    @SerializedName("calculated_data") val calculatedData: UserAnalyticsCalculated,
-    @SerializedName("table") val userAnalyticsTable: UserAnalyticsTable,
-): Serializable {
-    companion object{
-        fun mockInstance(): Map<Long, UserAnalytics> {
-            val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>() {}.type
-            return Gson().fromJson(MOCK_USER_ANALYTICS, userAnalyticsType)
-        }
-    }
-}
-*/
-
-data class AnalyticsPartTest(
-    @SerializedName("Parts") val AnalyticsPart: List<AnalyticsPart>
+data class AnalyticsParts(
+    @SerializedName("Parts") val AnalyticsParts: List<AnalyticsPart>
 ){
     companion object {
-        fun mockInstance(): AnalyticsPart {
-            return Gson().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsPart::class.java)
+        fun mockInstance(): AnalyticsParts {
+            return Gson().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java)
         }
     }
 }
@@ -89,9 +72,8 @@ data class AnalyticsPart (
     @SerializedName("User ID") val userID: List<Int>,
         ): Serializable {
             companion object {
-                fun mockInstance(): AnalyticsPart {
-                    val analyticsPartType = object : TypeToken<List<AnalyticsPart>>() {}.type
-                    return Gson().fromJson(MOCK_PARTS_ANALYTICS, analyticsPartType)
+                fun mockInstance(): List<AnalyticsPart> {
+                    return Gson().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java).AnalyticsParts
                 }
             }
         }
