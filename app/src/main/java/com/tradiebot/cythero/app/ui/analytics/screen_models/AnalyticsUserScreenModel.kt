@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
-import com.tradiebot.cythero.domain.analytics.user.model.Analytics
+import com.tradiebot.cythero.domain.analytics.user.model.UserAnalytics
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.flow.update
@@ -83,6 +83,6 @@ sealed class AnalyticsUserReportScreenState {
     @Immutable
     data class Success(
         val auth: Auth,
-        val userAnalytics: Map<Long, Analytics>,
+        val userAnalytics: Map<Long, UserAnalytics>,
     ) : AnalyticsUserReportScreenState()
 }

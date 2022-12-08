@@ -11,8 +11,8 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.domain.analytics.user.model.Analytics
-import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.domain.analytics.user.model.UserAnalytics
+import com.tradiebot.cythero.domain.analytics.user.model.GradeHelper
 
 /**
  * TODO this is not reusable at its current state
@@ -83,9 +83,9 @@ fun LineChart(
 object LineChartHelper{
     @Composable
     fun generatePartsDataSet(
-        analytics: Analytics
+        userAnalytics: UserAnalytics
     ): List<LineDataSet> {
-        val analyticsTable = analytics.analyticsTable
+        val analyticsTable = userAnalytics.userAnalyticsTable
 
         val parts = analyticsTable.part.takeLast(10)
 
@@ -110,19 +110,19 @@ object LineChartHelper{
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
             label = stringResource(R.string.field_coverage_low),
-            color = ChartsHelper.GradeToColor.C.rgb,
+            color = GradeHelper.C.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
             label = stringResource(R.string.field_coverage_good),
-            color = ChartsHelper.GradeToColor.B.rgb,
+            color = GradeHelper.B.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
             label = stringResource(R.string.field_coverage_high),
-            color = ChartsHelper.GradeToColor.A.rgb,
+            color = GradeHelper.A.rgb,
         )
 
         return listOf(lowCoverageDataSet, goodCoverageDataSet, highCoverageDataSet)

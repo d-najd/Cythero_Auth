@@ -6,55 +6,17 @@ import com.google.gson.reflect.TypeToken
 import java.io.Serializable
 
 
-data class Analytics(
-    @SerializedName("calculated_data") val calculatedData: AnalyticsCalculated,
-    @SerializedName("table") val analyticsTable: AnalyticsTable,
+data class UserAnalytics(
+    @SerializedName("calculated_data") val calculatedData: UserAnalyticsCalculated,
+    @SerializedName("table") val userAnalyticsTable: UserAnalyticsTable,
 ): Serializable {
     companion object{
-        fun testingInstance(): Map<Long, Analytics> {
-            val analyticsType = object : TypeToken<Map<Long, Analytics>>() {}.type
-            return Gson().fromJson(TESTING_USER_ANALYTICS, analyticsType)
+        fun testingInstance(): Map<Long, UserAnalytics> {
+            val userAnalyticsType = object : TypeToken<Map<Long, UserAnalytics>>() {}.type
+            return Gson().fromJson(TESTING_USER_ANALYTICS, userAnalyticsType)
         }
     }
 }
-
-data class AnalyticsCalculated(
-    @SerializedName("Average Paint") val averagePaint: Double,
-    @SerializedName("Average Time") val averageTime: Double,
-    @SerializedName("Least Paint") val leastPaint: Double,
-    @SerializedName("Longest Time") val longestTime: Double,
-    @SerializedName("Most Paint") val mostPaint: Double,
-    @SerializedName("Shortest Time") val shortestTime: Float,
-    @SerializedName("User IDs") val userIDs: List<Long>,
-): Serializable
-
-/**
- *
- * @param totalTimeSpentMin time played in minutes use [totalTimePlayedSec] for more accuracy
- * @param totalTimePlayedSec time played in seconds
- */
-data class AnalyticsTable(
-    @SerializedName("Base Good Coverage") val baseGoodCoverage: List<Double>,
-    @SerializedName("Base High Coverage") val baseHighCoverage: List<Double>,
-    @SerializedName("Base Low Coverage") val baseLowCoverage: List<Double>,
-    @SerializedName("Clear Coat Used (Milliliters)") val clearCoatUsedMilliliters: List<Double>,
-    @SerializedName("Clear Good Coverage") val clearGoodCoverage: List<Double>,
-    @SerializedName("Clear High Coverage") val clearHighCoverage: List<Double>,
-    @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
-    @SerializedName("Color Used (Milliliters)") val colorUsedMilliliters: List<Double>,
-    @SerializedName("Grade") val grade: List<String>,
-    @SerializedName("Part") val part: List<String>, //TODO replace this with enum
-    @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
-    @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
-    @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,
-    @SerializedName("Primer Used (Milliliters)") val primerUsedMilliliters: List<Double>,
-    @SerializedName("Session ID") val sessionID: List<String>,
-    @SerializedName("Total Paint Used") val totalPaintUsed: List<Double>,
-    @SerializedName("Total Paint Used (Milliliters)") val totalPaintUsedMilliliters: List<Double>,
-    @SerializedName("Total Time Played") val totalTimePlayedSec: List<Double>,
-    @SerializedName("Total Time Spent") val totalTimeSpentMin: List<Double>,
-    @SerializedName("User ID") val userIDs: List<Long>,
-    ): Serializable
 
 @Suppress("unused")
 private const val TESTING_USER_ANALYTICS =

@@ -3,7 +3,6 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.user.car
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
@@ -13,7 +12,7 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 fun AnalyticsLatestSessionCard(
     state: AnalyticsUserReportScreenState.Success,
 ){
-    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
+    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.userAnalyticsTable
 
     val lastPart = analyticsTable.part.lastOrNull() ?: ""
     val lastGrade = analyticsTable.grade.lastOrNull() ?: ""

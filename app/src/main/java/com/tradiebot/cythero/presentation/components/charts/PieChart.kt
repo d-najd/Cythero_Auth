@@ -12,7 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.domain.analytics.user.model.GradeHelper
 import java.util.SortedMap
 
 /**
@@ -88,9 +88,9 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
             colors.add(
                 when (grade.key){
-                    stringResource(ChartsHelper.GradeToColor.A.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
-                    stringResource(ChartsHelper.GradeToColor.B.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
-                    stringResource(ChartsHelper.GradeToColor.C.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
+                    stringResource(GradeHelper.A.shortName) -> android.graphics.Color.parseColor(GradeHelper.A.rgb)
+                    stringResource(GradeHelper.B.shortName) -> android.graphics.Color.parseColor(GradeHelper.B.rgb)
+                    stringResource(GradeHelper.C.shortName) -> android.graphics.Color.parseColor(GradeHelper.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

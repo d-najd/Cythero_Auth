@@ -18,7 +18,7 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 fun AnalyticsGeneralCard(
     state: AnalyticsUserReportScreenState.Success,
 ){
-    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.analyticsTable
+    val analyticsTable = state.userAnalytics[state.auth.user.id]!!.userAnalyticsTable
 
     val username = state.auth.user.username!!
     val timesPlayed = analyticsTable.sessionID.size.toString()
