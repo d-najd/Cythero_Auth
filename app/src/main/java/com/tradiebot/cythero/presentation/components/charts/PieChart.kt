@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
@@ -78,6 +79,7 @@ fun PieChart(
 }
 
 object PieChartHelper {
+    @Composable
     fun generateDataFromGrades(grades: SortedMap<String, Int>): PieDataSet {
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
@@ -86,9 +88,9 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${grade.key}"))
             colors.add(
                 when (grade.key){
-                    ChartsHelper.GradeToColor.A.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
-                    ChartsHelper.GradeToColor.B.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
-                    ChartsHelper.GradeToColor.C.shortName -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
+                    stringResource(ChartsHelper.GradeToColor.A.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.A.rgb)
+                    stringResource(ChartsHelper.GradeToColor.B.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.B.rgb)
+                    stringResource(ChartsHelper.GradeToColor.C.shortName) -> android.graphics.Color.parseColor(ChartsHelper.GradeToColor.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

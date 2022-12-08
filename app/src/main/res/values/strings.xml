@@ -21,6 +21,16 @@
 
     <string name="field_grades_breakdown">Grades Breakdown</string>
 
+    <string name="field_grade_a">A</string>
+    <string name="field_grade_b">B</string>
+    <string name="field_grade_c">C</string>
+    <string name="field_grade_nan">Nan</string>
+
+    <string name="field_coverage_high">High</string>
+    <string name="field_coverage_good">Good</string>
+    <string name="field_coverage_low">Low</string>
+    <string name="field_coverage_no_coverage">No Coverage</string>
+
     <string name="field_latest_session">Latest Session</string>
     <string name="field_part">Part</string>
     <string name="field_grade">Grade</string>

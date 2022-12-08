@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
+import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.user.model.Analytics
 import com.tradiebot.cythero.presentation.util.ChartsHelper
 
@@ -79,6 +81,7 @@ fun LineChart(
 }
 
 object LineChartHelper{
+    @Composable
     fun generatePartsDataSet(
         analytics: Analytics
     ): List<LineDataSet> {
@@ -106,19 +109,19 @@ object LineChartHelper{
 
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
-            label = ChartsHelper.GradeToColor.C.longName,
+            label = stringResource(R.string.field_coverage_low),
             color = ChartsHelper.GradeToColor.C.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
-            label = ChartsHelper.GradeToColor.B.longName,
+            label = stringResource(R.string.field_coverage_good),
             color = ChartsHelper.GradeToColor.B.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
-            label = ChartsHelper.GradeToColor.A.longName,
+            label = stringResource(R.string.field_coverage_high),
             color = ChartsHelper.GradeToColor.A.rgb,
         )
 
@@ -134,9 +137,10 @@ object LineChartHelper{
      * @param color color of the dataset, if undefined
      * @param label label of the entry set
      */
+    @Composable
     fun generateDataSet(
         data: List<Pair<Float, String>>,
-        color: String = ChartsHelper.GradeToColor.DEFAULT.toString(),
+        color: String,
         label: String = "",
     ): LineDataSet {
         val entries = mutableListOf<Entry>()
