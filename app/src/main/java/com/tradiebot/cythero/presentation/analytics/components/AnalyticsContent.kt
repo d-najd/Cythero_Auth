@@ -94,7 +94,7 @@ object AnalyticsContentHelper {
      */
     fun shouldIncludeDecimals(value: Float): String {
         return if (value < 10){
-            val df = DecimalFormat("#.#")
+            val df = includeDecimals(1)
             df.roundingMode = RoundingMode.HALF_UP
             df.format(value)
         } else value.roundToInt().toString()
@@ -110,9 +110,15 @@ object AnalyticsContentHelper {
      */
     fun shouldIncludeDecimals(value: Double): String {
         return if (value < 10){
-            val df = DecimalFormat("#.#")
+            val df = includeDecimals(1)
             df.roundingMode = RoundingMode.HALF_UP
             df.format(value)
         } else value.roundToInt().toString()
+    }
+
+    fun includeDecimals(decimals: Int): DecimalFormat {
+        if(decimals < 1) throw IllegalArgumentException("1 or more decimal spaces are required")
+        val pattern = "#." + "#".repeat(decimals)
+        return DecimalFormat(pattern)
     }
 }

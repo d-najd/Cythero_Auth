@@ -9,24 +9,28 @@ import com.tradiebot.cythero.domain.analytics.PartsEnum
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
+import com.tradiebot.cythero.util.includeDecimals
 
 @Composable
 fun AnalyticsLatestSessionCard(
     state: AnalyticsUserReportScreenState.Success,
-){
+) {
     val analyticsTable = state.analyticsUser[state.auth.user.id]!!.analyticsUserTable
 
     val lastPart = analyticsTable.part.lastOrNull() ?: PartsEnum.NAN
     val lastGrade = analyticsTable.grade.lastOrNull() ?: GradesEnum.NAN
-    val lastCoverage = "${
-        AnalyticsContentHelper.shouldIncludeDecimals(
-                                ((analyticsTable.clearLowCoverage.lastOrNull() ?: 0.0) +
-                                (analyticsTable.clearGoodCoverage.lastOrNull() ?: 0.0) +
-                                (analyticsTable.clearHighCoverage.lastOrNull() ?: 0.0))/3.0)} ml"
-    val lastPaintUsed = "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull() ?: 0.0)} ml"
+    val lastCoverage = "${((
+            (
+                (analyticsTable.clearLowCoverage.lastOrNull() ?: 0.0) + 
+                (analyticsTable.clearGoodCoverage.lastOrNull() ?: 0.0) +
+                (analyticsTable.clearHighCoverage.lastOrNull() ?: 0.0)) / 3.0)).includeDecimals(1)
+    }%"
+    val lastPaintUsed =
+        "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull() ?: 0.0)} ml"
 
     val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.lastOrNull()?.toLong() ?: 0L
-    val lastTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
+    val lastTimePlayedString =
+        AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
 
     CytheroCard(
         title = stringResource(R.string.field_latest_session),

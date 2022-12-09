@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import logcat.logcat
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.util.Date
 
 /**
  * NOTE lazy injection can be used for performance
@@ -25,10 +26,10 @@ class AnalyticsUserScreenModel(
     RequestedDifferentAnalytics {
 
     /** requesting analytics for single user and updates the state */
-    fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!){
+    fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsUserReportScreenState.Loading }
-            val userAnalytics = requestUserAnalytics.await(auth, userID)
+            val userAnalytics = requestUserAnalytics.await(auth, userID, dateRange)
             if(userAnalytics != null) {
                 mutableState.update {
                     AnalyticsUserReportScreenState.Success(
@@ -45,10 +46,10 @@ class AnalyticsUserScreenModel(
 
     /** requesting analytics for multiple users and updates the state */
     @Suppress("unused")
-    fun requestAnalytics(auth: Auth, userIDs: List<Long>){
+    fun requestAnalytics(auth: Auth, userIDs: List<Long>, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsUserReportScreenState.Loading }
-            val userAnalytics = requestUserAnalytics.await(auth, userIDs)
+            val userAnalytics = requestUserAnalytics.await(auth, userIDs, dateRange)
             if(userAnalytics.isNotEmpty()) {
                 mutableState.update {
                     AnalyticsUserReportScreenState.Success(

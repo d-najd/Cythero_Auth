@@ -13,6 +13,9 @@ import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.GradesEnum
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 /**
  * TODO this is not reusable at its current state
@@ -39,7 +42,7 @@ fun LineChart(
                 for(dataSet in dataSets) {
                     dataSet.lineWidth = 2f
                     dataSet.circleRadius = 4f
-                    dataSet.cubicIntensity = .1f
+                    dataSet.cubicIntensity = .025f
                     dataSet.setDrawCircleHole(false)
                     dataSet.setDrawValues(true)
 
@@ -90,39 +93,39 @@ object LineChartHelper{
         val parts = analyticsTable.part.takeLast(10).map { stringResource(it.nameId) }
 
         val lowCoverage = analyticsTable.clearLowCoverage.takeLast(10)
-            .zip( analyticsTable.baseLowCoverage.takeLast(10)) { a, b -> a + b  }
-            .zip( analyticsTable.primerLowCoverage.takeLast(10)) { a, b -> (a + b)/3 }
-            .map { o -> o.toFloat() }
+            .zip( analyticsTable.baseLowCoverage.takeLast(10)) { f, s -> f + s  }
+            .zip( analyticsTable.primerLowCoverage.takeLast(10)) { f, s -> (f + s)/3 }
+            .map { o -> o.roundToInt().toFloat() }
             .zip(parts)
 
         val goodCoverage = analyticsTable.clearGoodCoverage.takeLast(10)
-            .zip( analyticsTable.baseGoodCoverage.takeLast(10)) { a, b -> a + b  }
-            .zip( analyticsTable.primerGoodCoverage.takeLast(10)) { a, b -> (a + b)/3 }
-            .map { o -> o.toFloat() }
+            .zip( analyticsTable.baseGoodCoverage.takeLast(10)) { f, s -> f + s  }
+            .zip( analyticsTable.primerGoodCoverage.takeLast(10)) { f, s -> (f + s)/3 }
+            .map { o -> o.roundToInt().toFloat() }
             .zip(parts)
 
         val highCoverage = analyticsTable.clearHighCoverage.takeLast(10)
-            .zip( analyticsTable.baseHighCoverage.takeLast(10)) { a, b -> a + b  }
-            .zip( analyticsTable.primerHighCoverage.takeLast(10)) { a, b -> (a + b)/3 }
-            .map { o -> o.toFloat() }
+            .zip( analyticsTable.baseHighCoverage.takeLast(10)) { f, s -> f + s  }
+            .zip( analyticsTable.primerHighCoverage.takeLast(10)) { f, s -> (f + s)/3 }
+            .map { o -> o.roundToInt().toFloat() }
             .zip(parts)
 
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
             label = stringResource(R.string.field_coverage_low),
-            color = GradesEnum.C.rgb,
+            color = GradesEnum.B.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
             label = stringResource(R.string.field_coverage_good),
-            color = GradesEnum.B.rgb,
+            color = GradesEnum.A.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
             label = stringResource(R.string.field_coverage_high),
-            color = GradesEnum.A.rgb,
+            color = GradesEnum.C.rgb,
         )
 
         return listOf(lowCoverageDataSet, goodCoverageDataSet, highCoverageDataSet)

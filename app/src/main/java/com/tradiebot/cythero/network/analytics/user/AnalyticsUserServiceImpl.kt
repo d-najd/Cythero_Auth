@@ -6,11 +6,13 @@ import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.user.service.AnalyticsUserService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
+import com.tradiebot.cythero.util.CytheroDateFormat
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.io.IOException
+import java.util.Date
 
 object AnalyticsUserServiceImpl: AnalyticsUserService {
     private val client = Injekt.get<OkHttpClient>()
@@ -19,9 +21,17 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
     override suspend fun getAnalytics(
         userAuth: Auth,
         userIDs: List<Long>,
+        dateRange: Pair<Date, Date>
     ): Map<Long, AnalyticsUser> {
+        val dateFormat = CytheroDateFormat.defaultRequestDateFormat()
+
+        val test1 = dateFormat.format(dateRange.first)
+        val test2 = dateFormat.format(dateRange.second)
+
         val body = MultipartBodyBuilder()
             .addFormDataPart("user_ids", userIDs)
+            .addFormDataPart("date_from", dateFormat.format(dateRange.first))
+            .addFormDataPart("date_to", dateFormat.format(dateRange.second))
             .build()
 
         val request = POST(

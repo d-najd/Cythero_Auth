@@ -8,14 +8,11 @@ import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenModel
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenModel
+import com.tradiebot.cythero.app.ui.analytics.screen_models.*
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.analytics.AnalyticsScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
-import java.util.Date
 
 class AnalyticsScreen(
     private val auth: Auth,
@@ -27,6 +24,7 @@ class AnalyticsScreen(
         val context = LocalContext.current
         val reportTypeScreenModel = rememberScreenModel { AnalyticsReportTypeScreenModel(context, auth) }
         val userReportScreenModel = rememberScreenModel { AnalyticsUserScreenModel(context, auth) }
+        val screenModels = listOf<RequestedDifferentAnalytics>(userReportScreenModel)
 
         val reportTypeState by reportTypeScreenModel.state.collectAsState()
         val userReportState by userReportScreenModel.state.collectAsState()
@@ -40,15 +38,17 @@ class AnalyticsScreen(
          * only a single function is called because { when(SelectedReportType) } provides safety when
          * adding new report types and the function is located here for easy access to the screen models
          */
-        fun changeReportScreenModel(
+        fun unFocusOtherScreens(
             reportType: SelectedReportType,
-            dateRange: Pair<Date, Date>?,
         ){
+
+            /*
             when(reportType) {
                 SelectedReportType.USER -> {
                     userReportScreenModel.requestAnalytics(
                         auth = auth,
                         userID = 4L,
+                        dateRange!!
                     )
                 }
                 SelectedReportType.PART -> {
@@ -58,6 +58,7 @@ class AnalyticsScreen(
                     userReportScreenModel.requestedDifferentAnalytics()
                 }
             }
+             */
         }
 
         val reportTypeSuccessState = reportTypeState as AnalyticsReportTypeScreenState.Success
@@ -67,7 +68,12 @@ class AnalyticsScreen(
             userReportState = userReportState,
             onBackClicked = router::popCurrentController,
             onGenerateUserReportClicked = { reportType, dateRange ->
-                changeReportScreenModel(reportType, dateRange)
+                unFocusOtherScreens(reportType)
+                userReportScreenModel.requestAnalytics(
+                    auth = auth,
+                    userID = 4L,
+                    dateRange
+                )
             }
         )
     }

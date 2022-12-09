@@ -1,23 +1,36 @@
 package com.tradiebot.cythero.util
 
-import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * converts given date to the very beginning of the day down to the last millisecond
+ *
+ * @sample { 2022-09-06 14:46:38:541 -> 2022-09-06 00:00:00:000 }
+ */
+fun Date.toStartOfDay(): Date {
+    val date = Calendar.getInstance()
+    date.time = this
+    date.set(Calendar.HOUR_OF_DAY, 0)
+    date.set(Calendar.MINUTE, 0)
+    date.set(Calendar.SECOND, 0)
+    date.set(Calendar.MILLISECOND, 0)
 
-class CytheroDateFormat(){
-    companion object {
-        fun defaultDateFormat(): SimpleDateFormat {
-            return SimpleDateFormat(DEFAULT_APP_DATE_FORMAT, Locale.getDefault())
-        }
+    return date.time
+}
 
-        fun defaultRequestDateFormat(): SimpleDateFormat {
-            return SimpleDateFormat(DEFAULT_API_DATE_FORMAT, Locale.getDefault())
-        }
+/**
+ * converts given date to the very end of the day down to the last millisecond
+ *
+ * @sample { 2022-09-06 14:46:38:541 -> 2022-09-06 23:59:59:999 }
+ */
+fun Date.toEndOfDay(): Date {
+    val date = Calendar.getInstance()
+    date.time = this
+    date.set(Calendar.HOUR_OF_DAY, 23)
+    date.set(Calendar.MINUTE, 59)
+    date.set(Calendar.SECOND, 59)
+    date.set(Calendar.MILLISECOND, 999)
 
-        /** for displaying data */
-        private const val DEFAULT_APP_DATE_FORMAT = "d MMM yyyy"
-        /** for parsing data from the api */
-        private const val DEFAULT_API_DATE_FORMAT = "yyyy-MM-d HH:mm:ss"
-    }
+    return date.time
 }
 

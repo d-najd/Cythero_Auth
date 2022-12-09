@@ -9,13 +9,12 @@ class RequestUserAnalytics(
     private val analyticsUserService: AnalyticsUserService,
 ) {
 
-    @Suppress("unused")
-    suspend fun await(userAuth: Auth, userIDs: List<Long>): Map<Long, AnalyticsUser> {
-        return analyticsUserService.getAnalytics(userAuth, userIDs)
+    suspend fun await(userAuth: Auth, userIDs: List<Long>, dateRange: Pair<Date, Date>): Map<Long, AnalyticsUser> {
+        return analyticsUserService.getAnalytics(userAuth, userIDs, dateRange)
     }
 
-    suspend fun await(userAuth: Auth, userID: Long): AnalyticsUser? {
-        return analyticsUserService.getAnalytics(userAuth, listOf(userID))[userID]
+    suspend fun await(userAuth: Auth, userID: Long, dateRange: Pair<Date, Date>): AnalyticsUser? {
+        return analyticsUserService.getAnalytics(userAuth, listOf(userID), dateRange)[userID]
     }
 
 }

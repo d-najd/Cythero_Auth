@@ -17,6 +17,8 @@ import com.tradiebot.cythero.presentation.components.CytheroMultipurposeMenu
 import com.tradiebot.cythero.presentation.components.dialogs.DateRangePickerDialog
 import com.tradiebot.cythero.presentation.util.show
 import com.tradiebot.cythero.util.CytheroDateFormat
+import com.tradiebot.cythero.util.toEndOfDay
+import com.tradiebot.cythero.util.toStartOfDay
 import java.util.*
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -129,7 +131,7 @@ private fun SelectDateRange(
             second = dateRange.second
         ),
         title = R.string.info_select_date_range,
-        onDateSelected = { f, s -> onChangeDateRange(Pair(f,s)) }
+        onDateSelected = { f, s -> onChangeDateRange(Pair(f.toStartOfDay(), s.toEndOfDay())) }
     )
 
     CytheroMultipurposeMenu(
