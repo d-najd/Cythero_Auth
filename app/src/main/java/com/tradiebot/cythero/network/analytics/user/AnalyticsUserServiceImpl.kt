@@ -25,9 +25,6 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
     ): Map<Long, AnalyticsUser> {
         val dateFormat = CytheroDateFormat.defaultRequestDateFormat()
 
-        val test1 = dateFormat.format(dateRange.first)
-        val test2 = dateFormat.format(dateRange.second)
-
         val body = MultipartBodyBuilder()
             .addFormDataPart("user_ids", userIDs)
             .addFormDataPart("date_from", dateFormat.format(dateRange.first))
@@ -35,7 +32,7 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
             .build()
 
         val request = POST(
-            url = Urls.ANALYTICS_SPRAYVERSE,
+            url = Urls.ANALYTICS_USER_SPRAYVERSE,
             body = body,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )

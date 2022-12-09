@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.*
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.components.LoadingScreen
@@ -23,11 +22,13 @@ class AnalyticsScreen(
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
         val reportTypeScreenModel = rememberScreenModel { AnalyticsReportTypeScreenModel(context, auth) }
-        val userReportScreenModel = rememberScreenModel { AnalyticsUserScreenModel(context, auth) }
-        val screenModels = listOf<RequestedDifferentAnalytics>(userReportScreenModel)
+        val userAnalyticsScreenModel = rememberScreenModel { AnalyticsUserScreenModelType(context, auth) }
+        val partAnalyticsScreenModel = rememberScreenModel { AnalyticsPartScreenModelType(context, auth) }
+        val screenModels = listOf<AnalyticsScreenModelType>(userAnalyticsScreenModel, partAnalyticsScreenModel)
 
         val reportTypeState by reportTypeScreenModel.state.collectAsState()
-        val userReportState by userReportScreenModel.state.collectAsState()
+        val userReportState by userAnalyticsScreenModel.state.collectAsState()
+        val partReportState by partAnalyticsScreenModel.state.collectAsState()
 
         if (reportTypeState is AnalyticsReportTypeScreenState.Loading) {
             LoadingScreen()
@@ -35,30 +36,16 @@ class AnalyticsScreen(
         }
 
         /**
-         * only a single function is called because { when(SelectedReportType) } provides safety when
-         * adding new report types and the function is located here for easy access to the screen models
+         * un-focuses the screen models which are not the given screen
          */
         fun unFocusOtherScreens(
-            reportType: SelectedReportType,
+            reportType: AnalyticsType,
         ){
-
-            /*
-            when(reportType) {
-                SelectedReportType.USER -> {
-                    userReportScreenModel.requestAnalytics(
-                        auth = auth,
-                        userID = 4L,
-                        dateRange!!
-                    )
-                }
-                SelectedReportType.PART -> {
-                    userReportScreenModel.requestedDifferentAnalytics()
-                }
-                SelectedReportType.USAGE -> {
-                    userReportScreenModel.requestedDifferentAnalytics()
+            for(screenModel in screenModels){
+                if(screenModel.getReportType() != reportType){
+                    screenModel.requestedDifferentAnalytics()
                 }
             }
-             */
         }
 
         val reportTypeSuccessState = reportTypeState as AnalyticsReportTypeScreenState.Success
@@ -66,23 +53,19 @@ class AnalyticsScreen(
         AnalyticsScreen(
             reportTypeState = reportTypeSuccessState,
             userReportState = userReportState,
+            partReportState = partReportState,
             onBackClicked = router::popCurrentController,
-            onGenerateUserReportClicked = { reportType, dateRange ->
-                unFocusOtherScreens(reportType)
-                userReportScreenModel.requestAnalytics(
-                    auth = auth,
-                    userID = 4L,
-                    dateRange
-                )
+            onGenerateUserReportClicked = {
+                unFocusOtherScreens(AnalyticsType.USER)
+                userAnalyticsScreenModel.requestAnalytics(auth, userID = 4L, it)
+            },
+            onGeneratePartReportClicked = {
+                unFocusOtherScreens(AnalyticsType.PART)
+                partAnalyticsScreenModel.requestAnalytics(auth, userID = 4L, it)
             }
         )
     }
 
-    enum class SelectedReportType(val reportTypeId: Int) {
-        USER(R.string.action_select_user_report),
-        PART(R.string.action_select_part),
-        USAGE(R.string.action_select_usage),
-    }
 
 }
 

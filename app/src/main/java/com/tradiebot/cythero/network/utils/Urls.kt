@@ -26,5 +26,6 @@ object Urls {
     const val ANALYTICS_RAW = "/analytics"
     const val ANALYTICS = API + ANALYTICS_RAW
 
-    const val ANALYTICS_SPRAYVERSE = "$ANALYTICS/sprayverse_user_report"
+    const val ANALYTICS_USER_SPRAYVERSE = "$ANALYTICS/sprayverse_user_report"
+    const val ANALYTICS_PART_SPRAYVERSE = "$ANALYTICS/sprayverse_part_report"
 }

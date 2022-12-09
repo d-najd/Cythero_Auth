@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -15,31 +16,39 @@ import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.util.Date
 
-/**
- * NOTE lazy injection can be used for performance
- */
-class AnalyticsUserScreenModel(
+class AnalyticsUserScreenModelType(
     val context: Context,
     val auth: Auth,
     private val requestUserAnalytics: RequestUserAnalytics = Injekt.get()
-) : StateScreenModel<AnalyticsUserReportScreenState>(AnalyticsUserReportScreenState.AwaitingSelection),
-    RequestedDifferentAnalytics {
+) : StateScreenModel<AnalyticsUserScreenState>(AnalyticsUserScreenState.AwaitingSelection),
+    AnalyticsScreenModelType {
+
+    override fun getReportType(): AnalyticsType = AnalyticsType.USER
+
+    override fun requestedDifferentAnalytics() {
+        coroutineScope.launch {
+            mutableState.update {
+                AnalyticsUserScreenState.AwaitingSelection
+            }
+        }
+    }
 
     /** requesting analytics for single user and updates the state */
     fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
-            mutableState.update { AnalyticsUserReportScreenState.Loading }
+            mutableState.update { AnalyticsUserScreenState.Loading }
             val userAnalytics = requestUserAnalytics.await(auth, userID, dateRange)
             if(userAnalytics != null) {
                 mutableState.update {
-                    AnalyticsUserReportScreenState.Success(
+                    AnalyticsUserScreenState.Success(
                         auth = auth,
                         // FIXME passing the user id here is not correct
-                        analyticsUser = mapOf(auth.user.id!! to userAnalytics),
+                        analytics = mapOf(auth.user.id!! to userAnalytics),
                     )
                 }
             } else {
                 logcat { "Something went wrong" }
+                mutableState.update { AnalyticsUserScreenState.AwaitingSelection }
             }
         }
     }
@@ -48,41 +57,36 @@ class AnalyticsUserScreenModel(
     @Suppress("unused")
     fun requestAnalytics(auth: Auth, userIDs: List<Long>, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
-            mutableState.update { AnalyticsUserReportScreenState.Loading }
+            mutableState.update { AnalyticsUserScreenState.Loading }
             val userAnalytics = requestUserAnalytics.await(auth, userIDs, dateRange)
             if(userAnalytics.isNotEmpty()) {
                 mutableState.update {
-                    AnalyticsUserReportScreenState.Success(
+                    AnalyticsUserScreenState.Success(
                         auth = auth,
-                        analyticsUser = userAnalytics,
+                        analytics = userAnalytics,
                     )
                 }
             } else {
                 logcat { "Something went wrong" }
+                mutableState.update { AnalyticsUserScreenState.AwaitingSelection }
             }
         }
     }
 
-    override fun requestedDifferentAnalytics() {
-        coroutineScope.launch {
-            mutableState.update {
-                AnalyticsUserReportScreenState.AwaitingSelection
-            }
-        }
-    }
+
 }
 
-sealed class AnalyticsUserReportScreenState {
+sealed class AnalyticsUserScreenState {
 
     @Immutable
-    object AwaitingSelection : AnalyticsUserReportScreenState()
+    object AwaitingSelection : AnalyticsUserScreenState()
 
     @Immutable
-    object Loading: AnalyticsUserReportScreenState()
+    object Loading: AnalyticsUserScreenState()
 
     @Immutable
     data class Success(
         val auth: Auth,
-        val analyticsUser: Map<Long, AnalyticsUser>,
-    ) : AnalyticsUserReportScreenState()
+        val analytics: Map<Long, AnalyticsUser>,
+    ) : AnalyticsUserScreenState()
 }

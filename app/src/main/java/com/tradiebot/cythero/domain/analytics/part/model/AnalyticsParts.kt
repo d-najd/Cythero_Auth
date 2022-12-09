@@ -1,10 +1,7 @@
 package com.tradiebot.cythero.domain.analytics.part.model
 
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.annotations.SerializedName
-import com.tradiebot.cythero.app.util.view.FragmentManagerHolder
-import com.tradiebot.cythero.util.CytheroDateFormat
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 

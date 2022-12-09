@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsBasicFields(
-    state: AnalyticsUserReportScreenState.Success,
+    state: AnalyticsUserScreenState.Success,
 ){
     Text(
         textAlign = TextAlign.Center,

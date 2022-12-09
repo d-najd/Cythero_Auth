@@ -3,7 +3,7 @@ package com.tradiebot.cythero.app.util.view
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 
-class FragmentManagerHolder(
+class ContextHolder(
     context: Context,
 ) {
     private val context: Context
@@ -12,6 +12,10 @@ class FragmentManagerHolder(
     init {
         this.context = context
         fragmentManager = (context as FragmentActivity).supportFragmentManager
+    }
+
+    fun getString(id: Int): String{
+        return context.getString(id)
     }
 
     /*

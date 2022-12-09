@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.R
 
-enum class PartsEnum(@StringRes val nameId: Int){
+enum class PartEnum(@StringRes val nameId: Int){
     @SerializedName("Fender")
     FENDER(R.string.field_part_fender),
     @SerializedName("Hood")

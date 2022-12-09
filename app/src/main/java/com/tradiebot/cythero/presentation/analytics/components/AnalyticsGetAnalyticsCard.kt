@@ -9,8 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
+import com.tradiebot.cythero.domain.analytics.PartEnum
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
 import com.tradiebot.cythero.presentation.components.CytheroMultipurposeMenu
@@ -28,16 +29,18 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun AnalyticsGetAnalyticsCard(
     state: AnalyticsReportTypeScreenState.Success,
-    onGenerateUserReportClicked: (AnalyticsScreen.SelectedReportType, Pair<Date, Date>) -> Unit,
+    onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
+    onGeneratePartReportClicked: (PartEnum) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsScreen.SelectedReportType.USER) }
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
+
     var dateRange by remember { mutableStateOf(Pair(
-        first = Date(
-            Date().time -
-                    Duration.Companion.convert(168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()
-        ),
+        first = Date(Date().time - Duration.Companion.convert(
+            168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
         second = Date()
     )) }
+
+    var selectedPartType by remember { mutableStateOf(PartEnum.FENDER) }
 
     CytheroCard(
         title = stringResource(R.string.field_analytics),
@@ -50,25 +53,31 @@ fun AnalyticsGetAnalyticsCard(
         )
 
         when(selectedReportType) {
-            AnalyticsScreen.SelectedReportType.USER,
-            AnalyticsScreen.SelectedReportType.USAGE -> {
+            AnalyticsType.USER,
+            AnalyticsType.USAGE -> {
                 SelectDateRange(
                     dateRange = dateRange,
                     onChangeDateRange = { dateRange = it }
                 )
             }
 
-            AnalyticsScreen.SelectedReportType.PART -> {
-
+            AnalyticsType.PART -> {
+                SelectPartType(
+                    part = selectedPartType,
+                    onChangePart = { selectedPartType = it }
+                )
             }
         }
 
         Button(
             onClick = {
-                onGenerateUserReportClicked(
-                    selectedReportType,
-                    Pair(dateRange.first, dateRange.second),
-                )
+                when(selectedReportType){
+                    AnalyticsType.USER -> onGenerateUserReportClicked(dateRange)
+                    AnalyticsType.PART -> onGeneratePartReportClicked(selectedPartType)
+                    AnalyticsType.USAGE -> {
+
+                    }
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -80,11 +89,18 @@ fun AnalyticsGetAnalyticsCard(
     }
 }
 
+@Composable fun SelectPartType(
+    part: PartEnum,
+    onChangePart: (PartEnum) -> Unit,
+) {
+
+}
+
 @Composable
 private fun ReportType(
-    selectedReportType: AnalyticsScreen.SelectedReportType,
-    onChangeReportType: (AnalyticsScreen.SelectedReportType) -> Unit,
-){
+    selectedReportType: AnalyticsType,
+    onChangeReportType: (AnalyticsType) -> Unit,
+) {
     var expanded by remember { mutableStateOf(false) }
 
     CytheroDropdownMenu(
@@ -95,23 +111,23 @@ private fun ReportType(
         onClick = { expanded = !expanded },
     ) {
         DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.USER.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsType.USER.reportTypeId)) },
             onClick = {
-                onChangeReportType(AnalyticsScreen.SelectedReportType.USER)
+                onChangeReportType(AnalyticsType.USER)
                 expanded = false
             }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.PART.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsType.PART.reportTypeId)) },
             onClick = {
-                onChangeReportType(AnalyticsScreen.SelectedReportType.PART)
+                onChangeReportType(AnalyticsType.PART)
                 expanded = false
             }
         )
         DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsScreen.SelectedReportType.USAGE.reportTypeId)) },
+            text = { Text(text = stringResource(AnalyticsType.USAGE.reportTypeId)) },
             onClick = {
-                onChangeReportType(AnalyticsScreen.SelectedReportType.USAGE)
+                onChangeReportType(AnalyticsType.USAGE)
                 expanded = false
             }
         )

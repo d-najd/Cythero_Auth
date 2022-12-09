@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.R
 
-enum class GradesEnum(val rgb: String, @StringRes val nameId: Int){
+enum class GradeEnum(val rgb: String, @StringRes val nameId: Int){
     @SerializedName("A")
     A("#00A83D", R.string.field_grade_a),
     @SerializedName("B")

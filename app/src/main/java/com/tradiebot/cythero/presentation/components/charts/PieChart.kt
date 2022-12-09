@@ -12,7 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.tradiebot.cythero.domain.analytics.GradesEnum
+import com.tradiebot.cythero.domain.analytics.GradeEnum
 import java.util.SortedMap
 
 /**
@@ -80,7 +80,7 @@ fun PieChart(
 
 object PieChartHelper {
     @Composable
-    fun generateDataFromGrades(grades: SortedMap<GradesEnum, Int>): PieDataSet {
+    fun generateDataFromGrades(grades: SortedMap<GradeEnum, Int>): PieDataSet {
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
 
@@ -88,12 +88,12 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${stringResource(grade.key.nameId)}"))
             colors.add(
                 when (grade.key){
-                    GradesEnum.A -> android.graphics.Color.parseColor(
-                        GradesEnum.A.rgb)
-                    GradesEnum.B -> android.graphics.Color.parseColor(
-                        GradesEnum.B.rgb)
-                    GradesEnum.C -> android.graphics.Color.parseColor(
-                        GradesEnum.C.rgb)
+                    GradeEnum.A -> android.graphics.Color.parseColor(
+                        GradeEnum.A.rgb)
+                    GradeEnum.B -> android.graphics.Color.parseColor(
+                        GradeEnum.B.rgb)
+                    GradeEnum.C -> android.graphics.Color.parseColor(
+                        GradeEnum.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

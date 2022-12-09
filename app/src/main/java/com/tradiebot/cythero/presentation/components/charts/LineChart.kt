@@ -12,9 +12,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
-import com.tradiebot.cythero.domain.analytics.GradesEnum
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import com.tradiebot.cythero.domain.analytics.GradeEnum
 import kotlin.math.roundToInt
 
 /**
@@ -113,19 +111,19 @@ object LineChartHelper{
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
             label = stringResource(R.string.field_coverage_low),
-            color = GradesEnum.B.rgb,
+            color = GradeEnum.B.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
             label = stringResource(R.string.field_coverage_good),
-            color = GradesEnum.A.rgb,
+            color = GradeEnum.A.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
             label = stringResource(R.string.field_coverage_high),
-            color = GradesEnum.C.rgb,
+            color = GradeEnum.C.rgb,
         )
 
         return listOf(lowCoverageDataSet, goodCoverageDataSet, highCoverageDataSet)

@@ -1,11 +1,19 @@
 package com.tradiebot.cythero.domain.analytics.part.service
 
-import com.tradiebot.cythero.domain.analytics.PartsEnum
+import com.tradiebot.cythero.domain.analytics.PartEnum
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.auth.model.Auth
 
 interface AnalyticsPartService {
-    
-    suspend fun getAnalytics(userAuth: Auth, userIDs: List<Long>, part: PartsEnum): List<AnalyticsPart>
+
+    /**
+     * return list of part analytics for the given user ids
+     *
+     * @param userAuth user which has privileges to request analytics for the given userIDs
+     * @param userIDs ids of users which the analytics are requested for
+     * @param parts parts for which the analytics are being requested
+     * @return list of [AnalyticsPart]
+     */
+    suspend fun getAnalytics(userAuth: Auth, userIDs: List<Long>, parts: List<PartEnum>): List<AnalyticsPart>
 
 }

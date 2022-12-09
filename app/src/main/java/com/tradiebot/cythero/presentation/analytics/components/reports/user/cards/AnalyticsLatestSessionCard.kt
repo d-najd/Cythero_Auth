@@ -3,9 +3,9 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.user.car
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
-import com.tradiebot.cythero.domain.analytics.GradesEnum
-import com.tradiebot.cythero.domain.analytics.PartsEnum
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
+import com.tradiebot.cythero.domain.analytics.GradeEnum
+import com.tradiebot.cythero.domain.analytics.PartEnum
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
@@ -13,12 +13,12 @@ import com.tradiebot.cythero.util.includeDecimals
 
 @Composable
 fun AnalyticsLatestSessionCard(
-    state: AnalyticsUserReportScreenState.Success,
+    state: AnalyticsUserScreenState.Success,
 ) {
-    val analyticsTable = state.analyticsUser[state.auth.user.id]!!.analyticsUserTable
+    val analyticsTable = state.analytics[state.auth.user.id]!!.analyticsUserTable
 
-    val lastPart = analyticsTable.part.lastOrNull() ?: PartsEnum.NAN
-    val lastGrade = analyticsTable.grade.lastOrNull() ?: GradesEnum.NAN
+    val lastPart = analyticsTable.part.lastOrNull() ?: PartEnum.NAN
+    val lastGrade = analyticsTable.grade.lastOrNull() ?: GradeEnum.NAN
     val lastCoverage = "${((
             (
                 (analyticsTable.clearLowCoverage.lastOrNull() ?: 0.0) + 

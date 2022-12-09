@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -13,9 +14,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreen
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserReportScreenState
+import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
+import com.tradiebot.cythero.domain.analytics.PartEnum
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 import com.tradiebot.cythero.presentation.components.LoadingScreen
@@ -28,11 +30,13 @@ import kotlin.math.roundToInt
 @Composable
 fun AnalyticsContent(
     reportTypeState: AnalyticsReportTypeScreenState.Success,
-    userReportState: AnalyticsUserReportScreenState,
+    userReportState: AnalyticsUserScreenState,
+    partReportState: AnalyticsPartScreenState,
     contentPadding: PaddingValues,
 
     //Report Type Content
-    onGenerateUserReportClicked: (AnalyticsScreen.SelectedReportType, Pair<Date, Date>) -> Unit,
+    onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
+    onGeneratePartReportClicked: (PartEnum) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -55,14 +59,20 @@ fun AnalyticsContent(
         AnalyticsGetAnalyticsCard(
             state = reportTypeState,
             onGenerateUserReportClicked = onGenerateUserReportClicked,
+            onGeneratePartReportClicked = onGeneratePartReportClicked,
         )
 
-        if (userReportState is AnalyticsUserReportScreenState.Success) {
+        if (userReportState is AnalyticsUserScreenState.Success) {
             AnalyticsUserReportContent(
                 state = userReportState,
                 contentPadding = contentPadding,
             )
-        } else if (userReportState is AnalyticsUserReportScreenState.Loading) {
+        } else if (userReportState is AnalyticsUserScreenState.Loading) {
+            LoadingScreen()
+        } else if (partReportState is AnalyticsPartScreenState.Success){
+            var test = partReportState.analytics
+            Text(text = "Hello")
+        } else if(partReportState is AnalyticsPartScreenState.Loading){
             LoadingScreen()
         }
     }
@@ -92,7 +102,7 @@ object AnalyticsContentHelper {
      * @return string value with 1 decimal if { value < 10 } or no decimals if bigger
      * @see [shouldIncludeDecimals]
      */
-    fun shouldIncludeDecimals(value: Float): String {
+    private fun shouldIncludeDecimals(value: Float): String {
         return if (value < 10){
             val df = includeDecimals(1)
             df.roundingMode = RoundingMode.HALF_UP
@@ -116,7 +126,7 @@ object AnalyticsContentHelper {
         } else value.roundToInt().toString()
     }
 
-    fun includeDecimals(decimals: Int): DecimalFormat {
+    private fun includeDecimals(decimals: Int): DecimalFormat {
         if(decimals < 1) throw IllegalArgumentException("1 or more decimal spaces are required")
         val pattern = "#." + "#".repeat(decimals)
         return DecimalFormat(pattern)

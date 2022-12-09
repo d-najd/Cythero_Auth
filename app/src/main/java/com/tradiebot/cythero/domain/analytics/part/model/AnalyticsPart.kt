@@ -1,20 +1,21 @@
 package com.tradiebot.cythero.domain.analytics.part.model
 
 import com.google.gson.annotations.SerializedName
-import com.tradiebot.cythero.domain.analytics.PartsEnum
-import com.tradiebot.cythero.domain.analytics.GradesEnum
+import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.GradeEnum
 import java.util.Date
 
 data class AnalyticsPart (
-    @SerializedName("Overall Grade") val overallGrade: List<GradesEnum>,
+    @SerializedName("Part") val part: PartEnum,
+    @SerializedName("Overall Grade") val overallGrade: List<GradeEnum>,
     @SerializedName("Overall Time") val overallTime: List<Double>,
     @SerializedName("Overall Time Sum") val overallTimeSum: Double,
     @SerializedName("Overall Paint Used") val overallPaintUsed: List<Double>,
     @SerializedName("Overall Coverage Improvement") val overallCoverageImprovement: Double,
-    @SerializedName("Average Grade Overall") val averageGradeOverall: GradesEnum,
-    @SerializedName("Average Grade Base") val averageGradeBase: GradesEnum,
-    @SerializedName("Average Grade Clear") val averageGradeClear: GradesEnum,
-    @SerializedName("Average Grade Primer") val averageGradePrimer: GradesEnum,
+    @SerializedName("Average Grade Overall") val averageGradeOverall: GradeEnum,
+    @SerializedName("Average Grade Base") val averageGradeBase: GradeEnum,
+    @SerializedName("Average Grade Clear") val averageGradeClear: GradeEnum,
+    @SerializedName("Average Grade Primer") val averageGradePrimer: GradeEnum,
     @SerializedName("Average Coverage Overall") val averageCoverageOverall: Double,
     @SerializedName("Average Coverage Overall (Base)") val averageCoverageOverallBase: Double,
     @SerializedName("Average Coverage Overall (Clear)") val averageCoverageOverallClear: Double,
@@ -28,14 +29,14 @@ data class AnalyticsPart (
     @SerializedName("Average Low Coverage (Base)") val averageLowCoverageBase: Double,
     @SerializedName("Average Low Coverage (Clear)") val averageLowCoverageClear: Double,
     @SerializedName("Average Low Coverage (Primer)") val averageLowCoveragePrimer: Double,
-    @SerializedName("Base Grade") val baseGrade: List<GradesEnum>,
+    @SerializedName("Base Grade") val baseGrade: List<GradeEnum>,
     @SerializedName("Base Time") val baseTime: List<Double>,
     @SerializedName("Base Paint Used") val basePaintUsed: List<Double>,
     @SerializedName("Base Coverage Improvement") val baseCoverageImprovement: Double,
     @SerializedName("Base High Coverage") val baseHighCoverage: List<Double>,
     @SerializedName("Base Good Coverage") val baseGoodCoverage: List<Double>,
     @SerializedName("Base Low Coverage") val baseLowCoverage: List<Double>,
-    @SerializedName("Clear Grade") val clearGrade: List<GradesEnum>,
+    @SerializedName("Clear Grade") val clearGrade: List<GradeEnum>,
     @SerializedName("Clear Time") val clearTime: List<Double>,
     @SerializedName("Clear Paint Used") val clearPaintUsed: List<Double>,
     @SerializedName("Clear Coverage Improvement") val clearCoverageImprovement: Double,
@@ -44,7 +45,7 @@ data class AnalyticsPart (
     @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
     @SerializedName("Primer Coverage Improvement") val primerCoverageImprovement: Double,
     @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
-    @SerializedName("Primer Grade") val primerGrade: List<GradesEnum>,
+    @SerializedName("Primer Grade") val primerGrade: List<GradeEnum>,
     @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
     @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,
     @SerializedName("Primer Paint Used") val primerPaintUsed: List<Double>,
@@ -56,10 +57,10 @@ data class AnalyticsPart (
     @SerializedName("Paint Used Base") val paintUsedBase: Double,
     @SerializedName("Paint Used Clear") val paintUsedClear: Double,
     @SerializedName("Paint Used Primer") val paintUsedPrimer: Double,
-    @SerializedName("Session End") val sessionEnd: List<Date>,
     @SerializedName("Session Start") val sessionStart: List<Date>,
+    @SerializedName("Session End") val sessionEnd: List<Date>,
     @SerializedName("Times Played") val timesPlayed: Int,
-    @SerializedName("Parts") val parts: List<PartsEnum>,
+    @SerializedName("Parts") val parts: List<PartEnum>,
     @SerializedName("User ID") val userIDs: List<Int>,
 ) {
     /*
