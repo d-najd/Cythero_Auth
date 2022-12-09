@@ -36,8 +36,6 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
 
-        val teste = request.toString()
-
         try {
             val response: Response = client.newCall(request).execute().printResponse()
 
