@@ -20,8 +20,8 @@ import java.util.SortedMap
  * chart and doing so requires rework of some components in the library.
  *
  * @param dataSet data set for the chart
- * @param offsetLeft offset to the left on the chart in <b>DP</b. use negative values for offset to the right
- * @param offsetTop offset to the top on the chart in <b>DP</b. use negative values for offset to the bottom
+ * @param offsetLeft offset to the left on the chart in <b>DP</b>. use negative values for offset to the right
+ * @param offsetTop offset to the top on the chart in <b>DP</b>. use negative values for offset to the bottom
  * @param isLegendEnabled whether the legend is enabled or not on by default. <b>NOTE</b> enabling the
  * legend changes the offset on the chart
  *

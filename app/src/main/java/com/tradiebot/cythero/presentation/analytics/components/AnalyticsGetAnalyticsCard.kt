@@ -32,15 +32,29 @@ fun AnalyticsGetAnalyticsCard(
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (PartEnum) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
-
     var dateRange by remember { mutableStateOf(Pair(
         first = Date(Date().time - Duration.Companion.convert(
             168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
         second = Date()
     )) }
-
     var selectedPartType by remember { mutableStateOf(PartEnum.FENDER) }
+
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
+    when(selectedReportType) {
+        AnalyticsType.USER,
+        AnalyticsType.USAGE -> {
+            SelectDateRange(
+                dateRange = dateRange,
+                onChangeDateRange = { dateRange = it }
+            )
+        }
+        AnalyticsType.PART -> {
+            SelectPartType(
+                selectedPart = selectedPartType,
+                onChangeSelectedPart = { selectedPartType = it }
+            )
+        }
+    }
 
     CytheroCard(
         title = stringResource(R.string.field_analytics),
@@ -51,23 +65,6 @@ fun AnalyticsGetAnalyticsCard(
             selectedReportType = selectedReportType,
             onChangeReportType = { selectedReportType = it },
         )
-
-        when(selectedReportType) {
-            AnalyticsType.USER,
-            AnalyticsType.USAGE -> {
-                SelectDateRange(
-                    dateRange = dateRange,
-                    onChangeDateRange = { dateRange = it }
-                )
-            }
-
-            AnalyticsType.PART -> {
-                SelectPartType(
-                    selectedPart = selectedPartType,
-                    onChangeSelectedPart = { selectedPartType = it }
-                )
-            }
-        }
 
         Button(
             onClick = {
