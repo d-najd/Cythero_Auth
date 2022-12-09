@@ -23,5 +23,4 @@ enum class PartEnum(@StringRes val nameId: Int){
     BEAM(R.string.field_part_beam),
     @SerializedName("Rail Section")
     RAIL_SECTION(R.string.field_part_rail_section),
-    NAN(R.string.field_part_nan),
 }

@@ -18,6 +18,7 @@ import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenS
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
 import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.presentation.analytics.components.reports.part.AnalyticsPartReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 import com.tradiebot.cythero.presentation.components.LoadingScreen
@@ -70,8 +71,10 @@ fun AnalyticsContent(
         } else if (userReportState is AnalyticsUserScreenState.Loading) {
             LoadingScreen()
         } else if (partReportState is AnalyticsPartScreenState.Success){
-            var test = partReportState.analytics
-            Text(text = "Hello")
+            AnalyticsPartReportContent(
+                state = partReportState,
+                contentPadding = contentPadding,
+            )
         } else if(partReportState is AnalyticsPartScreenState.Loading){
             LoadingScreen()
         }

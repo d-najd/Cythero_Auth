@@ -23,7 +23,7 @@ fun AnalyticsGeneralCard(
 
     val username = state.auth.user.username!!
     val timesPlayed = analyticsTable.sessionID.size.toString()
-    val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else PartEnum.NAN
+    val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else PartEnum.DOOR
     val totalTimePlayedSec = if(analyticsTable.totalTimePlayedSec.isNotEmpty()) analyticsTable.totalTimePlayedSec.sum().toLong() else 0L
     val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
 

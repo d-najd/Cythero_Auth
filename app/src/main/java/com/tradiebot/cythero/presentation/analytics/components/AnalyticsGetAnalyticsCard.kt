@@ -45,7 +45,7 @@ fun AnalyticsGetAnalyticsCard(
     CytheroCard(
         title = stringResource(R.string.field_analytics),
         modifier = Modifier
-            .padding(top = 24.dp)
+            .padding(top = 24.dp),
     ) {
         ReportType(
             selectedReportType = selectedReportType,
@@ -63,8 +63,8 @@ fun AnalyticsGetAnalyticsCard(
 
             AnalyticsType.PART -> {
                 SelectPartType(
-                    part = selectedPartType,
-                    onChangePart = { selectedPartType = it }
+                    selectedPart = selectedPartType,
+                    onChangeSelectedPart = { selectedPartType = it }
                 )
             }
         }
@@ -90,10 +90,29 @@ fun AnalyticsGetAnalyticsCard(
 }
 
 @Composable fun SelectPartType(
-    part: PartEnum,
-    onChangePart: (PartEnum) -> Unit,
+    selectedPart: PartEnum,
+    onChangeSelectedPart: (PartEnum) -> Unit,
 ) {
+    var expanded by remember { mutableStateOf(false) }
+    val parts = PartEnum.values()
 
+    CytheroDropdownMenu(
+        title = stringResource(R.string.info_select_report_type),
+        text = stringResource(selectedPart.nameId),
+        expanded = expanded,
+        onDismissRequest = { expanded = false },
+        onClick = { expanded = !expanded },
+    ) {
+        for(part in parts){
+            DropdownMenuItem(
+                text = { Text(text = stringResource(part.nameId)) },
+                onClick = {
+                    onChangeSelectedPart(part)
+                    expanded = false
+                }
+            )
+        }
+    }
 }
 
 @Composable
@@ -102,35 +121,25 @@ private fun ReportType(
     onChangeReportType: (AnalyticsType) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val reports = AnalyticsType.values()
 
     CytheroDropdownMenu(
+        modifier = Modifier.padding(bottom = 20.dp),
         title = stringResource(R.string.info_select_report_type),
-        text = stringResource(selectedReportType.reportTypeId),
+        text = stringResource(selectedReportType.nameId),
         expanded = expanded,
         onDismissRequest = { expanded = false },
         onClick = { expanded = !expanded },
     ) {
-        DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsType.USER.reportTypeId)) },
-            onClick = {
-                onChangeReportType(AnalyticsType.USER)
-                expanded = false
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsType.PART.reportTypeId)) },
-            onClick = {
-                onChangeReportType(AnalyticsType.PART)
-                expanded = false
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(text = stringResource(AnalyticsType.USAGE.reportTypeId)) },
-            onClick = {
-                onChangeReportType(AnalyticsType.USAGE)
-                expanded = false
-            }
-        )
+        for(report in reports) {
+            DropdownMenuItem(
+                text = { Text(text = stringResource(report.nameId)) },
+                onClick = {
+                    onChangeReportType(report)
+                    expanded = false
+                }
+            )
+        }
     }
 }
 
@@ -151,8 +160,6 @@ private fun SelectDateRange(
     )
 
     CytheroMultipurposeMenu(
-        modifier = Modifier
-            .padding(top = 20.dp),
         title = stringResource(R.string.info_select_date_range),
         text = "${dateFormat.format(dateRange.first)} - ${dateFormat.format(dateRange.second)}",
         onClick = {

@@ -17,7 +17,7 @@ fun AnalyticsLatestSessionCard(
 ) {
     val analyticsTable = state.analytics[state.auth.user.id]!!.analyticsUserTable
 
-    val lastPart = analyticsTable.part.lastOrNull() ?: PartEnum.NAN
+    val lastPart = analyticsTable.part.lastOrNull() ?: PartEnum.DOOR
     val lastGrade = analyticsTable.grade.lastOrNull() ?: GradeEnum.NAN
     val lastCoverage = "${((
             (
