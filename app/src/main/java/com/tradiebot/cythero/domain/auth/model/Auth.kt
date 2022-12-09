@@ -2,6 +2,8 @@ package com.tradiebot.cythero.domain.auth.model
 
 import com.google.gson.Gson
 import com.tradiebot.cythero.domain.user.model.User
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import java.io.Serializable
 
 data class Auth(
@@ -12,7 +14,7 @@ data class Auth(
 ) : Serializable {
     companion object{
         fun mockInstance(): Auth {
-            return Gson().fromJson(MOCK_AUTH, Auth::class.java)
+            return Injekt.get<Gson>().fromJson(MOCK_AUTH, Auth::class.java)
         }
     }
 }

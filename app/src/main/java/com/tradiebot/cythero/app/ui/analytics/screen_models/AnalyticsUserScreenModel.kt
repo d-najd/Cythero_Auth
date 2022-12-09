@@ -21,7 +21,6 @@ class AnalyticsUserScreenModel(
     val context: Context,
     val auth: Auth,
     private val requestUserAnalytics: RequestUserAnalytics = Injekt.get()
-    // private val requestAnalytics: RequestAnalytics = Injekt.get(),
 ) : StateScreenModel<AnalyticsUserReportScreenState>(AnalyticsUserReportScreenState.AwaitingSelection),
     RequestedDifferentAnalytics {
 

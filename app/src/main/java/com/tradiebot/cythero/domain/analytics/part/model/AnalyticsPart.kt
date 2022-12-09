@@ -3,9 +3,10 @@ package com.tradiebot.cythero.domain.analytics.part.model
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.domain.analytics.PartsEnum
 import com.tradiebot.cythero.domain.analytics.GradesEnum
+import java.util.Date
 
 data class AnalyticsPart (
-    @SerializedName("Overall Grade") val overallGrade: List<String>,
+    @SerializedName("Overall Grade") val overallGrade: List<GradesEnum>,
     @SerializedName("Overall Time") val overallTime: List<Double>,
     @SerializedName("Overall Time Sum") val overallTimeSum: Double,
     @SerializedName("Overall Paint Used") val overallPaintUsed: List<Double>,
@@ -55,16 +56,16 @@ data class AnalyticsPart (
     @SerializedName("Paint Used Base") val paintUsedBase: Double,
     @SerializedName("Paint Used Clear") val paintUsedClear: Double,
     @SerializedName("Paint Used Primer") val paintUsedPrimer: Double,
-    @SerializedName("Session End") val sessionEnd: List<String>,
-    @SerializedName("Session Start") val sessionStart: List<String>,
+    @SerializedName("Session End") val sessionEnd: List<Date>,
+    @SerializedName("Session Start") val sessionStart: List<Date>,
     @SerializedName("Times Played") val timesPlayed: Int,
     @SerializedName("Parts") val parts: List<PartsEnum>,
-    @SerializedName("User ID") val userID: List<Int>,
+    @SerializedName("User ID") val userIDs: List<Int>,
 ) {
     /*
     companion object {
         fun mockInstance(): List<AnalyticsPart> {
-            return Gson().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java).AnalyticsParts
+            return Injekt.get<Gson>().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java).AnalyticsParts
         }
     }
      */

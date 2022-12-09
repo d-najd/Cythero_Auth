@@ -3,6 +3,8 @@ package com.tradiebot.cythero.domain.analytics.user.model
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import java.io.Serializable
 
 
@@ -13,7 +15,7 @@ data class AnalyticsUser(
     companion object{
         fun mockInstance(): Map<Long, AnalyticsUser> {
             val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>() {}.type
-            return Gson().fromJson(MOCK_USER_ANALYTICS, analyticsUserType)
+            return Injekt.get<Gson>().fromJson(MOCK_USER_ANALYTICS, analyticsUserType)
         }
     }
 }

@@ -1,13 +1,15 @@
 package com.tradiebot.cythero.domain.timeline.model
 
 import com.google.gson.Gson
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 
 @Deprecated("")
 data class Timeline (
     val timeline: List<TimelineEntry>,
 ) {
     companion object {
-        fun mockInstance() = Gson().fromJson(MOCK_TIMELINE, Timeline::class.java)!!
+        fun mockInstance() = Injekt.get<Gson>().fromJson(MOCK_TIMELINE, Timeline::class.java)!!
     }
 }
 

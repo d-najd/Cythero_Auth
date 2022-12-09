@@ -87,7 +87,7 @@ object LineChartHelper{
     ): List<LineDataSet> {
         val analyticsTable = analyticsUser.analyticsUserTable
 
-        val parts = analyticsTable.part.takeLast(10)
+        val parts = analyticsTable.part.takeLast(10).map { stringResource(it.nameId) }
 
         val lowCoverage = analyticsTable.clearLowCoverage.takeLast(10)
             .zip( analyticsTable.baseLowCoverage.takeLast(10)) { a, b -> a + b  }
