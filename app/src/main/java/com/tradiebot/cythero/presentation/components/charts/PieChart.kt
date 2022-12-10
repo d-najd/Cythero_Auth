@@ -3,12 +3,16 @@ package com.tradiebot.cythero.presentation.components.charts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.Legend.LegendForm
+import com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment
+import com.github.mikephil.charting.components.Legend.LegendOrientation
+import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -20,8 +24,6 @@ import java.util.SortedMap
  * chart and doing so requires rework of some components in the library.
  *
  * @param dataSet data set for the chart
- * @param offsetLeft offset to the left on the chart in <b>DP</b>. use negative values for offset to the right
- * @param offsetTop offset to the top on the chart in <b>DP</b>. use negative values for offset to the bottom
  * @param isLegendEnabled whether the legend is enabled or not on by default. <b>NOTE</b> enabling the
  * legend changes the offset on the chart
  *
@@ -33,9 +35,19 @@ import java.util.SortedMap
 fun PieChart(
     modifier: Modifier = Modifier,
     dataSet: PieDataSet,
-    offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
-    offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
+    offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
+    sliceSize: Float = 5f,
+
+    //Legend
     isLegendEnabled: Boolean = true,
+    legendForm: LegendForm = LegendForm.CIRCLE,
+    legendFormSize: Float = 15f,
+    legendTextSize: Float = 12f,
+    legendOffsets: Offset = Offset(PieChartHelper.PIE_CHART_LEGEND_X_OFFSET, 0f),
+    legendEntrySpacing: Offset = Offset(0f,15f),
+    legendHorizontalAlignment: LegendHorizontalAlignment = LegendHorizontalAlignment.RIGHT,
+    legendVerticalAlignment: LegendVerticalAlignment = LegendVerticalAlignment.CENTER,
+    legendOrientation: LegendOrientation = LegendOrientation.VERTICAL,
 ) {
 
     AndroidView(
@@ -48,28 +60,29 @@ fun PieChart(
         update = { pieChart ->
             pieChart.apply {
                 dataSet.setDrawValues(false)
-                dataSet.sliceSpace = 5f
+                dataSet.sliceSpace = sliceSize
 
                 setDrawEntryLabels(false)
                 setUsePercentValues(false)
                 setHoleColor(Color.Transparent.toArgb())
                 setDrawMarkers(true)
                 setTransparentCircleAlpha(0)
+                extraTopOffset = offsets.y
+                extraLeftOffset = offsets.x
                 description.isEnabled = false
 
                 legend.isEnabled = isLegendEnabled
 
-                legend.form = Legend.LegendForm.CIRCLE
-                legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-                legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
-                legend.orientation = Legend.LegendOrientation.VERTICAL
-                legend.yEntrySpace = 15f
-                legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
-                legend.textSize = 12f
-                legend.formSize = 15f
-
-                extraTopOffset = offsetTop
-                extraLeftOffset = offsetLeft
+                legend.form = legendForm
+                legend.horizontalAlignment = legendHorizontalAlignment
+                legend.verticalAlignment = legendVerticalAlignment
+                legend.orientation = legendOrientation
+                legend.yEntrySpace = legendEntrySpacing.y
+                legend.xEntrySpace = legendEntrySpacing.x
+                legend.yOffset = legendOffsets.y
+                legend.xOffset = legendOffsets.x
+                legend.textSize = legendTextSize
+                legend.formSize = legendFormSize
 
                 data = PieData(dataSet)
 
