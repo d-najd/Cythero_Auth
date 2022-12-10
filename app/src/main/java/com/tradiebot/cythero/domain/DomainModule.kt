@@ -9,6 +9,7 @@ import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.service.AuthService
 import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceImpl
+import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceMock
 import com.tradiebot.cythero.network.analytics.user.AnalyticsUserServiceMock
 import com.tradiebot.cythero.network.auth.AuthServiceMock
 import com.tradiebot.cythero.util.CytheroDateFormat
@@ -38,7 +39,7 @@ class DomainModule : InjektModule {
         // addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceImpl }
         addFactory { RequestUserAnalytics(get()) }
 
-        addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
+        addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
         // addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
         addFactory { RequestPartAnalytics(get()) }
 
