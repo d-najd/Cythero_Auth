@@ -129,14 +129,16 @@ object PieChartHelper {
         colors: List<String>,
     ): PieDataSet {
         val mColors = mutableListOf<Int>()
+        val mEntries = mutableListOf<PieEntry>()
         if(colors.size < entries.size) throw IllegalArgumentException()
         for(i in entries.indices){
             if(entries[i].value > 0){
+                mEntries.add(entries[i])
                 mColors.add(android.graphics.Color.parseColor(colors[i]))
             }
         }
 
-        val dataSet = PieDataSet(entries, "")
+        val dataSet = PieDataSet(mEntries, "")
         dataSet.colors = mColors
 
         return dataSet
