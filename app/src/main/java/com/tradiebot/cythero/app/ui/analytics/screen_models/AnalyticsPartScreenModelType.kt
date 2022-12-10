@@ -10,6 +10,8 @@ import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalyti
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.util.launchIO
+import com.tradiebot.cythero.util.launchUI
+import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import logcat.logcat
@@ -83,4 +85,5 @@ sealed class AnalyticsPartScreenState {
         val auth: Auth,
         val analytics: List<AnalyticsPart>,
     ) : AnalyticsPartScreenState()
+
 }

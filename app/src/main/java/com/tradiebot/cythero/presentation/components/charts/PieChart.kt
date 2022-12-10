@@ -48,7 +48,7 @@ fun PieChart(
     legendFormSize: Float = 15f,
     legendTextSize: Float = 12f,
     legendOffsets: Offset = Offset(PieChartHelper.PIE_CHART_LEGEND_X_OFFSET, 0f),
-    legendEntrySpacing: Offset = Offset(0f,15f),
+    legendEntrySpacing: Offset = Offset(25f,15f),
     legendHorizontalAlignment: LegendHorizontalAlignment = LegendHorizontalAlignment.RIGHT,
     legendVerticalAlignment: LegendVerticalAlignment = LegendVerticalAlignment.CENTER,
     legendOrientation: LegendOrientation = LegendOrientation.VERTICAL,

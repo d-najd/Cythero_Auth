@@ -4,28 +4,60 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.Grade
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.runBlocking
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import kotlin.math.roundToInt
 
 /**
- * TODO this is not reusable at its current state
+ * TODO just look at the number of parameters
  */
 @Composable
 fun LineChart(
     modifier: Modifier = Modifier,
-    dataSets: List<LineDataSet>,
-    // offsetLeft: Float = PieChartHelper.PIE_CHART_OFFSET_LEFT,
-    // offsetTop: Float = PieChartHelper.PIE_CHART_OFFSET_TOP,
+    dataSets: Flow<List<LineDataSet>>,
+    offsets: Offset = Offset(0f, 0f),
+    bezierType: LineDataSet.Mode = LineDataSet.Mode.HORIZONTAL_BEZIER,
+    pinchZoomEnabled: Boolean = false,
+    dragEnabled: Boolean = false,
+    scaleEnabled: Boolean = false,
+
+    labelCount: Int = 9,
+    lineWidth: Float = 2f,
+    circleRadius: Float = 4f,
+    drawCircleHole: Boolean = false,
+    drawValues: Boolean = true,
+
+    horizontalValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
+    leftValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
+    rightValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
+    xAxisPosition: XAxisPosition = XAxisPosition.TOP,
+
+    //Legend
     isLegendEnabled: Boolean = true,
-){
+    legendForm: Legend.LegendForm = Legend.LegendForm.CIRCLE,
+    legendFormSize: Float = 15f,
+    legendTextSize: Float = 12f,
+    legendOffsets: Offset = Offset(0f, 0f),
+    legendEntrySpacing: Offset = Offset(25f,15f),
+    legendHorizontalAlignment: Legend.LegendHorizontalAlignment = Legend.LegendHorizontalAlignment.CENTER,
+    legendVerticalAlignment: Legend.LegendVerticalAlignment = Legend.LegendVerticalAlignment.BOTTOM,
+    legendOrientation: Legend.LegendOrientation = Legend.LegendOrientation.HORIZONTAL,
+) {
     AndroidView(
         modifier = modifier
             .fillMaxSize()
@@ -36,59 +68,150 @@ fun LineChart(
 
         update = { lineChart ->
             lineChart.apply {
-
-                for(dataSet in dataSets) {
-                    dataSet.lineWidth = 2f
-                    dataSet.circleRadius = 4f
-                    dataSet.cubicIntensity = .025f
-                    dataSet.setDrawCircleHole(false)
-                    dataSet.setDrawValues(true)
-
-                    dataSet.mode = LineDataSet.Mode.HORIZONTAL_BEZIER
+                var lastDataSet: LineDataSet
+                runBlocking {
+                    lastDataSet = dataSets.last()[0]
                 }
 
-                data = LineData(dataSets)
-
-                lineChart.xAxis.axisMinimum = 0f
-                lineChart.xAxis.axisMaximum = 9f
-                lineChart.xAxis.setValueFormatter { value, _ -> "${value.toInt() + 1}" +
-                        " ${(dataSets[0].entries.getOrNull(value.toInt())?.data) ?: ""}"}
-                lineChart.xAxis.labelCount = 9
+                xAxis.axisMaximum = 0f
+                xAxis.axisMinimum = 0f
+                xAxis.axisMaximum = labelCount.toFloat()
+                xAxis.labelCount = labelCount
 
                 description.isEnabled = false
 
-                setPinchZoom(false)
-
-                isDragEnabled = false
-                setScaleEnabled(false)
+                isDragEnabled = dragEnabled
+                setPinchZoom(pinchZoomEnabled)
+                setScaleEnabled(scaleEnabled)
 
                 maxHighlightDistance = 250f
 
                 legend.isEnabled = isLegendEnabled
 
-                legend.form = Legend.LegendForm.CIRCLE
-                legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-                legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-                legend.orientation = Legend.LegendOrientation.HORIZONTAL
-                legend.yEntrySpace = 15f
-                legend.xEntrySpace = 25f
-                legend.textSize = 12f
-                legend.formSize = 15f
+                legend.form = legendForm
+                legend.horizontalAlignment = legendHorizontalAlignment
+                legend.verticalAlignment = legendVerticalAlignment
+                legend.orientation = legendOrientation
+                legend.yEntrySpace = legendEntrySpacing.y
+                legend.xEntrySpace = legendEntrySpacing.x
+                legend.textSize = legendTextSize
+                legend.formSize = legendFormSize
 
-                invalidate()
+                xAxis.position = xAxisPosition
+
+                if(horizontalValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
+                    xAxis.setValueFormatter { position, _ ->
+                        LineChartHelper.LineValueFormatter.format(
+                            horizontalValueFormatter,
+                            lastDataSet,
+                            position
+                        )
+                    }
+                }
+
+                if(leftValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
+                    axisLeft.setValueFormatter { position, _ ->
+                        LineChartHelper.LineValueFormatter.format(
+                            horizontalValueFormatter,
+                            lastDataSet,
+                            position
+                        )
+                    }
+                }
+
+                if(rightValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
+                    axisRight.setValueFormatter { position, _ ->
+                        LineChartHelper.LineValueFormatter.format(
+                            horizontalValueFormatter,
+                            lastDataSet,
+                            position
+                        )
+                    }
+                }
+
+                runBlocking {
+
+                    dataSets.collectLatest {
+                        val dataSetsLatest = dataSets.last()
+                        lastDataSet = dataSets.last()[0]
+
+                        for(dataSet in dataSetsLatest){
+                            dataSet.lineWidth = lineWidth
+                            dataSet.circleRadius = circleRadius
+                            dataSet.cubicIntensity = 0.025f
+                            dataSet.setDrawCircleHole(drawCircleHole)
+                            dataSet.setDrawValues(drawValues)
+                            dataSet.mode = bezierType
+                        }
+
+                        data = LineData(dataSetsLatest)
+
+                        invalidate()
+                    }
+                }
             }
         }
     )
 }
 
 object LineChartHelper{
-    @Composable
-    fun generatePartsDataSet(
+    enum class LineValueFormatterType{
+        /** formatted { value position } ex { Fender 2 } */
+        VALUE_POSITION,
+        /** doesn't format the value */
+        DEFAULT,
+    }
+
+    object LineValueFormatter {
+        fun format(
+            type: LineValueFormatterType,
+            dataSet: LineDataSet,
+            position: Float
+        ): String {
+            @Suppress("KotlinConstantConditions")
+            when (type) {
+                LineValueFormatterType.VALUE_POSITION -> {
+                    return valuePosition(
+                        dataSet,
+                        position,
+                    )
+                }
+                LineValueFormatterType.DEFAULT -> {
+                    throw IllegalStateException()
+                }
+            }
+        }
+
+        private fun valuePosition(dataSet: LineDataSet, position: Float): String{
+            return "${position.toInt() + 1}" +
+                    " ${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
+        }
+    }
+
+    fun generatePartTimeTakenData(
+        timeList: List<Int>,
+        dates: List<String>,
+    ): List<LineDataSet> {
+
+        val formattedList = timeList.takeLast(10)
+            .map { o -> o/60f }
+            .zip(dates)
+
+        val dataSet = generateDataSet(
+            data = formattedList,
+            label = Injekt.get<ContextHolder>().getString(R.string.field_sessions),
+            color = Grade.A.rgb
+        )
+
+        return listOf(dataSet)
+    }
+
+    fun generateUserPartsData(
         analyticsUser: AnalyticsUser
     ): List<LineDataSet> {
         val analyticsTable = analyticsUser.analyticsUserTable
 
-        val parts = analyticsTable.part.takeLast(10).map { stringResource(it.nameId) }
+        val parts = analyticsTable.part.takeLast(10).map { Injekt.get<ContextHolder>().getString(it.nameId) }
 
         val lowCoverage = analyticsTable.clearLowCoverage.takeLast(10)
             .zip( analyticsTable.baseLowCoverage.takeLast(10)) { f, s -> f + s  }
@@ -110,19 +233,19 @@ object LineChartHelper{
 
         val lowCoverageDataSet = generateDataSet(
             data = lowCoverage,
-            label = stringResource(R.string.field_coverage_low),
+            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_low),
             color = Grade.B.rgb,
         )
 
         val goodCoverageDataSet = generateDataSet(
             data = goodCoverage,
-            label = stringResource(R.string.field_coverage_good),
+            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_good),
             color = Grade.A.rgb,
         )
 
         val highCoverageDataSet  = generateDataSet(
             data = highCoverage,
-            label = stringResource(R.string.field_coverage_high),
+            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_high),
             color = Grade.C.rgb,
         )
 
@@ -138,7 +261,6 @@ object LineChartHelper{
      * @param color color of the dataset, if undefined
      * @param label label of the entry set
      */
-    @Composable
     fun generateDataSet(
         data: List<Pair<Float, Any>>,
         color: String,
@@ -157,101 +279,3 @@ object LineChartHelper{
         return dataSet
     }
 }
-
-
-
-
-
-/*
-@Composable
-@Deprecated("This class needs rework if its to be used")
-fun LineChartComponent(
-    timeline: Timeline = Timeline.testingInstance(),
-) {
-    Text(text = "Example Line Chart")
-
-    AndroidView(
-        modifier = Modifier.fillMaxSize(),
-        factory = { context -> LineChart(context) },
-        update = { chart ->
-            val values = timeline.timeline.mapToEntry()
-
-            val dataSet = LineDataSet(values, "TimeLine Data Set")
-
-            chart.apply {
-                data = LineData(dataSet)
-                invalidate()
-            }
-        }
-    )
-}
- */
-
-/*
-/**
- * converts TimelineEntry to charting Entry
- *
- * @return list of charting Entries
- */
-private fun List<TimelineEntry>.mapToEntry(): List<Entry> {
-    return this.map { tEntry -> Entry(this.indexOf(tEntry).toFloat(), tEntry.time_spent, tEntry.session_start ) }
-
-    /*
-    val dbTracks = map { it.toDbTrack() }
-    val loggedServices = Injekt.get<TrackManager>().services.filter { it.isLogged }
-    val source = Injekt.get<SourceManager>().getOrStub(sourceId)
-    return loggedServices
-        // Map to TrackItem
-        .map { service -> TrackItem(dbTracks.find { it.sync_id.toLong() == service.id }, service) }
-        // Show only if the service supports this manga's source
-        .filter { (it.service as? EnhancedTrackService)?.accept(source) ?: true }
-
-     */
-}
-
- */
-
-/*
-@Composable
-fun PieChartComponent() {
-
-    Box {
-        Text(text = "Pie Chart Below")
-
-        AndroidView(
-            modifier = Modifier.fillMaxSize(),
-            factory = { context ->
-                BarChart(context)
-            },
-            update = { barChart ->
-                val pieEntry1 = BarEntry(
-                    10f,
-                    5f,
-                )
-
-                val pieEntry2 = BarEntry(
-                    15f,
-                    10f,
-                )
-
-                val newList = mutableListOf<BarEntry>()
-
-                newList.add(pieEntry1)
-                newList.add(pieEntry2)
-
-                val dataSet = BarDataSet(
-                    newList,
-                    "test",
-                )
-                val barData = BarData(dataSet)
-
-                barChart.apply {
-                    data = barData
-                    invalidate()
-                }
-
-
-            })
-    }
-}
-*/

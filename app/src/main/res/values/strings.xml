@@ -91,5 +91,6 @@
     <string name="field_coverage_type_clear">Clear</string>
     <string name="field_average_grade">Average Grade</string>
     <string name="field_time_taken_last_sessions">Time Taken (Last 10 sessions)</string>
+    <string name="field_sessions">Sessions</string>
 
 </resources>

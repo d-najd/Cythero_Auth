@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.analytics.components.reports.part
+package com.tradiebot.cythero.presentation.analytics.components.reports.part.cards
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,7 +44,6 @@ fun AnalyticsPartGradesBreakdownCard(
     val averageGrade = "TO DO"
 
     val gradePieDataSet: Flow<PieDataSet> = flow {
-        emit(gradesOverall)
         when(selectedCoverageType) {
             CoverageType.OVERALL -> emit(gradesOverall)
             CoverageType.PRIMER -> emit(gradesPrimer)
