@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
+import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.charts.PieChart
@@ -35,22 +36,18 @@ fun AnalyticsPartGradesBreakdownCard(
 ){
     val analytics = state.analytics[0]
 
-    val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesPrimer = PieChartHelper.dataFromGrades(analytics.primerGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesBase = PieChartHelper.dataFromGrades(analytics.baseGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesClear = PieChartHelper.dataFromGrades(analytics.clearGrade.groupingBy { it }.eachCount().toSortedMap())
-
     val timesPlayed = analytics.timesPlayed
-    val averageGrade = "TO DO"
-
-    val gradePieDataSet: Flow<PieDataSet> = flow {
-        when(selectedCoverageType) {
-            CoverageType.OVERALL -> emit(gradesOverall)
-            CoverageType.PRIMER -> emit(gradesPrimer)
-            CoverageType.BASE -> emit(gradesBase)
-            CoverageType.CLEAR -> emit(gradesClear)
-        }
+    val averageGrade = when(selectedCoverageType) {
+        CoverageType.OVERALL -> stringResource(analytics.averageGradeOverall.nameId)
+        CoverageType.PRIMER -> stringResource(analytics.averageGradePrimer.nameId)
+        CoverageType.BASE -> stringResource(analytics.averageGradeBase.nameId)
+        CoverageType.CLEAR -> stringResource(analytics.averageGradeClear.nameId)
     }
+
+    val gradePieDataSet = mDataSet(
+        analytics = analytics,
+        selectedCoverageType = selectedCoverageType
+    )
 
     CytheroCard(
         title = stringResource(R.string.field_grades_breakdown)
@@ -90,4 +87,25 @@ fun AnalyticsPartGradesBreakdownCard(
         AnalyticsPairField(stringResource(R.string.field_times_played), value = timesPlayed.toString())
         AnalyticsPairField(stringResource(R.string.field_average_grade), value = averageGrade)
     }
+}
+
+@Composable
+private fun mDataSet(
+    analytics: AnalyticsPart,
+    selectedCoverageType: CoverageType,
+): Flow<PieDataSet> {
+    val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.groupingBy { it }.eachCount().toSortedMap())
+    val gradesPrimer = PieChartHelper.dataFromGrades(analytics.primerGrade.groupingBy { it }.eachCount().toSortedMap())
+    val gradesBase = PieChartHelper.dataFromGrades(analytics.baseGrade.groupingBy { it }.eachCount().toSortedMap())
+    val gradesClear = PieChartHelper.dataFromGrades(analytics.clearGrade.groupingBy { it }.eachCount().toSortedMap())
+
+    val gradePieDataSet: Flow<PieDataSet> = flow {
+        when(selectedCoverageType) {
+            CoverageType.OVERALL -> emit(gradesOverall)
+            CoverageType.PRIMER -> emit(gradesPrimer)
+            CoverageType.BASE -> emit(gradesBase)
+            CoverageType.CLEAR -> emit(gradesClear)
+        }
+    }
+    return gradePieDataSet
 }

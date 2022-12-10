@@ -2,6 +2,7 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.user.car
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
+import com.tradiebot.cythero.presentation.components.dialogs.CytheroButtonDefaults
 
 @Composable
 fun AnalyticsGeneralCard(
@@ -52,6 +54,7 @@ fun AnalyticsGeneralCard(
 
         Button(
             onClick = { },
+            shape = RoundedCornerShape(CytheroButtonDefaults.BUTTON_CORNER_ROUNDING),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)

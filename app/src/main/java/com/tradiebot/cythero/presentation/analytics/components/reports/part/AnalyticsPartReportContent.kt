@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
+import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartCoverageBreakdownCard
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartGradesBreakdownCard
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsTimeTakenCard
 
@@ -25,6 +26,15 @@ fun AnalyticsPartReportContent(
     )
 
     AnalyticsTimeTakenCard(
+        state = state,
+        selectedCoverageType = selectedCoverageType
+    )
+
+    Divider(
+        modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp)
+    )
+
+    AnalyticsPartCoverageBreakdownCard(
         state = state,
         selectedCoverageType = selectedCoverageType
     )

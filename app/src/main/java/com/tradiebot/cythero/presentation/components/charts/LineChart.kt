@@ -75,8 +75,6 @@ fun LineChart(
 
                 xAxis.axisMaximum = 0f
                 xAxis.axisMinimum = 0f
-                xAxis.axisMaximum = labelCount.toFloat()
-                xAxis.labelCount = labelCount
 
                 description.isEnabled = false
 
@@ -130,10 +128,12 @@ fun LineChart(
                 }
 
                 runBlocking {
-
                     dataSets.collectLatest {
                         val dataSetsLatest = dataSets.last()
                         lastDataSet = dataSets.last()[0]
+
+                        xAxis.axisMaximum = if(lastDataSet.entryCount > labelCount) labelCount.toFloat() else lastDataSet.entryCount.toFloat() - 1f
+                        xAxis.labelCount = if(lastDataSet.entryCount > labelCount) labelCount else lastDataSet.entryCount - 1
 
                         for(dataSet in dataSetsLatest){
                             dataSet.lineWidth = lineWidth

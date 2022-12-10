@@ -124,6 +124,24 @@ object PieChartHelper {
         return dataSet
     }
 
+    fun dataFromEntriesAndColors(
+        entries: List<PieEntry>,
+        colors: List<String>,
+    ): PieDataSet {
+        val mColors = mutableListOf<Int>()
+        if(colors.size < entries.size) throw IllegalArgumentException()
+        for(i in entries.indices){
+            if(entries[i].value > 0){
+                mColors.add(android.graphics.Color.parseColor(colors[i]))
+            }
+        }
+
+        val dataSet = PieDataSet(entries, "")
+        dataSet.colors = mColors
+
+        return dataSet
+    }
+
     /** default offset on the chart */
     const val PIE_CHART_OFFSET_TOP = 0f
     /** default offset on the chart */
