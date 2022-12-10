@@ -1,9 +1,6 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.part.cards
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -60,12 +57,15 @@ fun AnalyticsPartGradesBreakdownCard(
         }
 
         Row(
+            horizontalArrangement =Arrangement.Center,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             val coverages = CoverageType.values()
             for (coverage in coverages){
                 TextButton(
+                    modifier = Modifier
+                        .padding(horizontal = 4.dp),
                     shape = RoundedCornerShape(CytheroButtonDefaults.BUTTON_CORNER_ROUNDING),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = if(selectedCoverageType == coverage)
