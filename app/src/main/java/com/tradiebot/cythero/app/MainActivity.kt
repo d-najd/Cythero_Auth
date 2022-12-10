@@ -3,9 +3,11 @@ package com.tradiebot.cythero.app
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.platform.LocalContext
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.asTransaction
+import com.github.mikephil.charting.utils.Utils
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
 import com.tradiebot.cythero.databinding.MainActivityBinding
 import com.tradiebot.cythero.domain.DomainModule
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         // get instantiated before the DomainModule gets called
         Injekt.importModule(DomainModule())
         Injekt.importModule(MainActivityModule(this))
+
+        Utils.init(this)
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

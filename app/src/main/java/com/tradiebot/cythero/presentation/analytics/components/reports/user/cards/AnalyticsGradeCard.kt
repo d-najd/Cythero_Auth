@@ -1,6 +1,7 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.user.cards
 
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,8 +22,13 @@ fun AnalyticsGradeCard(
     
     CytheroCard(
         title = stringResource(R.string.field_grades_breakdown),
-        modifier = Modifier.height(275.dp),
+        modifier = Modifier
     ) {
-        PieChart(dataSet = pieDataSet)
+        PieChart(
+            dataSet = pieDataSet,
+            isLegendEnabled = true,
+            offsetLeft = 0f,
+            offsetTop = 0f,
+        )
     }
 }
