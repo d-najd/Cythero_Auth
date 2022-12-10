@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -17,7 +16,7 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.AnalyticsPartReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
@@ -37,7 +36,7 @@ fun AnalyticsContent(
 
     //Report Type Content
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
-    onGeneratePartReportClicked: (PartEnum) -> Unit,
+    onGeneratePartReportClicked: (Part) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Immutable
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -33,7 +33,7 @@ class AnalyticsPartScreenModelType(
         }
     }
 
-    fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!, part: PartEnum){
+    fun requestAnalytics(auth: Auth, userID: Long = auth.user.id!!, part: Part){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsPartScreenState.Loading }
             val partAnalytics = requestPartAnalytics.await(auth, userID, part)
@@ -51,7 +51,7 @@ class AnalyticsPartScreenModelType(
         }
     }
 
-    fun requestAnalytics(auth: Auth, userIDs: List<Long>, parts: List<PartEnum>){
+    fun requestAnalytics(auth: Auth, userIDs: List<Long>, parts: List<Part>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsPartScreenState.Loading }
             val partAnalytics = requestPartAnalytics.await(auth, userIDs, parts)

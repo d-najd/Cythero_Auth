@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -16,7 +15,12 @@ import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.tradiebot.cythero.domain.analytics.GradeEnum
+import com.tradiebot.cythero.app.util.view.ContextHolder
+import com.tradiebot.cythero.domain.analytics.Grade
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.runBlocking
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import java.util.SortedMap
 
 /**
@@ -34,7 +38,7 @@ import java.util.SortedMap
 @Composable
 fun PieChart(
     modifier: Modifier = Modifier,
-    dataSet: PieDataSet,
+    dataSet: Flow<PieDataSet>,
     offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
 
@@ -59,9 +63,6 @@ fun PieChart(
 
         update = { pieChart ->
             pieChart.apply {
-                dataSet.setDrawValues(false)
-                dataSet.sliceSpace = sliceSize
-
                 setDrawEntryLabels(false)
                 setUsePercentValues(false)
                 setHoleColor(Color.Transparent.toArgb())
@@ -84,29 +85,35 @@ fun PieChart(
                 legend.textSize = legendTextSize
                 legend.formSize = legendFormSize
 
-                data = PieData(dataSet)
+                runBlocking {
+                    dataSet.collectLatest {
+                        val lastDataSet = dataSet.last()
+                        lastDataSet.setDrawValues(false)
+                        lastDataSet.sliceSpace = sliceSize
+                        data = PieData(lastDataSet)
 
-                invalidate()
+                        invalidate()
+                    }
+                }
             }
         })
 }
 
 object PieChartHelper {
-    @Composable
-    fun generateDataFromGrades(grades: SortedMap<GradeEnum, Int>): PieDataSet {
+    fun dataFromGrades(grades: SortedMap<Grade, Int>): PieDataSet {
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
 
         for (grade in grades) {
-            entries.add(PieEntry(grade.value.toFloat(), "Grade ${stringResource(grade.key.nameId)}"))
+            entries.add(PieEntry(grade.value.toFloat(), "Grade ${Injekt.get<ContextHolder>().getString(grade.key.nameId)}"))
             colors.add(
                 when (grade.key){
-                    GradeEnum.A -> android.graphics.Color.parseColor(
-                        GradeEnum.A.rgb)
-                    GradeEnum.B -> android.graphics.Color.parseColor(
-                        GradeEnum.B.rgb)
-                    GradeEnum.C -> android.graphics.Color.parseColor(
-                        GradeEnum.C.rgb)
+                    Grade.A -> android.graphics.Color.parseColor(
+                        Grade.A.rgb)
+                    Grade.B -> android.graphics.Color.parseColor(
+                        Grade.B.rgb)
+                    Grade.C -> android.graphics.Color.parseColor(
+                        Grade.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

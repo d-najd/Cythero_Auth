@@ -85,5 +85,11 @@
     <string name="placeholder_first_name">Cosmos</string>
     <string name="placeholder_last_name">Redshift</string>
     <string name="placeholder_username">Andromeda</string>
+    <string name="field_coverage_type_overall">Overall</string>
+    <string name="field_coverage_type_primer">Primer</string>
+    <string name="field_coverage_type_base">Base</string>
+    <string name="field_coverage_type_clear">Clear</string>
+    <string name="field_average_grade">Average Grade</string>
+    <string name="field_time_taken_last_sessions">Time Taken (Last 10 sessions)</string>
 
 </resources>

@@ -1,6 +1,6 @@
 package com.tradiebot.cythero.domain.analytics.part.service
 
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.auth.model.Auth
 
@@ -14,6 +14,6 @@ interface AnalyticsPartService {
      * @param parts parts for which the analytics are being requested
      * @return list of [AnalyticsPart]
      */
-    suspend fun getAnalytics(userAuth: Auth, userIDs: List<Long>, parts: List<PartEnum>): List<AnalyticsPart>
+    suspend fun getAnalytics(userAuth: Auth, userIDs: List<Long>, parts: List<Part>): List<AnalyticsPart>
 
 }

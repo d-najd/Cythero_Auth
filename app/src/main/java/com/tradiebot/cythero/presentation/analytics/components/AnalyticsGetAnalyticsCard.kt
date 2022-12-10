@@ -1,6 +1,7 @@
 package com.tradiebot.cythero.presentation.analytics.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
@@ -11,10 +12,11 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
 import com.tradiebot.cythero.presentation.components.CytheroMultipurposeMenu
+import com.tradiebot.cythero.presentation.components.dialogs.CytheroButtonDefaults
 import com.tradiebot.cythero.presentation.components.dialogs.DateRangePickerDialog
 import com.tradiebot.cythero.presentation.util.show
 import com.tradiebot.cythero.util.CytheroDateFormat
@@ -30,16 +32,16 @@ import kotlin.time.ExperimentalTime
 fun AnalyticsGetAnalyticsCard(
     state: AnalyticsReportTypeScreenState.Success,
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
-    onGeneratePartReportClicked: (PartEnum) -> Unit,
+    onGeneratePartReportClicked: (Part) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.PART) }
 
     var dateRange by remember { mutableStateOf(Pair(
         first = Date(Date().time - Duration.Companion.convert(
             168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
         second = Date()
     )) }
-    var selectedPartType by remember { mutableStateOf(PartEnum.FENDER) }
+    var selectedPartType by remember { mutableStateOf(Part.FENDER) }
 
     CytheroCard(
         title = stringResource(R.string.field_analytics),
@@ -68,6 +70,7 @@ fun AnalyticsGetAnalyticsCard(
         }
 
         Button(
+            shape = RoundedCornerShape(CytheroButtonDefaults.BUTTON_CORNER_ROUNDING),
             onClick = {
                 when(selectedReportType){
                     AnalyticsType.USER -> onGenerateUserReportClicked(dateRange)
@@ -88,11 +91,11 @@ fun AnalyticsGetAnalyticsCard(
 }
 
 @Composable fun SelectPartType(
-    selectedPart: PartEnum,
-    onChangeSelectedPart: (PartEnum) -> Unit,
+    selectedPart: Part,
+    onChangeSelectedPart: (Part) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val parts = PartEnum.values()
+    val parts = Part.values()
 
     CytheroDropdownMenu(
         title = stringResource(R.string.info_select_report_type),

@@ -1,8 +1,8 @@
 package com.tradiebot.cythero.domain.analytics.user.model
 
 import com.google.gson.annotations.SerializedName
-import com.tradiebot.cythero.domain.analytics.GradeEnum
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Grade
+import com.tradiebot.cythero.domain.analytics.Part
 
 /**
  *
@@ -18,8 +18,8 @@ data class AnalyticsUserTable(
     @SerializedName("Clear High Coverage") val clearHighCoverage: List<Double>,
     @SerializedName("Clear Low Coverage") val clearLowCoverage: List<Double>,
     @SerializedName("Color Used (Milliliters)") val colorUsedMilliliters: List<Double>,
-    @SerializedName("Grade") val grade: List<GradeEnum>,
-    @SerializedName("Part") val part: List<PartEnum>,
+    @SerializedName("Grade") val grade: List<Grade>,
+    @SerializedName("Part") val part: List<Part>,
     @SerializedName("Primer Good Coverage") val primerGoodCoverage: List<Double>,
     @SerializedName("Primer High Coverage") val primerHighCoverage: List<Double>,
     @SerializedName("Primer Low Coverage") val primerLowCoverage: List<Double>,

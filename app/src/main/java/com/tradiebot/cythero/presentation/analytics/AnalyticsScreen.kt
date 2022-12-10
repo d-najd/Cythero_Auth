@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
-import com.tradiebot.cythero.domain.analytics.PartEnum
+import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContent
 import java.util.Date
 
@@ -20,7 +20,7 @@ fun AnalyticsScreen(
 
     //Report Type Content
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
-    onGeneratePartReportClicked: (PartEnum) -> Unit,
+    onGeneratePartReportClicked: (Part) -> Unit,
 ) {
     Scaffold { contentPadding ->
         BackHandler{ onBackClicked() }
