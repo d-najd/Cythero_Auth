@@ -42,8 +42,8 @@ class DomainModule : InjektModule {
         // addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceImpl }
         addFactory { RequestUserAnalytics(get()) }
 
-        // addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
-        addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
+        addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
+        // addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
         addFactory { RequestPartAnalytics(get()) }
 
         addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
