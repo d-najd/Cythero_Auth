@@ -35,7 +35,7 @@ fun AnalyticsTimeTakenCard(
         ) {
             Column(
                 modifier = Modifier
-                    .height(350.dp)
+                    .height(300.dp)
                     .fillMaxSize()
             ) {
                 val dates = analytics.sessionEnd.takeLast(10)
@@ -71,7 +71,7 @@ fun AnalyticsTimeTakenCard(
             }
             Column(
                 modifier = Modifier
-                    .padding(5.dp)
+                    .padding(2.dp)
             ) { }
         }
     }
