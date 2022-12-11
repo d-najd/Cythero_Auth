@@ -19,6 +19,7 @@ import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.math.round
+import kotlin.math.roundToInt
 
 @Composable
 fun AnalyticsPartCoverageBreakdownCard(
@@ -33,7 +34,7 @@ fun AnalyticsPartCoverageBreakdownCard(
     )
 
     CytheroCard(
-        title = stringResource(R.string.field_grades_breakdown)
+        title = stringResource(R.string.field_coverage_breakdown)
     ) {
         Column(
             modifier = Modifier
@@ -55,8 +56,7 @@ private fun mDataSet(
         Grade.B.rgb
     )
 
-    val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesPrimer = PieChartHelper.dataFromEntriesAndColors(
+    val coveragePrimer = PieChartHelper.dataFromEntriesAndColors(
         entries = listOf(
             PieEntry(round(analytics.averageHighCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_high)),
             PieEntry(round(analytics.averageGoodCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_good)),
@@ -64,7 +64,7 @@ private fun mDataSet(
         ),
         colors = colorsList
     )
-    val gradesBase = PieChartHelper.dataFromEntriesAndColors(
+    val coverageBase = PieChartHelper.dataFromEntriesAndColors(
         entries = listOf(
             PieEntry(round(analytics.averageHighCoverageBase).toFloat(), stringResource(R.string.field_coverage_high)),
             PieEntry(round(analytics.averageGoodCoverageBase).toFloat(), stringResource(R.string.field_coverage_good)),
@@ -72,7 +72,7 @@ private fun mDataSet(
         ),
         colors = colorsList
     )
-    val gradesClear = PieChartHelper.dataFromEntriesAndColors(
+    val coverageClear = PieChartHelper.dataFromEntriesAndColors(
         entries = listOf(
             PieEntry(round(analytics.averageHighCoverageClear).toFloat(), stringResource(R.string.field_coverage_high)),
             PieEntry(round(analytics.averageGoodCoverageClear).toFloat(), stringResource(R.string.field_coverage_good)),
@@ -81,14 +81,35 @@ private fun mDataSet(
         colors = colorsList
     )
 
-    val gradePieDataSet: Flow<PieDataSet> = flow {
+    // Using the other coverage's entry sets will be error prone
+    val coverageOverall = PieChartHelper.dataFromEntriesAndColors(
+        entries = listOf(
+            PieEntry(
+                round( (analytics.averageHighCoverageBase + analytics.averageHighCoverageClear + analytics.averageHighCoveragePrimer)
+                        /3f).toFloat(), stringResource(id = R.string.field_coverage_high)
+            ),
+            PieEntry(
+                round((analytics.averageGoodCoverageBase + analytics.averageGoodCoverageClear + analytics.averageGoodCoveragePrimer)
+                        /3f).toFloat(), stringResource(id = R.string.field_coverage_good)
+            ),
+            PieEntry(
+                round((analytics.averageLowCoverageBase + analytics.averageLowCoverageClear + analytics.averageLowCoveragePrimer)
+                        /3f).toFloat(), stringResource(id = R.string.field_coverage_low)
+            )
+        ),
+        colors = colorsList
+    )
+
+    // val coverageOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.groupingBy { it }.eachCount().toSortedMap())
+
+    val coveragePieDataSet: Flow<PieDataSet> = flow {
         when(selectedCoverageType) {
-            CoverageType.OVERALL -> emit(gradesOverall)
-            CoverageType.PRIMER -> emit(gradesPrimer)
-            CoverageType.BASE -> emit(gradesBase)
-            CoverageType.CLEAR -> emit(gradesClear)
+            CoverageType.OVERALL -> emit(coverageOverall)
+            CoverageType.PRIMER -> emit(coveragePrimer)
+            CoverageType.BASE -> emit(coverageBase)
+            CoverageType.CLEAR -> emit(coverageClear)
         }
     }
 
-    return gradePieDataSet
+    return coveragePieDataSet
 }

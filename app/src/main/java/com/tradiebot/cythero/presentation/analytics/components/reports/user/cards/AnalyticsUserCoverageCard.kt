@@ -33,7 +33,7 @@ fun AnalyticsCoverageGraph(
 
             LineChart(
                 dataSets = dataSets,
-                horizontalValueFormatter = LineChartHelper.LineValueFormatterType.VALUE_POSITION
+                verticalValueFormatter = LineChartHelper.LineValueFormatterType.VALUE_POSITION
             )
         }
     }

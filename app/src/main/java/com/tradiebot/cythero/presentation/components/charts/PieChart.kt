@@ -88,7 +88,7 @@ fun PieChart(
                 runBlocking {
                     dataSet.collectLatest {
                         val lastDataSet = dataSet.last()
-                        lastDataSet.setDrawValues(false)
+                        lastDataSet.setDrawValues(true)
                         lastDataSet.sliceSpace = sliceSize
                         data = PieData(lastDataSet)
 

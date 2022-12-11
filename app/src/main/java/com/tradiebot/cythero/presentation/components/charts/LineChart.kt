@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /**
@@ -42,7 +43,7 @@ fun LineChart(
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
 
-    horizontalValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
+    verticalValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
     leftValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
     rightValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
     xAxisPosition: XAxisPosition = XAxisPosition.TOP,
@@ -73,6 +74,10 @@ fun LineChart(
                     lastDataSet = dataSets.last()[0]
                 }
 
+                extraTopOffset = if (offsets.y > 0) offsets.y else 0f
+                extraBottomOffset = if (offsets.y < 0) abs(offsets.y) else 0f
+                extraLeftOffset = if (offsets.x > 0) offsets.x else 0f
+                extraRightOffset = if (offsets.x < 0) abs(offsets.x) else 0f
                 xAxis.axisMaximum = 0f
                 xAxis.axisMinimum = 0f
 
@@ -95,12 +100,15 @@ fun LineChart(
                 legend.textSize = legendTextSize
                 legend.formSize = legendFormSize
 
+                legend.xOffset = legendOffsets.x
+                legend.yOffset = legendOffsets.y
+
                 xAxis.position = xAxisPosition
 
-                if(horizontalValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
+                if(verticalValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
                     xAxis.setValueFormatter { position, _ ->
                         LineChartHelper.LineValueFormatter.format(
-                            horizontalValueFormatter,
+                            verticalValueFormatter,
                             lastDataSet,
                             position
                         )
@@ -110,7 +118,7 @@ fun LineChart(
                 if(leftValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
                     axisLeft.setValueFormatter { position, _ ->
                         LineChartHelper.LineValueFormatter.format(
-                            horizontalValueFormatter,
+                            leftValueFormatter,
                             lastDataSet,
                             position
                         )
@@ -120,7 +128,7 @@ fun LineChart(
                 if(rightValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
                     axisRight.setValueFormatter { position, _ ->
                         LineChartHelper.LineValueFormatter.format(
-                            horizontalValueFormatter,
+                            rightValueFormatter,
                             lastDataSet,
                             position
                         )
@@ -158,6 +166,8 @@ object LineChartHelper{
     enum class LineValueFormatterType{
         /** formatted { value position } ex { Fender 2 } */
         VALUE_POSITION,
+        /** formatted { value } ex { Fender } */
+        VALUE,
         /** doesn't format the value */
         DEFAULT,
     }
@@ -168,23 +178,18 @@ object LineChartHelper{
             dataSet: LineDataSet,
             position: Float
         ): String {
-            @Suppress("KotlinConstantConditions")
-            when (type) {
+            (return when (type) {
                 LineValueFormatterType.VALUE_POSITION -> {
-                    return valuePosition(
-                        dataSet,
-                        position,
-                    )
+                    "${position.toInt() + 1}" +
+                            " ${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
+                }
+                LineValueFormatterType.VALUE -> {
+                    "${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
                 }
                 LineValueFormatterType.DEFAULT -> {
                     throw IllegalStateException()
                 }
-            }
-        }
-
-        private fun valuePosition(dataSet: LineDataSet, position: Float): String{
-            return "${position.toInt() + 1}" +
-                    " ${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
+            })
         }
     }
 
