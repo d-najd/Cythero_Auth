@@ -14,6 +14,10 @@ class ContextHolder(
         fragmentManager = (context as FragmentActivity).supportFragmentManager
     }
 
+    fun getContext(): Context{
+        return context
+    }
+
     fun getString(id: Int): String{
         return context.getString(id)
     }

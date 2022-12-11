@@ -4,7 +4,14 @@ package com.tradiebot.cythero.util
 
 import android.content.Context
 import android.util.DisplayMetrics
+import com.tradiebot.cythero.app.util.view.ContextHolder
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 
+/** gets app context */
+fun mAppContext(): Context {
+    return Injekt.get<ContextHolder>().getContext()
+}
 
 /**
  * This method converts dp unit to equivalent pixels, depending on device density.

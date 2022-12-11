@@ -6,6 +6,8 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineDataSet
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
+import com.tradiebot.cythero.util.convertPixelsToDp
+import com.tradiebot.cythero.util.mAppContext
 
 object ChartsHelper {
     /**
@@ -24,11 +26,11 @@ object ChartsHelper {
         fLegend.horizontalAlignment = sLegend.horizontalAlignment
         fLegend.verticalAlignment = sLegend.verticalAlignment
         fLegend.orientation = sLegend.orientation
-        fLegend.yEntrySpace = sLegend.yEntrySpace
-        fLegend.xEntrySpace = sLegend.xEntrySpace
-        fLegend.yOffset = sLegend.yOffset
-        fLegend.xOffset = sLegend.xOffset
-        fLegend.textSize = sLegend.textSize
+        fLegend.yEntrySpace = mAppContext().convertPixelsToDp(sLegend.yEntrySpace)
+        fLegend.xEntrySpace = mAppContext().convertPixelsToDp(sLegend.xEntrySpace)
+        fLegend.yOffset = mAppContext().convertPixelsToDp(sLegend.yOffset)
+        fLegend.xOffset = mAppContext().convertPixelsToDp(sLegend.xOffset)
+        fLegend.textSize = mAppContext().convertPixelsToDp(sLegend.textSize)
         fLegend.formSize = sLegend.formSize
     }
 
