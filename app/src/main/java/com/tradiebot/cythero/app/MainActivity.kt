@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // get instantiated before the DomainModule gets called
         Injekt.importModule(DomainModule())
         Injekt.importModule(MainActivityModule(this))
-        // Utils.init(this) // utils for mp android chart
+        Utils.init(this) // utils for mp android chart
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)

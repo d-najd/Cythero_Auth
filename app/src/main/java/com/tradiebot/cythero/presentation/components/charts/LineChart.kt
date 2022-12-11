@@ -75,14 +75,12 @@ fun LineChart(
 
                 maxHighlightDistance = 250f
 
-                /*
                 ChartsHelper.copyLegendAndFormatterVars(
                     fLegend = this.legend,
                     sLegend = legend,
                     lineChart = this,
                     dataSet = lastDataSet
                 )
-                 */
 
                 runBlocking {
                     dataSets.collectLatest {

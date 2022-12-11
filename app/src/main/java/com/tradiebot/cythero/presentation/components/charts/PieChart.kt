@@ -8,16 +8,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.PieChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.Legend.LegendForm
-import com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment
-import com.github.mikephil.charting.components.Legend.LegendOrientation
-import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
+import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.presentation.util.CytheroLegend
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
@@ -43,18 +40,7 @@ fun PieChart(
     offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
 
-    legend: Legend = Legend(),
-
-    //Legend
-    isLegendEnabled: Boolean = true,
-    legendForm: LegendForm = LegendForm.CIRCLE,
-    legendFormSize: Float = 15f,
-    legendTextSize: Float = 12f,
-    legendOffsets: Offset = Offset(PieChartHelper.PIE_CHART_LEGEND_X_OFFSET, 0f),
-    legendEntrySpacing: Offset = Offset(25f,15f),
-    legendHorizontalAlignment: LegendHorizontalAlignment = LegendHorizontalAlignment.RIGHT,
-    legendVerticalAlignment: LegendVerticalAlignment = LegendVerticalAlignment.CENTER,
-    legendOrientation: LegendOrientation = LegendOrientation.VERTICAL,
+    legend: CytheroLegend = ChartsHelper.defaultPieCLegend(),
 ) {
 
     AndroidView(
@@ -74,6 +60,11 @@ fun PieChart(
                 extraTopOffset = offsets.y
                 extraLeftOffset = offsets.x
                 description.isEnabled = false
+
+                ChartsHelper.copyLegendVars(
+                    fLegend = this.legend,
+                    sLegend = legend
+                )
 
                 runBlocking {
                     dataSet.collectLatest {
