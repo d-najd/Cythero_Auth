@@ -8,13 +8,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.*
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.Grade
+import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.presentation.util.CytheroLegend
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
@@ -43,21 +43,7 @@ fun LineChart(
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
 
-    verticalValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
-    leftValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
-    rightValueFormatter: LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT,
-    xAxisPosition: XAxisPosition = XAxisPosition.TOP,
-
-    //Legend
-    isLegendEnabled: Boolean = true,
-    legendForm: Legend.LegendForm = Legend.LegendForm.CIRCLE,
-    legendFormSize: Float = 15f,
-    legendTextSize: Float = 12f,
-    legendOffsets: Offset = Offset(0f, 0f),
-    legendEntrySpacing: Offset = Offset(25f,15f),
-    legendHorizontalAlignment: Legend.LegendHorizontalAlignment = Legend.LegendHorizontalAlignment.CENTER,
-    legendVerticalAlignment: Legend.LegendVerticalAlignment = Legend.LegendVerticalAlignment.BOTTOM,
-    legendOrientation: Legend.LegendOrientation = Legend.LegendOrientation.HORIZONTAL,
+    legend: CytheroLegend = ChartsHelper.defaultLineCLegend()
 ) {
     AndroidView(
         modifier = modifier
@@ -89,51 +75,14 @@ fun LineChart(
 
                 maxHighlightDistance = 250f
 
-                legend.isEnabled = isLegendEnabled
-
-                legend.form = legendForm
-                legend.horizontalAlignment = legendHorizontalAlignment
-                legend.verticalAlignment = legendVerticalAlignment
-                legend.orientation = legendOrientation
-                legend.yEntrySpace = legendEntrySpacing.y
-                legend.xEntrySpace = legendEntrySpacing.x
-                legend.textSize = legendTextSize
-                legend.formSize = legendFormSize
-
-                legend.xOffset = legendOffsets.x
-                legend.yOffset = legendOffsets.y
-
-                xAxis.position = xAxisPosition
-
-                if(verticalValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
-                    xAxis.setValueFormatter { position, _ ->
-                        LineChartHelper.LineValueFormatter.format(
-                            verticalValueFormatter,
-                            lastDataSet,
-                            position
-                        )
-                    }
-                }
-
-                if(leftValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
-                    axisLeft.setValueFormatter { position, _ ->
-                        LineChartHelper.LineValueFormatter.format(
-                            leftValueFormatter,
-                            lastDataSet,
-                            position
-                        )
-                    }
-                }
-
-                if(rightValueFormatter != LineChartHelper.LineValueFormatterType.DEFAULT) {
-                    axisRight.setValueFormatter { position, _ ->
-                        LineChartHelper.LineValueFormatter.format(
-                            rightValueFormatter,
-                            lastDataSet,
-                            position
-                        )
-                    }
-                }
+                /*
+                ChartsHelper.copyLegendAndFormatterVars(
+                    fLegend = this.legend,
+                    sLegend = legend,
+                    lineChart = this,
+                    dataSet = lastDataSet
+                )
+                 */
 
                 runBlocking {
                     dataSets.collectLatest {

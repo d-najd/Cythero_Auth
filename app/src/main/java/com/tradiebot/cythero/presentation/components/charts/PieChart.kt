@@ -8,6 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment
 import com.github.mikephil.charting.components.Legend.LegendOrientation
@@ -42,6 +43,8 @@ fun PieChart(
     offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
 
+    legend: Legend = Legend(),
+
     //Legend
     isLegendEnabled: Boolean = true,
     legendForm: LegendForm = LegendForm.CIRCLE,
@@ -71,19 +74,6 @@ fun PieChart(
                 extraTopOffset = offsets.y
                 extraLeftOffset = offsets.x
                 description.isEnabled = false
-
-                legend.isEnabled = isLegendEnabled
-
-                legend.form = legendForm
-                legend.horizontalAlignment = legendHorizontalAlignment
-                legend.verticalAlignment = legendVerticalAlignment
-                legend.orientation = legendOrientation
-                legend.yEntrySpace = legendEntrySpacing.y
-                legend.xEntrySpace = legendEntrySpacing.x
-                legend.yOffset = legendOffsets.y
-                legend.xOffset = legendOffsets.x
-                legend.textSize = legendTextSize
-                legend.formSize = legendFormSize
 
                 runBlocking {
                     dataSet.collectLatest {

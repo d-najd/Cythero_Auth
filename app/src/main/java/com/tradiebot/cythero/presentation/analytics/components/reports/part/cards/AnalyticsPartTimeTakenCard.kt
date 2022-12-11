@@ -1,14 +1,11 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.part.cards
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.Legend.LegendOrientation
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.LineDataSet
 import com.tradiebot.cythero.R
@@ -18,6 +15,7 @@ import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
 import com.tradiebot.cythero.presentation.components.charts.LineChart
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
+import com.tradiebot.cythero.presentation.util.ChartsHelper
 import com.tradiebot.cythero.util.CytheroDateFormat
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -60,11 +58,15 @@ fun AnalyticsTimeTakenCard(
                         CoverageType.CLEAR -> emit(clearTimeData)
                     }
                 }
+
+                val legend = ChartsHelper.defaultLineCLegend()
+                legend.xAxisPosition = XAxisPosition.BOTTOM
+                legend.verticalValueFormatter = LineChartHelper.LineValueFormatterType.VALUE
+
                 LineChart(
                     dataSets = dataSet,
-                    xAxisPosition = XAxisPosition.BOTTOM,
+                    legend = legend,
                     offsets = Offset(0f, -10f),
-                    verticalValueFormatter = LineChartHelper.LineValueFormatterType.VALUE,
                 )
             }
             Column(

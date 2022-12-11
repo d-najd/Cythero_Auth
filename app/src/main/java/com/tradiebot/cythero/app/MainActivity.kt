@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.asTransaction
+import com.github.mikephil.charting.utils.Utils
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
 import com.tradiebot.cythero.databinding.MainActivityBinding
 import com.tradiebot.cythero.domain.DomainModule
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         // get instantiated before the DomainModule gets called
         Injekt.importModule(DomainModule())
         Injekt.importModule(MainActivityModule(this))
+        // Utils.init(this) // utils for mp android chart
 
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
