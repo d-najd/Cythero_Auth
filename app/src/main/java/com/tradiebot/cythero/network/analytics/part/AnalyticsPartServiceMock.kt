@@ -13,7 +13,7 @@ object AnalyticsPartServiceMock: AnalyticsPartService {
         userIDs: List<Long>,
         parts: List<Part>
     ): List<AnalyticsPart> {
-        return AnalyticsParts.mockInstance().AnalyticsParts
+        return AnalyticsParts.mockInstance()
     }
 
 }

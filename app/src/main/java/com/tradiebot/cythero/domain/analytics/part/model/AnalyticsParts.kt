@@ -9,8 +9,8 @@ data class AnalyticsParts(
     @SerializedName("Parts") val AnalyticsParts: List<AnalyticsPart>
 ) {
     companion object {
-        fun mockInstance(): AnalyticsParts {
-            return Injekt.get<Gson>().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java)
+        fun mockInstance(): List<AnalyticsPart> {
+            return Injekt.get<Gson>().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java).AnalyticsParts
         }
     }
 }
