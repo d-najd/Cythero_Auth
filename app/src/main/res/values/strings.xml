@@ -93,5 +93,6 @@
     <string name="field_time_taken_last_sessions">Time Taken (Last 10 sessions)</string>
     <string name="field_sessions">Sessions</string>
     <string name="field_coverage_breakdown">Coverage Breakdown</string>
+    <string name="field_paint_used_last_sessions">Paint Used (Last 10 sessions)</string>
 
 </resources>

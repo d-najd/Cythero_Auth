@@ -4,7 +4,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 
-class CytheroLegend() : Legend() {
+class CytheroLegend : Legend() {
     var verticalValueFormatter:
             LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
     var leftValueFormatter:
@@ -12,8 +12,7 @@ class CytheroLegend() : Legend() {
     var rightValueFormatter:
             LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
 
-    var xAxisPosition:
-            XAxis.XAxisPosition = XAxis.XAxisPosition.TOP
+    var xAxisPosition: XAxis.XAxisPosition = XAxis.XAxisPosition.TOP
 
     init {
         form = LegendForm.CIRCLE

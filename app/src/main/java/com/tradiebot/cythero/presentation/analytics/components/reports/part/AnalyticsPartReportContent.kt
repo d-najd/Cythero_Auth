@@ -10,6 +10,7 @@ import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenS
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartCoverageBreakdownCard
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartGradesBreakdownCard
+import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartPaintUsed
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsTimeTakenCard
 
 @Composable
@@ -35,6 +36,11 @@ fun AnalyticsPartReportContent(
     )
 
     AnalyticsPartCoverageBreakdownCard(
+        state = state,
+        selectedCoverageType = selectedCoverageType
+    )
+
+    AnalyticsPartPaintUsed(
         state = state,
         selectedCoverageType = selectedCoverageType
     )
