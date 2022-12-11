@@ -26,7 +26,6 @@ import java.util.SortedMap
  * chart and doing so requires rework of some components in the library.
  *
  * @param dataSet data set for the chart
- * @param isLegendEnabled whether the legend is enabled or not on by default. <b>NOTE</b> enabling the
  * legend changes the offset on the chart
  *
  * TODO while hovering a field in chart display number of overall grades
@@ -42,7 +41,6 @@ fun PieChart(
 
     legend: CytheroLegend = ChartsHelper.defaultPieCLegend(),
 ) {
-
     AndroidView(
         modifier = modifier
             .fillMaxSize(),
