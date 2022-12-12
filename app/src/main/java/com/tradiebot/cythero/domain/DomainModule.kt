@@ -10,15 +10,19 @@ import com.tradiebot.cythero.domain.analytics.user.service.AnalyticsUserService
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.service.AuthService
+import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceImpl
 import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceMock
 import com.tradiebot.cythero.network.analytics.usage.AnalyticsUsageServiceMock
+import com.tradiebot.cythero.network.analytics.user.AnalyticsUserServiceImpl
 import com.tradiebot.cythero.network.analytics.user.AnalyticsUserServiceMock
+import com.tradiebot.cythero.network.auth.AuthServiceImpl
 import com.tradiebot.cythero.network.auth.AuthServiceMock
 import com.tradiebot.cythero.util.CytheroDateFormat
 import okhttp3.OkHttpClient
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
+    private val USE_MOCKS = false
 
     override fun InjektRegistrar.registerInjectables() {
         addSingletonFactory {
@@ -31,23 +35,27 @@ class DomainModule : InjektModule {
                 .create()
         }
 
-        addSingletonFactory<AuthService> { AuthServiceMock }
-        // addSingletonFactory<AuthService> { AuthServiceImpl }
+        when(USE_MOCKS){
+            true -> {
+                addSingletonFactory<AuthService> { AuthServiceMock }
+                addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceMock }
+                addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
+                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
+            }
+            false -> {
+                addSingletonFactory<AuthService> { AuthServiceImpl }
+                addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceImpl }
+                addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
+                // No Impl yet
+                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
+            }
+        }
+
         addFactory { LoginUser(get()) }
         addFactory { RegisterUser(get()) }
 
-
-        addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceMock }
-        // addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceImpl }
         addFactory { RequestUserAnalytics(get()) }
-
-        addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
-        // addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
         addFactory { RequestPartAnalytics(get()) }
-
-        addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
-        // addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
         addFactory { RequestUsageAnalytics(get()) }
-
     }
 }
