@@ -4,7 +4,6 @@ package com.tradiebot.cythero.app.theme
 
 import androidx.compose.ui.graphics.Color
 
-
 val cythero_theme_light_primary = Color(0xFF58A85F)
 val cythero_theme_light_onPrimary = Color(0xFFFFFFFF)
 val cythero_theme_light_primaryContainer = Color(0xFFDAEC73)
@@ -35,8 +34,6 @@ val cythero_theme_light_shadow = Color(0xFF000000)
 val cythero_theme_light_surfaceTint = Color(0xFF58A85F)
 val cythero_theme_light_outlineVariant = Color(0xFFC8C7B7)
 val cythero_theme_light_scrim = Color(0xFF000000)
-
-
 
 val cythero_theme_dark_primary = Color(0xFF87D98A)
 val cythero_theme_dark_onPrimary = Color(0xFF003910)
