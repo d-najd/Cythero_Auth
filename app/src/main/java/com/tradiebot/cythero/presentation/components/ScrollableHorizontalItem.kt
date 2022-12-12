@@ -3,6 +3,7 @@ package com.tradiebot.cythero.presentation.components
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 /**
  * Single horizontally scrollable tab row
@@ -16,9 +17,10 @@ fun ScrollableHorizontalItem(
     content: @Composable () -> Unit
 ) {
     ScrollableTabRow(
-        selectedTabIndex = 0,
-        modifier = modifier,
+        edgePadding = 0.dp,
         indicator = { },
+        modifier = modifier,
+        selectedTabIndex = 0,
         divider = { },
     ) {
         content()
