@@ -21,6 +21,7 @@ import com.tradiebot.cythero.util.CytheroDateFormat
 import com.tradiebot.cythero.util.mAppContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.math.round
 
 @Composable
 fun AnalyticsPartPaintUsed(
@@ -42,23 +43,24 @@ fun AnalyticsPartPaintUsed(
             ) {
                 val dates = analytics.sessionEnd.takeLast(10)
                     .map { o -> CytheroDateFormat.defaultChartDateFormat().format(o) }
+
                 val overallTimeData = LineChartHelper.generateDataSet(
-                        data = analytics.overallPaintUsed.map { o -> o.toFloat() }.zip(dates),
+                        data = analytics.overallPaintUsed.map { o -> round(o.toFloat()) }.zip(dates),
                         label = mAppContext().getString(R.string.field_sessions),
                         color = Grade.A.rgb
                     )
                 val primerTimeData = LineChartHelper.generateDataSet(
-                    data = analytics.primerPaintUsed.map { o -> o.toFloat() }.zip(dates),
+                    data = analytics.primerPaintUsed.map { o -> round(o.toFloat()) }.zip(dates),
                     label = mAppContext().getString(R.string.field_sessions),
                     color = Grade.A.rgb
                 )
                 val baseTimeData = LineChartHelper.generateDataSet(
-                    data = analytics.basePaintUsed.map { o -> o.toFloat() }.zip(dates),
+                    data = analytics.basePaintUsed.map { o -> round(o.toFloat()) }.zip(dates),
                     label = mAppContext().getString(R.string.field_sessions),
                     color = Grade.A.rgb
                 )
                 val clearTimeData = LineChartHelper.generateDataSet(
-                    data = analytics.basePaintUsed.map { o -> o.toFloat() }.zip(dates),
+                    data = analytics.basePaintUsed.map { o -> round(o.toFloat()) }.zip(dates),
                     label = mAppContext().getString(R.string.field_sessions),
                     color = Grade.A.rgb
                 )
