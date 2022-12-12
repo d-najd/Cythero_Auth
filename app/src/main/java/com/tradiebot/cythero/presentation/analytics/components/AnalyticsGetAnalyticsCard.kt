@@ -32,7 +32,7 @@ fun AnalyticsGetAnalyticsCard(
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.PART) }
 
     var dateRange by remember { mutableStateOf(Pair(
         first = Date(Date().time - Duration.Companion.convert(
