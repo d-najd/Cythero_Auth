@@ -5,13 +5,12 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsBasicFields
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 
 @Composable
 fun AnalyticsUserReportContent(
-    state: AnalyticsUserScreenState.Success,
+    state: AnalyticsScreenState.UserSuccess,
     contentPadding: PaddingValues,
 ) {
     AnalyticsGeneralCard(

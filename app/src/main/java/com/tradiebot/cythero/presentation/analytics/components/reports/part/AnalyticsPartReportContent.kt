@@ -6,7 +6,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartCoverageBreakdownCard
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.cards.AnalyticsPartGradesBreakdownCard
@@ -15,7 +15,7 @@ import com.tradiebot.cythero.presentation.analytics.components.reports.part.card
 
 @Composable
 fun AnalyticsPartReportContent(
-    state: AnalyticsPartScreenState.Success,
+    state: AnalyticsScreenState.PartSuccess,
     contentPadding: PaddingValues,
 ) {
     var selectedCoverageType by remember { mutableStateOf(CoverageType.OVERALL) }

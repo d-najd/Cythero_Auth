@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsReportTypeScreenState
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
@@ -30,7 +29,6 @@ import kotlin.time.ExperimentalTime
 @OptIn(ExperimentalTime::class)
 @Composable
 fun AnalyticsGetAnalyticsCard(
-    state: AnalyticsReportTypeScreenState.Success,
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
 ) {

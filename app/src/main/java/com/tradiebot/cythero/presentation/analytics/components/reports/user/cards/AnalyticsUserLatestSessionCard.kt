@@ -3,7 +3,7 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.user.car
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.components.CytheroCard
@@ -13,7 +13,7 @@ import com.tradiebot.cythero.util.includeDecimals
 
 @Composable
 fun AnalyticsLatestSessionCard(
-    state: AnalyticsUserScreenState.Success,
+    state: AnalyticsScreenState.UserSuccess,
 ) {
     val analyticsTable = state.analytics[state.auth.user.id]!!.analyticsUserTable
 

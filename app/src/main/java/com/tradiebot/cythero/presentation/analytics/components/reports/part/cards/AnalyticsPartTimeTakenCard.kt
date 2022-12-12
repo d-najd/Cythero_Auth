@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.data.LineDataSet
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.flow
 
 @Composable
 fun AnalyticsTimeTakenCard(
-    state: AnalyticsPartScreenState.Success,
+    state: AnalyticsScreenState.PartSuccess,
     selectedCoverageType: CoverageType,
 ){
     val analytics = state.analytics[0]

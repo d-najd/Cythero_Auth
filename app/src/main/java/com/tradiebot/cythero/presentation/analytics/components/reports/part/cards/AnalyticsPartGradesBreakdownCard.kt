@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 
 @Composable
 fun AnalyticsPartGradesBreakdownCard(
-    state: AnalyticsPartScreenState.Success,
+    state: AnalyticsScreenState.PartSuccess,
     selectedCoverageType: CoverageType,
     onSelectedCoverageTypeChange: (CoverageType) -> Unit,
 ){

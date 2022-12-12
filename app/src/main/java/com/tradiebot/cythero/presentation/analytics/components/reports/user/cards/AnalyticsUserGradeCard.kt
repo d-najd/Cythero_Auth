@@ -7,7 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsUserScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.charts.PieChart
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.*
 
 @Composable
 fun AnalyticsGradeCard(
-    state: AnalyticsUserScreenState.Success,
+    state: AnalyticsScreenState.UserSuccess,
 ){
     val analyticsTable = state.analytics[state.auth.user.id]!!.analyticsUserTable
     val grades = analyticsTable.grade.groupingBy { it }.eachCount().toSortedMap()

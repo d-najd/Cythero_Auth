@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.screen_models.AnalyticsPartScreenState
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
@@ -22,7 +22,7 @@ import kotlin.math.round
 
 @Composable
 fun AnalyticsPartCoverageBreakdownCard(
-    state: AnalyticsPartScreenState.Success,
+    state: AnalyticsScreenState.PartSuccess,
     selectedCoverageType: CoverageType,
 ) {
     val analytics = state.analytics[0]
