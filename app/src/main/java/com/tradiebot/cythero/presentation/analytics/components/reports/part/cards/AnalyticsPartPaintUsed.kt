@@ -16,7 +16,7 @@ import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
 import com.tradiebot.cythero.presentation.components.charts.LineChart
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
-import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.presentation.util.ChartFieldHolder
 import com.tradiebot.cythero.util.CytheroDateFormat
 import com.tradiebot.cythero.util.mAppContext
 import kotlinx.coroutines.flow.Flow
@@ -74,13 +74,13 @@ fun AnalyticsPartPaintUsed(
                     }
                 }
 
-                val legend = ChartsHelper.defaultLineCLegend()
-                legend.xAxisPosition = XAxis.XAxisPosition.BOTTOM
-                legend.verticalValueFormatter = LineChartHelper.LineValueFormatterType.VALUE
+                val chartFieldHolder = ChartFieldHolder.defaultPieCLegend()
+                chartFieldHolder.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                chartFieldHolder.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.VALUE
 
                 LineChart(
                     dataSets = dataSet,
-                    legend = legend,
+                    chartFieldHolder = chartFieldHolder,
                     offsets = Offset(0f, -10f),
                 )
             }

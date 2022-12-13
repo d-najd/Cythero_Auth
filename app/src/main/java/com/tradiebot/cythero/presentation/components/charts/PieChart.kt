@@ -13,13 +13,15 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
-import com.tradiebot.cythero.presentation.util.ChartsHelper
 import com.tradiebot.cythero.presentation.util.ChartFieldHolder
-import kotlinx.coroutines.flow.*
+import com.tradiebot.cythero.presentation.util.ChartsHelper
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.SortedMap
+import java.util.*
 
 /**
  * Creates a PieChart which fills max size and gets centered, currently there is no way to align the
@@ -39,7 +41,7 @@ fun PieChart(
     offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
 
-    legend: ChartFieldHolder = ChartsHelper.defaultPieCLegend(),
+    chartFieldHolder: ChartFieldHolder = ChartFieldHolder.defaultPieCLegend(),
 ) {
     AndroidView(
         modifier = modifier
@@ -50,6 +52,11 @@ fun PieChart(
 
         update = { pieChart ->
             pieChart.apply {
+                var curDataSet: PieDataSet
+                runBlocking {
+                    curDataSet = dataSet.last()
+                }
+
                 setDrawEntryLabels(false)
                 setUsePercentValues(false)
                 setHoleColor(Color.Transparent.toArgb())
@@ -59,17 +66,19 @@ fun PieChart(
                 extraLeftOffset = offsets.x
                 description.isEnabled = false
 
-                ChartsHelper.copyIntoLegend(
-                    legend = this.legend,
-                    holder = legend
+                ChartsHelper.copyIntoChart(
+                    chart = this,
+                    legend = legend,
+                    holder = chartFieldHolder,
+                    dataSet = curDataSet
                 )
 
                 runBlocking {
                     dataSet.collectLatest {
-                        val lastDataSet = dataSet.last()
-                        lastDataSet.setDrawValues(true)
-                        lastDataSet.sliceSpace = sliceSize
-                        data = PieData(lastDataSet)
+                        curDataSet = dataSet.last()
+                        curDataSet.setDrawValues(true)
+                        curDataSet.sliceSpace = sliceSize
+                        data = PieData(curDataSet)
 
                         invalidate()
                     }

@@ -46,7 +46,7 @@ fun LineChart(
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
 
-    legend: ChartFieldHolder = ChartsHelper.defaultLineCLegend()
+    chartFieldHolder: ChartFieldHolder = ChartFieldHolder.defaultLineCLegend()
 ) {
     AndroidView(
         modifier = modifier
@@ -58,9 +58,9 @@ fun LineChart(
 
         update = { lineChart ->
             lineChart.apply {
-                var lastDataSet: LineDataSet
+                var curDataSet: LineDataSet
                 runBlocking {
-                    lastDataSet = dataSets.last()[0]
+                    curDataSet = dataSets.last()[0]
                 }
 
                 extraTopOffset = if (offsets.y > 0) offsets.y else 0f
@@ -78,22 +78,20 @@ fun LineChart(
 
                 maxHighlightDistance = 250f
 
-                /*
-                ChartsHelper.copyLegendAndFormatterVars(
-                    fLegend = this.legend,
-                    sLegend = legend,
-                    lineChart = this,
-                    dataSet = lastDataSet
+                ChartsHelper.copyIntoBarLineChart(
+                    chart = this,
+                    legend = legend,
+                    holder = chartFieldHolder,
+                    dataSet = curDataSet
                 )
-                 */
 
                 runBlocking {
                     dataSets.collectLatest {
                         val dataSetsLatest = dataSets.last()
-                        lastDataSet = dataSets.last()[0]
+                        curDataSet = dataSets.last()[0]
 
-                        xAxis.axisMaximum = if(lastDataSet.entryCount > labelCount) labelCount.toFloat() else lastDataSet.entryCount.toFloat() - 1f
-                        xAxis.labelCount = if(lastDataSet.entryCount > labelCount) labelCount else lastDataSet.entryCount - 1
+                        xAxis.axisMaximum = if(curDataSet.entryCount > labelCount) labelCount.toFloat() else curDataSet.entryCount.toFloat() - 1f
+                        xAxis.labelCount = if(curDataSet.entryCount > labelCount) labelCount else curDataSet.entryCount - 1
 
                         for(dataSet in dataSetsLatest){
                             dataSet.lineWidth = lineWidth
