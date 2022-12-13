@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ProcessLifecycleOwner
-import uy.kohesive.injekt.Injekt
 
 class App : Application(), DefaultLifecycleObserver
 {

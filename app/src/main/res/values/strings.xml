@@ -95,4 +95,13 @@
     <string name="field_coverage_breakdown">Coverage Breakdown</string>
     <string name="field_paint_used_last_sessions">Paint Used (Last 10 sessions)</string>
 
+    <string name="field_dump_crash_logs">Dump crash logs</string>
+
+
+    <!-- Crash screen -->
+    <string name="crash_screen_title">An Unexpected Error Occurred</string>
+    <string name="crash_screen_description">%s ran into an unexpected error. We suggest you screenshot this message and dump the crash logs</string>
+    <string name="crash_screen_restart_application">Restart the application</string>
+    <string name="crash">Crash</string>
+
 </resources>
