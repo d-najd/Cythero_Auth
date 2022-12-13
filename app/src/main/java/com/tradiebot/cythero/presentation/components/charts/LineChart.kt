@@ -8,13 +8,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.IDataSet
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.util.view.ContextHolder
-import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.analytics.Grade
+import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
+import com.tradiebot.cythero.presentation.util.ChartFieldHolder
 import com.tradiebot.cythero.presentation.util.ChartsHelper
-import com.tradiebot.cythero.presentation.util.CytheroLegend
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
@@ -43,7 +46,7 @@ fun LineChart(
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
 
-    legend: CytheroLegend = ChartsHelper.defaultLineCLegend()
+    legend: ChartFieldHolder = ChartsHelper.defaultLineCLegend()
 ) {
     AndroidView(
         modifier = modifier
@@ -75,12 +78,14 @@ fun LineChart(
 
                 maxHighlightDistance = 250f
 
+                /*
                 ChartsHelper.copyLegendAndFormatterVars(
                     fLegend = this.legend,
                     sLegend = legend,
                     lineChart = this,
                     dataSet = lastDataSet
                 )
+                 */
 
                 runBlocking {
                     dataSets.collectLatest {
@@ -122,19 +127,19 @@ object LineChartHelper{
     object LineValueFormatter {
         fun format(
             type: LineValueFormatterType,
-            dataSet: LineDataSet,
+            dataSet: IDataSet<*>,
             position: Float
         ): String {
             (return when (type) {
                 LineValueFormatterType.VALUE_POSITION -> {
                     "${position.toInt() + 1}" +
-                            " ${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
+                            " ${dataSet.getEntryForIndex(position.toInt()).data}"
                 }
                 LineValueFormatterType.VALUE -> {
-                    "${(dataSet.entries?.getOrNull(position.toInt())?.data) ?: ""}"
+                    "${(dataSet.getEntryForIndex(position.toInt()).data)}"
                 }
                 LineValueFormatterType.DEFAULT -> {
-                    throw IllegalStateException()
+                    LineValueFormatterType.DEFAULT.toString()
                 }
             })
         }

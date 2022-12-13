@@ -1,39 +1,99 @@
 package com.tradiebot.cythero.presentation.util
 
-import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.charts.BarLineChartBase
+import com.github.mikephil.charting.charts.Chart
+import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
+import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.LineRadarDataSet
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
 
+
+
 object ChartsHelper {
     /**
-     * copies and sets the values from the [sLegend] to [fLegend], if using line chart use [copyLegendAndFormatterVars]
-     * @param [fLegend] the legend which is being modified
-     * @param [sLegend] the legend which the values are being copied from
-     * @see [copyLegendAndFormatterVars]
+     * copies and sets the values from the [holder] to [legend], if using line chart use [copyLegendAndFormatterVars]
+     * @param [legend] the legend which is being modified
+     * @param [holder] the legend which the values are being copied from
      */
-    fun copyLegendVars(
-        fLegend: Legend,
-        sLegend: CytheroLegend
+    fun copyIntoLegend(
+        legend: Legend,
+        holder: ChartFieldHolder
     ) {
-        fLegend.isEnabled = sLegend.isEnabled
+        legend.isEnabled = holder.isEnabled
 
-        fLegend.form = sLegend.form
-        fLegend.horizontalAlignment = sLegend.horizontalAlignment
-        fLegend.verticalAlignment = sLegend.verticalAlignment
-        fLegend.orientation = sLegend.orientation
-        fLegend.yEntrySpace = mAppContext().convertPixelsToDp(sLegend.yEntrySpace)
-        fLegend.xEntrySpace = mAppContext().convertPixelsToDp(sLegend.xEntrySpace)
-        fLegend.yOffset = mAppContext().convertPixelsToDp(sLegend.yOffset)
-        fLegend.xOffset = mAppContext().convertPixelsToDp(sLegend.xOffset)
-        fLegend.textSize = mAppContext().convertPixelsToDp(sLegend.textSize)
-        fLegend.formSize = sLegend.formSize
+        legend.form = holder.form
+        legend.horizontalAlignment = holder.horizontalAlignment
+        legend.verticalAlignment = holder.verticalAlignment
+        legend.orientation = holder.orientation
+        legend.yEntrySpace = mAppContext().convertPixelsToDp(holder.yEntrySpace)
+        legend.xEntrySpace = mAppContext().convertPixelsToDp(holder.xEntrySpace)
+        legend.yOffset = mAppContext().convertPixelsToDp(holder.yOffset)
+        legend.xOffset = mAppContext().convertPixelsToDp(holder.xOffset)
+        legend.textSize = mAppContext().convertPixelsToDp(holder.textSize)
+        legend.formSize = holder.formSize
     }
 
+
+    fun <T: BarLineScatterCandleBubbleData<*>> copyIntoBarChart(
+        chart: BarLineChartBase<T>,
+        legend: Legend,
+        holder: ChartFieldHolder,
+        dataSet: LineRadarDataSet<*> = chart.data.dataSets[0]
+    ) {
+        chart.xAxis.setValueFormatterIfNotDefault(
+            type = holder.verticalValueFormatter,
+            dataset = dataSet
+        )
+
+        chart.axisLeft.setValueFormatterIfNotDefault(
+            type = holder.verticalValueFormatter,
+            dataset = dataSet
+        )
+
+        chart.axisRight.setValueFormatterIfNotDefault(
+            type = holder.verticalValueFormatter,
+            dataset = dataSet
+        )
+
+        chart.xAxis.position = holder.xAxisPosition
+
+        copyIntoLegend(
+            legend = legend,
+            holder = holder
+        )
+    }
+
+    private fun <T: ChartData<*>> copyIntoChart(
+        chart: Chart<T>,
+        legend: Legend,
+        holder: ChartFieldHolder,
+        dataSet: LineDataSet = chart.data.dataSets[0] as LineDataSet
+    ) {
+
+    }
+
+    fun AxisBase.setValueFormatterIfNotDefault(
+        type: LineChartHelper.LineValueFormatterType,
+        dataset: LineRadarDataSet<*>,
+    ) {
+        if(type == LineChartHelper.LineValueFormatterType.DEFAULT) return
+        this.setValueFormatter { value, _ ->
+            LineChartHelper.LineValueFormatter.format(
+                type,
+                dataset,
+                value
+            )
+        }
+    }
+
+    /*
     /**
      * extension of [copyLegendVars] which also applies value formatters
      * TODO there is probably a common interface, that can be used instead to apply the formatters
@@ -78,9 +138,10 @@ object ChartsHelper {
         lineChart.xAxis.position = sLegend.xAxisPosition
         copyLegendVars(fLegend, sLegend)
     }
+     */
 
-    fun defaultPieCLegend(): CytheroLegend {
-        val legend = CytheroLegend()
+    fun defaultPieCLegend(): ChartFieldHolder {
+        val legend = ChartFieldHolder()
         legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
         legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
@@ -88,8 +149,8 @@ object ChartsHelper {
         return legend
     }
 
-    fun defaultLineCLegend(): CytheroLegend {
-        val legend = CytheroLegend()
+    fun defaultLineCLegend(): ChartFieldHolder {
+        val legend = ChartFieldHolder()
 
         legend.verticalValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
         legend.leftValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT

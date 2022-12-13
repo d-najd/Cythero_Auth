@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.ui.analytics.AnalyticsType
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.CytheroDropdownMenu
@@ -88,7 +87,8 @@ fun AnalyticsGetAnalyticsCard(
     }
 }
 
-@Composable fun SelectPartType(
+@Composable
+private fun SelectPartType(
     selectedPart: Part,
     onChangeSelectedPart: (Part) -> Unit,
 ) {
@@ -165,4 +165,10 @@ private fun SelectDateRange(
             dateRangePicker.show()
         }
     )
+}
+
+private enum class AnalyticsType(val nameId: Int) {
+    USER(R.string.action_select_user_report),
+    PART(R.string.action_select_part),
+    USAGE(R.string.action_select_usage),
 }

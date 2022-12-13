@@ -4,7 +4,8 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 
-class CytheroLegend : Legend() {
+// probably needs more appropriate name
+class ChartFieldHolder : Legend() {
     var verticalValueFormatter:
             LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
     var leftValueFormatter:

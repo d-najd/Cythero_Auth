@@ -14,7 +14,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.presentation.util.ChartsHelper
-import com.tradiebot.cythero.presentation.util.CytheroLegend
+import com.tradiebot.cythero.presentation.util.ChartFieldHolder
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
@@ -39,7 +39,7 @@ fun PieChart(
     offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
 
-    legend: CytheroLegend = ChartsHelper.defaultPieCLegend(),
+    legend: ChartFieldHolder = ChartsHelper.defaultPieCLegend(),
 ) {
     AndroidView(
         modifier = modifier
@@ -59,9 +59,9 @@ fun PieChart(
                 extraLeftOffset = offsets.x
                 description.isEnabled = false
 
-                ChartsHelper.copyLegendVars(
-                    fLegend = this.legend,
-                    sLegend = legend
+                ChartsHelper.copyIntoLegend(
+                    legend = this.legend,
+                    holder = legend
                 )
 
                 runBlocking {
