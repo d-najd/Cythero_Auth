@@ -1,5 +1,7 @@
 package com.tradiebot.cythero.presentation.util.chart
 
+import androidx.compose.ui.geometry.Offset
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
@@ -12,7 +14,10 @@ class ChartSettingsHolder {
     var xAxis: XAxis = XAxis()
     @Suppress("unused")
     var yAxis: YAxis = YAxis()
-
+    var description = Description()
+    
+    var offsets: Offset = Offset(0f,0f)
+    
     var xAxisValueFormatter:
             ChartValueFormatterType = ChartValueFormatterType.DEFAULT
     var leftValueFormatter:
@@ -27,15 +32,19 @@ class ChartSettingsHolder {
         legend.textSize = 12f
         legend.xEntrySpace = 25f
         legend.yEntrySpace = 15f
+        
+        description.isEnabled = false
     }
 
     companion object {
         fun defaultPieCSettings(): ChartSettingsHolder {
             val holder = ChartSettingsHolder()
+            
             holder.legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
             holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
             holder.legend.orientation = Legend.LegendOrientation.VERTICAL
+            
             return holder
         }
 
@@ -45,7 +54,10 @@ class ChartSettingsHolder {
             holder.xAxisValueFormatter = ChartValueFormatterType.DEFAULT
             holder.leftValueFormatter = ChartValueFormatterType.DEFAULT
             holder.rightValueFormatter = ChartValueFormatterType.DEFAULT
+            
             holder.xAxis.position = XAxis.XAxisPosition.TOP
+            holder.xAxis.axisMinimum = 0f
+            holder.xAxis.axisMaximum = 0f
 
             holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM

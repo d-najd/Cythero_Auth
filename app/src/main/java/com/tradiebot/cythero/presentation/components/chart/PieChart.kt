@@ -60,9 +60,6 @@ fun PieChart(
                 setHoleColor(Color.Transparent.toArgb())
                 setDrawMarkers(true)
                 setTransparentCircleAlpha(0)
-                extraTopOffset = offsets.y
-                extraLeftOffset = offsets.x
-                description.isEnabled = false
 
                 ChartsHelper.copyIntoChart(
                     chart = this,

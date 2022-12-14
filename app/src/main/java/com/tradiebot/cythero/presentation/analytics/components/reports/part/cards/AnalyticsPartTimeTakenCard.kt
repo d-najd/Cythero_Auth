@@ -67,11 +67,11 @@ fun AnalyticsTimeTakenCard(
                 val chartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()
                 chartSettingsHolder.xAxis.position = XAxisPosition.BOTTOM
                 chartSettingsHolder.xAxisValueFormatter = ChartValueFormatterType.VALUE
+                chartSettingsHolder.offsets = Offset(0f, -10f)
 
                 LineChart(
                     dataSets = dataSet,
                     chartSettingsHolder = chartSettingsHolder,
-                    offsets = Offset(0f, -10f),
                 )
             }
             Column(

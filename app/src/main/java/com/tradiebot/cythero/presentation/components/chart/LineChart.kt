@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.github.mikephil.charting.charts.LineChart
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
-import kotlin.math.abs
 
 /**
  * TODO just look at the number of parameters
@@ -26,7 +24,6 @@ import kotlin.math.abs
 fun LineChart(
     modifier: Modifier = Modifier,
     dataSets: Flow<List<LineDataSet>>,
-    offsets: Offset = Offset(0f, 0f),
     bezierType: LineDataSet.Mode = LineDataSet.Mode.HORIZONTAL_BEZIER,
     pinchZoomEnabled: Boolean = false,
     dragEnabled: Boolean = false,
@@ -55,20 +52,9 @@ fun LineChart(
                     curDataSet = dataSets.last()[0]
                 }
 
-                extraTopOffset = if (offsets.y > 0) offsets.y else 0f
-                extraBottomOffset = if (offsets.y < 0) abs(offsets.y) else 0f
-                extraLeftOffset = if (offsets.x > 0) offsets.x else 0f
-                extraRightOffset = if (offsets.x < 0) abs(offsets.x) else 0f
-                xAxis.axisMaximum = 0f
-                xAxis.axisMinimum = 0f
-
-                description.isEnabled = false
-
                 isDragEnabled = dragEnabled
                 setPinchZoom(pinchZoomEnabled)
                 setScaleEnabled(scaleEnabled)
-
-                maxHighlightDistance = 250f
 
                 ChartsHelper.copyIntoBarLineChart(
                     chart = this,

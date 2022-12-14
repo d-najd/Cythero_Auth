@@ -17,7 +17,7 @@ object ChartValueFormatter {
 				"${(dataSet.getEntryForIndex(position.toInt()).data)}"
 			}
 			ChartValueFormatterType.DEFAULT -> {
-				ChartValueFormatterType.DEFAULT.toString()
+				throw IllegalStateException("Default should not be formatted")
 			}
 		})
 	}

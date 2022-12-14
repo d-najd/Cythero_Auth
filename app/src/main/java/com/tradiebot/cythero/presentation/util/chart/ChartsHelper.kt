@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.interfaces.datasets.IDataSet
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
+import kotlin.math.abs
 
 object ChartsHelper {
     /**
@@ -64,15 +65,27 @@ object ChartsHelper {
         holder: ChartSettingsHolder,
         dataSet: IDataSet<*> = chart.data.dataSets[0]
     ) {
-        if(chart !is PieChart) {
-            chart.xAxis.setValueFormatterIfNotDefault(
+        with(chart) {
+            extraTopOffset = if (holder.offsets.y > 0) holder.offsets.y else 0f
+            extraBottomOffset = if (holder.offsets.y < 0) abs(holder.offsets.y) else 0f
+            extraLeftOffset = if (holder.offsets.x > 0) holder.offsets.x else 0f
+            extraRightOffset = if (holder.offsets.x < 0) abs(holder.offsets.x) else 0f
+    
+            // Pie chart doesn't have xAxis
+            if(this !is PieChart) {
+                xAxis.setValueFormatterIfNotDefault(
                     type = holder.xAxisValueFormatter,
                     dataSet = dataSet
-            )
-
-            chart.xAxis.position = holder.xAxis.position
+                )
+        
+                xAxis.position = holder.xAxis.position
+                xAxis.axisMaximum = holder.xAxis.axisMaximum
+                xAxis.axisMinimum = holder.xAxis.axisMinimum
+            }
+    
+            description.isEnabled = holder.description.isEnabled
         }
-
+        
         copyIntoLegend(
             legend = legend,
             holder = holder
@@ -83,15 +96,13 @@ object ChartsHelper {
         type: ChartValueFormatterType,
         dataSet: IDataSet<*>,
     ) {
-        @Suppress("ComplexRedundantLet")
-        takeIf { type != ChartValueFormatterType.DEFAULT }.let {
-            setValueFormatter { value, _ ->
-                ChartValueFormatter.format(
-                    type,
-                    dataSet,
-                    value
-                )
-            }
+        if(type == ChartValueFormatterType.DEFAULT) return
+        setValueFormatter { value, _ ->
+            ChartValueFormatter.format(
+                type,
+                dataSet,
+                value
+            )
         }
     }
 }
