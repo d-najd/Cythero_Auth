@@ -28,8 +28,7 @@ import java.util.*
  * legend changes the offset on the chart
  *
  * TODO while hovering a field in chart display number of overall grades
- *  in that category like in the webapp also round just the tip of the slices and this needs a rework
- *  and this is not reusable at its current state
+ *  in that category like in the webapp also round just the tip of the slices
  */
 @Composable
 fun PieChart(
