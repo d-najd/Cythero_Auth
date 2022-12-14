@@ -3,7 +3,7 @@ package com.tradiebot.cythero.util
 import java.util.*
 
 /**
- * converts given date to the very beginning of the day down to the last millisecond
+ * Converts given date to the very beginning of the day down to the last millisecond
  *
  * @sample { 2022-09-06 14:46:38:541 -> 2022-09-06 00:00:00:000 }
  */
@@ -19,7 +19,7 @@ fun Date.toStartOfDay(): Date {
 }
 
 /**
- * converts given date to the very end of the day down to the last millisecond
+ * Converts given date to the very end of the day down to the last millisecond
  *
  * @sample { 2022-09-06 14:46:38:541 -> 2022-09-06 23:59:59:999 }
  */
