@@ -13,7 +13,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
-import com.tradiebot.cythero.presentation.util.ChartFieldHolder
+import com.tradiebot.cythero.presentation.util.ChartSettingsHolder
 import com.tradiebot.cythero.presentation.util.ChartsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -36,12 +36,12 @@ import java.util.*
  */
 @Composable
 fun PieChart(
-    modifier: Modifier = Modifier,
-    dataSet: Flow<PieDataSet>,
-    offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
-    sliceSize: Float = 5f,
+        modifier: Modifier = Modifier,
+        dataSet: Flow<PieDataSet>,
+        offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
+        sliceSize: Float = 5f,
 
-    chartFieldHolder: ChartFieldHolder = ChartFieldHolder.defaultPieCLegend(),
+        chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings(),
 ) {
     AndroidView(
         modifier = modifier
@@ -69,7 +69,7 @@ fun PieChart(
                 ChartsHelper.copyIntoChart(
                     chart = this,
                     legend = legend,
-                    holder = chartFieldHolder,
+                    holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )
 

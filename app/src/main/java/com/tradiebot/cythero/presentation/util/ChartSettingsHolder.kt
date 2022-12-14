@@ -7,7 +7,7 @@ import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 
 // probably needs more appropriate name
-class ChartFieldHolder : Legend() {
+class ChartSettingsHolder : Legend() {
     var xAxis: XAxis = XAxis()
     var yAxis: YAxis = YAxis()
 
@@ -28,8 +28,8 @@ class ChartFieldHolder : Legend() {
     }
 
     companion object {
-        fun defaultPieCLegend(): ChartFieldHolder {
-            val legend = ChartFieldHolder()
+        fun defaultPieCSettings(): ChartSettingsHolder {
+            val legend = ChartSettingsHolder()
             legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
             legend.horizontalAlignment = LegendHorizontalAlignment.RIGHT
             legend.verticalAlignment = LegendVerticalAlignment.CENTER
@@ -37,8 +37,8 @@ class ChartFieldHolder : Legend() {
             return legend
         }
 
-        fun defaultLineCLegend(): ChartFieldHolder {
-            val legend = ChartFieldHolder()
+        fun defaultBarLineCSettings(): ChartSettingsHolder {
+            val legend = ChartSettingsHolder()
 
             legend.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
             legend.leftValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT

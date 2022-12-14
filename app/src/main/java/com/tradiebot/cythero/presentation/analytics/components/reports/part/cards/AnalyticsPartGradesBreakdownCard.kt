@@ -89,15 +89,16 @@ fun AnalyticsPartGradesBreakdownCard(
     }
 }
 
+@Suppress("UselessCallOnCollection") // it is not useless 
 @Composable
 private fun mDataSet(
     analytics: AnalyticsPart,
     selectedCoverageType: CoverageType,
 ): Flow<PieDataSet> {
-    val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesPrimer = PieChartHelper.dataFromGrades(analytics.primerGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesBase = PieChartHelper.dataFromGrades(analytics.baseGrade.groupingBy { it }.eachCount().toSortedMap())
-    val gradesClear = PieChartHelper.dataFromGrades(analytics.clearGrade.groupingBy { it }.eachCount().toSortedMap())
+    val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
+    val gradesPrimer = PieChartHelper.dataFromGrades(analytics.primerGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
+    val gradesBase = PieChartHelper.dataFromGrades(analytics.baseGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
+    val gradesClear = PieChartHelper.dataFromGrades(analytics.clearGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
 
     val gradePieDataSet: Flow<PieDataSet> = flow {
         when(selectedCoverageType) {

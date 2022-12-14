@@ -16,7 +16,7 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
-import com.tradiebot.cythero.presentation.util.ChartFieldHolder
+import com.tradiebot.cythero.presentation.util.ChartSettingsHolder
 import com.tradiebot.cythero.presentation.util.ChartsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -46,7 +46,7 @@ fun LineChart(
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
 
-    chartFieldHolder: ChartFieldHolder = ChartFieldHolder.defaultLineCLegend()
+    chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()
 ) {
     AndroidView(
         modifier = modifier
@@ -81,7 +81,7 @@ fun LineChart(
                 ChartsHelper.copyIntoBarLineChart(
                     chart = this,
                     legend = legend,
-                    holder = chartFieldHolder,
+                    holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )
 
