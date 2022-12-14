@@ -68,10 +68,11 @@ object ChartsHelper {
         dataSet: IDataSet<*> = chart.data.dataSets[0]
     ) {
         with(chart) {
-            extraTopOffset = if (holder.offsets.y > 0) holder.offsets.y else 0f
-            extraBottomOffset = if (holder.offsets.y < 0) abs(holder.offsets.y) else 0f
-            extraLeftOffset = if (holder.offsets.x > 0) holder.offsets.x else 0f
-            extraRightOffset = if (holder.offsets.x < 0) abs(holder.offsets.x) else 0f
+            // Setting the offset for the pie-chart the "intended" way makes it smaller, guess somebody doesn't understand the meaning of offset...
+            extraTopOffset.takeIf { holder.offsets.y > 0 && chart !is PieChart }.apply { holder.offsets.y }
+            extraBottomOffset.takeIf { holder.offsets.y < 0 && chart !is PieChart }.apply { abs(holder.offsets.y) }
+            extraLeftOffset.takeIf { holder.offsets.x > 0 && chart !is PieChart }.apply { holder.offsets.x }
+            extraRightOffset.takeIf { holder.offsets.x < 0 && chart !is PieChart }.apply { abs(holder.offsets.x) }
     
             // Pie chart doesn't have xAxis
             if(this !is PieChart) {
@@ -79,10 +80,13 @@ object ChartsHelper {
                     type = holder.xAxisValueFormatter,
                     dataSet = dataSet
                 )
-        
+                
                 xAxis.position = holder.xAxis.position
                 xAxis.axisMaximum = holder.xAxis.axisMaximum
                 xAxis.axisMinimum = holder.xAxis.axisMinimum
+            } else {
+                extraTopOffset = holder.offsets.y
+                extraLeftOffset = holder.offsets.x
             }
     
             description.isEnabled = holder.description.isEnabled
