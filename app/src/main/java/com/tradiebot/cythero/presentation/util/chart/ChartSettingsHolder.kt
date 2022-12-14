@@ -1,24 +1,24 @@
-package com.tradiebot.cythero.presentation.util
+package com.tradiebot.cythero.presentation.util.chart
 
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
-import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
+import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 
 // probably needs more appropriate name
 class ChartSettingsHolder {
     var legend = Legend()
     var xAxis: XAxis = XAxis()
+    @Suppress("unused")
     var yAxis: YAxis = YAxis()
 
     var xAxisValueFormatter:
-            LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
+            ChartValueFormatterType = ChartValueFormatterType.DEFAULT
     var leftValueFormatter:
-            LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
+            ChartValueFormatterType = ChartValueFormatterType.DEFAULT
     var rightValueFormatter:
-            LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
+            ChartValueFormatterType = ChartValueFormatterType.DEFAULT
 
     init {
         legend.form = LegendForm.CIRCLE
@@ -42,9 +42,9 @@ class ChartSettingsHolder {
         fun defaultBarLineCSettings(): ChartSettingsHolder {
             val holder = ChartSettingsHolder()
 
-            holder.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
-            holder.leftValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
-            holder.rightValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
+            holder.xAxisValueFormatter = ChartValueFormatterType.DEFAULT
+            holder.leftValueFormatter = ChartValueFormatterType.DEFAULT
+            holder.rightValueFormatter = ChartValueFormatterType.DEFAULT
             holder.xAxis.position = XAxis.XAxisPosition.TOP
 
             holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER

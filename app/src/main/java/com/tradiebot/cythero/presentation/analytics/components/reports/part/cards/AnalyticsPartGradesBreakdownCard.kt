@@ -19,8 +19,8 @@ import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.components.charts.PieChart
-import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
+import com.tradiebot.cythero.presentation.components.chart.PieChart
+import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 import com.tradiebot.cythero.presentation.components.dialogs.CytheroButtonDefaults
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

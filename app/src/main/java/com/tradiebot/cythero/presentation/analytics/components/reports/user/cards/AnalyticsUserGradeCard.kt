@@ -9,8 +9,8 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.components.charts.PieChart
-import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
+import com.tradiebot.cythero.presentation.components.chart.PieChart
+import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 import kotlinx.coroutines.flow.*
 
 @Composable

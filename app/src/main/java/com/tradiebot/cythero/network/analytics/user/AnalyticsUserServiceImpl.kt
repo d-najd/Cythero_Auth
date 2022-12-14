@@ -40,9 +40,9 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
         try {
             val response: Response = client.newCall(request).execute().printResponse()
     
-            response.takeIf { res -> res.isSuccessful }.use { res ->
+            response.takeIf { res -> res.isSuccessful }.let {
                 val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
-                return gson.fromJson(res!!.body.string(), analyticsUserType)
+                return gson.fromJson(it!!.body.string(), analyticsUserType)
             }
         } catch (e: IOException) {
             e.printStackTrace()

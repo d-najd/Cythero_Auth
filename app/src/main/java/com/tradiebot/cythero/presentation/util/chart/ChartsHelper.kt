@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.util
+package com.tradiebot.cythero.presentation.util.chart
 
 import com.github.mikephil.charting.charts.BarLineChartBase
 import com.github.mikephil.charting.charts.Chart
@@ -8,7 +8,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
 import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.interfaces.datasets.IDataSet
-import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
+import com.tradiebot.cythero.presentation.components.chart.LineChartHelper
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
 
@@ -81,16 +81,18 @@ object ChartsHelper {
     }
 
     private fun AxisBase.setValueFormatterIfNotDefault(
-        type: LineChartHelper.LineValueFormatterType,
+        type: ChartValueFormatterType,
         dataSet: IDataSet<*>,
     ) {
-        if(type == LineChartHelper.LineValueFormatterType.DEFAULT) return
-        this.setValueFormatter { value, _ ->
-            LineChartHelper.LineValueFormatter.format(
-                type,
-                dataSet,
-                value
-            )
+        @Suppress("ComplexRedundantLet")
+        takeIf { type != ChartValueFormatterType.DEFAULT }.let {
+            setValueFormatter { value, _ ->
+                LineChartHelper.LineValueFormatter.format(
+                    type,
+                    dataSet,
+                    value
+                )
+            }
         }
     }
 }

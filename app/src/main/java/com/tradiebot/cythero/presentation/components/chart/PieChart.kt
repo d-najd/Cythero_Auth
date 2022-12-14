@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.components.charts
+package com.tradiebot.cythero.presentation.components.chart
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -13,8 +13,8 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
-import com.tradiebot.cythero.presentation.util.ChartSettingsHolder
-import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
+import com.tradiebot.cythero.presentation.util.chart.ChartsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
@@ -36,12 +36,12 @@ import java.util.*
  */
 @Composable
 fun PieChart(
-        modifier: Modifier = Modifier,
-        dataSet: Flow<PieDataSet>,
-        offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
-        sliceSize: Float = 5f,
-
-        chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings(),
+    modifier: Modifier = Modifier,
+    dataSet: Flow<PieDataSet>,
+    offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
+    sliceSize: Float = 5f,
+    
+    chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings(),
 ) {
     AndroidView(
         modifier = modifier

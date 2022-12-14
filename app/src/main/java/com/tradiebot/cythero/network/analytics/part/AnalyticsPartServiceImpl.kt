@@ -37,8 +37,8 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
         try {
             val response: Response = client.newCall(request).execute().printResponse()
     
-            response.takeIf { res -> res.isSuccessful }.use { res ->
-                return gson.fromJson(res!!.body.string(), AnalyticsParts::class.java).AnalyticsParts
+            response.takeIf { res -> res.isSuccessful }.let {
+                return gson.fromJson(it!!.body.string(), AnalyticsParts::class.java).AnalyticsParts
             }
         } catch (e: IOException) {
             e.printStackTrace()

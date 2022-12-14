@@ -11,9 +11,10 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
-import com.tradiebot.cythero.presentation.components.charts.LineChart
-import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
-import com.tradiebot.cythero.presentation.util.ChartSettingsHolder
+import com.tradiebot.cythero.presentation.components.chart.LineChart
+import com.tradiebot.cythero.presentation.components.chart.LineChartHelper
+import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
+import com.tradiebot.cythero.presentation.util.chart.ChartValueFormatterType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -33,7 +34,7 @@ fun AnalyticsCoverageGraph(
             }
 
             val chartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()
-            chartSettingsHolder.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.VALUE_POSITION
+            chartSettingsHolder.xAxisValueFormatter = ChartValueFormatterType.VALUE_POSITION
 
             LineChart(
                 dataSets = dataSets,

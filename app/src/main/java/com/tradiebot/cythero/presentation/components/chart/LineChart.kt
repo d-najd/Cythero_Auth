@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.presentation.components.charts
+package com.tradiebot.cythero.presentation.components.chart
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,8 +16,9 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
-import com.tradiebot.cythero.presentation.util.ChartSettingsHolder
-import com.tradiebot.cythero.presentation.util.ChartsHelper
+import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
+import com.tradiebot.cythero.presentation.util.chart.ChartValueFormatterType
+import com.tradiebot.cythero.presentation.util.chart.ChartsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
@@ -39,13 +40,13 @@ fun LineChart(
     pinchZoomEnabled: Boolean = false,
     dragEnabled: Boolean = false,
     scaleEnabled: Boolean = false,
-
+    
     labelCount: Int = 9,
     lineWidth: Float = 2f,
     circleRadius: Float = 4f,
     drawCircleHole: Boolean = false,
     drawValues: Boolean = true,
-
+    
     chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()
 ) {
     AndroidView(
@@ -113,31 +114,22 @@ fun LineChart(
 }
 
 object LineChartHelper{
-    enum class LineValueFormatterType{
-        /** formatted { value position } ex { Fender 2 } */
-        VALUE_POSITION,
-        /** formatted { value } ex { Fender } */
-        VALUE,
-        /** doesn't format the value */
-        DEFAULT,
-    }
-
     object LineValueFormatter {
         fun format(
-            type: LineValueFormatterType,
+            type: ChartValueFormatterType,
             dataSet: IDataSet<*>,
             position: Float
         ): String {
             (return when (type) {
-                LineValueFormatterType.VALUE_POSITION -> {
+                ChartValueFormatterType.VALUE_POSITION -> {
                     "${position.toInt() + 1}" +
                             " ${dataSet.getEntryForIndex(position.toInt()).data}"
                 }
-                LineValueFormatterType.VALUE -> {
+                ChartValueFormatterType.VALUE -> {
                     "${(dataSet.getEntryForIndex(position.toInt()).data)}"
                 }
-                LineValueFormatterType.DEFAULT -> {
-                    LineValueFormatterType.DEFAULT.toString()
+                ChartValueFormatterType.DEFAULT -> {
+                    ChartValueFormatterType.DEFAULT.toString()
                 }
             })
         }
