@@ -27,15 +27,17 @@ import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
 @Composable
-fun AnalyticsGetAnalyticsCard(
+fun AnalyticsSelectAnalyticsCard(
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
+    onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsType.PART) }
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.USAGE) }
 
     var dateRange by remember { mutableStateOf(Pair(
         first = Date(Date().time - Duration.Companion.convert(
-            168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
+            // 168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
+            3000.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
         second = Date()
     )) }
     var selectedPartType by remember { mutableStateOf(Part.FENDER) }
@@ -72,9 +74,7 @@ fun AnalyticsGetAnalyticsCard(
                 when(selectedReportType){
                     AnalyticsType.USER -> onGenerateUserReportClicked(dateRange)
                     AnalyticsType.PART -> onGeneratePartReportClicked(selectedPartType)
-                    AnalyticsType.USAGE -> {
-
-                    }
+                    AnalyticsType.USAGE -> onGenerateUsageReportClicked(dateRange)
                 }
             },
             modifier = Modifier

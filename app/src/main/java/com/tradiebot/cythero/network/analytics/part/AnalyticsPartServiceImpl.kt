@@ -1,13 +1,13 @@
 package com.tradiebot.cythero.network.analytics.part
 
 import com.google.gson.Gson
-import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsParts
 import com.tradiebot.cythero.domain.analytics.part.service.AnalyticsPartService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
+import com.tradiebot.cythero.util.mAppContext
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import uy.kohesive.injekt.Injekt
@@ -23,11 +23,9 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
         userIDs: List<Long>,
         parts: List<Part>
     ): List<AnalyticsPart> {
-        val contextHolder = Injekt.get<ContextHolder>()
-
         val body = MultipartBodyBuilder()
             .addFormDataPart("users", userIDs)
-            .addFormDataPart("parts", parts.map { part -> "\"${contextHolder.getString(part.nameId)}\"" })
+            .addFormDataPart("parts", parts.map { part -> "\"${mAppContext().getString(part.nameId)}\"" })
             .build()
 
         val request = POST(

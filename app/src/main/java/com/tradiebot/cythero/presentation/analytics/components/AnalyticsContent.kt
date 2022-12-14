@@ -29,10 +29,9 @@ import kotlin.math.roundToInt
 fun AnalyticsContent(
     state: AnalyticsScreenState,
     contentPadding: PaddingValues,
-
-    //Report Type Content
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
+    onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -52,9 +51,10 @@ fun AnalyticsContent(
             .fillMaxSize(),
     ) {
 
-        AnalyticsGetAnalyticsCard(
+        AnalyticsSelectAnalyticsCard(
             onGenerateUserReportClicked = onGenerateUserReportClicked,
             onGeneratePartReportClicked = onGeneratePartReportClicked,
+            onGenerateUsageReportClicked = onGenerateUsageReportClicked,
         )
 
         when (state) {
@@ -72,6 +72,9 @@ fun AnalyticsContent(
                     state = state,
                     contentPadding = contentPadding
                 )
+            }
+            is AnalyticsScreenState.UsageSuccess -> {
+            
             }
         }
     }

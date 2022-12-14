@@ -21,14 +21,14 @@ class AnalyticsScreen(
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
         val screenModel = rememberScreenModel { AnalyticsScreenModel(context, auth) }
-
+        
         val state by screenModel.state.collectAsState()
-
+        
         if (state is AnalyticsScreenState.Loading) {
             LoadingScreen()
             return
         }
-
+        
         AnalyticsScreen(
             presenter = state,
             onBackClicked = router::popCurrentController,
@@ -37,6 +37,9 @@ class AnalyticsScreen(
             },
             onGeneratePartReportClicked = {
                 screenModel.requestPartAnalytics(auth, userID = 4L, it)
+            },
+            onGenerateUsageReportClicked = {
+                screenModel.requestUsageAnalytics(auth, userID = 4L, it)
             }
         )
     }

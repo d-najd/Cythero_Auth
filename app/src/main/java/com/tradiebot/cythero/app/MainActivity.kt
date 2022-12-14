@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         val container: ViewGroup = binding.controllerContainer
         router = Conductor.attachRouter(this, container, savedInstanceState)
             .setPopRootControllerMode(Router.PopRootControllerMode.NEVER)
-
+        
         // if there is no controller (in other words starting the app) set a root controller
         if(router.backstack.firstOrNull() == null) {
             router.setRoot(AnalyticsController(auth = Auth.mockInstance()).asTransaction())

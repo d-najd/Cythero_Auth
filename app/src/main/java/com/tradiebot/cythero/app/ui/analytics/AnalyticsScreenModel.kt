@@ -7,6 +7,8 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
+import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -23,6 +25,7 @@ class AnalyticsScreenModel(
     val auth: Auth,
     private val requestUserAnalytics: RequestUserAnalytics = Injekt.get(),
     private val requestPartAnalytics: RequestPartAnalytics = Injekt.get(),
+    private val requestUsageAnalytics: RequestUsageAnalytics = Injekt.get(),
 ) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
 
     init {
@@ -59,7 +62,6 @@ class AnalyticsScreenModel(
             }
         }
     }
-
 
     /** requesting analytics for multiple users and updates the state */
     @Suppress("unused")
@@ -121,20 +123,47 @@ class AnalyticsScreenModel(
                 mutableState.update {
                     AnalyticsScreenState.PartSuccess(
                         auth = auth,
-                        analytics = partAnalytics
+                        analytics = partAnalytics,
                     )
                 }
             } else {
                 logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
-                        auth = auth
+                        auth = auth,
                     )
                 }
             }
         }
     }
 
+    //endregion
+    
+    //region usage
+    
+    /** requesting analytics for single user and updates the state */
+    fun requestUsageAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
+        coroutineScope.launchIO {
+            mutableState.update { AnalyticsScreenState.LoadingType }
+            val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
+            if(userAnalytics != null) {
+                mutableState.update {
+                    AnalyticsScreenState.UsageSuccess(
+                        auth = auth,
+                        analytics = userAnalytics,
+                    )
+                }
+            } else {
+                logcat { "Something went wrong" }
+                mutableState.update {
+                    AnalyticsScreenState.Success(
+                        auth = auth,
+                    )
+                }
+            }
+        }
+    }
+    
     //endregion
 
 }
@@ -169,4 +198,13 @@ sealed class AnalyticsScreenState {
         val auth: Auth,
         val analytics: List<AnalyticsPart>,
     ) : AnalyticsScreenState()
+    
+    
+    /** if usage analytics were success */
+    @Immutable
+    data class UsageSuccess(
+        val auth: Auth,
+        val analytics: AnalyticsUsage,
+    ) : AnalyticsScreenState()
+    
 }

@@ -13,19 +13,19 @@ import java.util.Date
 fun AnalyticsScreen(
     presenter: AnalyticsScreenState,
     onBackClicked: () -> Unit,
-
-    //Report Type Content
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
+    onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
 ) {
     Scaffold { contentPadding ->
-        BackHandler{ onBackClicked() }
-
-        AnalyticsContent (
+        BackHandler { onBackClicked() }
+        
+        AnalyticsContent(
             state = presenter,
             contentPadding = contentPadding,
             onGenerateUserReportClicked = onGenerateUserReportClicked,
             onGeneratePartReportClicked = onGeneratePartReportClicked,
+            onGenerateUsageReportClicked = onGenerateUsageReportClicked,
         )
     }
 }
