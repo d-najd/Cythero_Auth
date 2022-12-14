@@ -1,13 +1,15 @@
 package com.tradiebot.cythero.presentation.util
 
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.tradiebot.cythero.presentation.components.charts.LineChartHelper
 import com.tradiebot.cythero.presentation.components.charts.PieChartHelper
 
 // probably needs more appropriate name
-class ChartSettingsHolder : Legend() {
+class ChartSettingsHolder {
+    var legend = Legend()
     var xAxis: XAxis = XAxis()
     var yAxis: YAxis = YAxis()
 
@@ -19,37 +21,37 @@ class ChartSettingsHolder : Legend() {
             LineChartHelper.LineValueFormatterType = LineChartHelper.LineValueFormatterType.DEFAULT
 
     init {
-        form = LegendForm.CIRCLE
-        isEnabled = true
-        formSize = 15f
-        textSize = 12f
-        xEntrySpace = 25f
-        yEntrySpace = 15f
+        legend.form = LegendForm.CIRCLE
+        legend.isEnabled = true
+        legend.formSize = 15f
+        legend.textSize = 12f
+        legend.xEntrySpace = 25f
+        legend.yEntrySpace = 15f
     }
 
     companion object {
         fun defaultPieCSettings(): ChartSettingsHolder {
-            val legend = ChartSettingsHolder()
-            legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
-            legend.horizontalAlignment = LegendHorizontalAlignment.RIGHT
-            legend.verticalAlignment = LegendVerticalAlignment.CENTER
-            legend.orientation = LegendOrientation.VERTICAL
-            return legend
+            val holder = ChartSettingsHolder()
+            holder.legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
+            holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+            holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+            holder.legend.orientation = Legend.LegendOrientation.VERTICAL
+            return holder
         }
 
         fun defaultBarLineCSettings(): ChartSettingsHolder {
-            val legend = ChartSettingsHolder()
+            val holder = ChartSettingsHolder()
 
-            legend.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
-            legend.leftValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
-            legend.rightValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
-            legend.xAxis.position = XAxis.XAxisPosition.TOP
+            holder.xAxisValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
+            holder.leftValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
+            holder.rightValueFormatter = LineChartHelper.LineValueFormatterType.DEFAULT
+            holder.xAxis.position = XAxis.XAxisPosition.TOP
 
-            legend.horizontalAlignment = LegendHorizontalAlignment.CENTER
-            legend.verticalAlignment = LegendVerticalAlignment.BOTTOM
-            legend.orientation = LegendOrientation.HORIZONTAL
+            holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            holder.legend.orientation = Legend.LegendOrientation.HORIZONTAL
 
-            return legend
+            return holder
         }
     }
 }

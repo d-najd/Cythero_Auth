@@ -21,18 +21,18 @@ object ChartsHelper {
         legend: Legend,
         holder: ChartSettingsHolder
     ) {
-        legend.isEnabled = holder.isEnabled
+        legend.isEnabled = holder.legend.isEnabled
 
-        legend.form = holder.form
-        legend.horizontalAlignment = holder.horizontalAlignment
-        legend.verticalAlignment = holder.verticalAlignment
-        legend.orientation = holder.orientation
-        legend.yEntrySpace = mAppContext().convertPixelsToDp(holder.yEntrySpace)
-        legend.xEntrySpace = mAppContext().convertPixelsToDp(holder.xEntrySpace)
-        legend.yOffset = mAppContext().convertPixelsToDp(holder.yOffset)
-        legend.xOffset = mAppContext().convertPixelsToDp(holder.xOffset)
-        legend.textSize = mAppContext().convertPixelsToDp(holder.textSize)
-        legend.formSize = holder.formSize
+        legend.form = holder.legend.form
+        legend.horizontalAlignment = holder.legend.horizontalAlignment
+        legend.verticalAlignment = holder.legend.verticalAlignment
+        legend.orientation = holder.legend.orientation
+        legend.yEntrySpace = mAppContext().convertPixelsToDp(holder.legend.yEntrySpace)
+        legend.xEntrySpace = mAppContext().convertPixelsToDp(holder.legend.xEntrySpace)
+        legend.yOffset = mAppContext().convertPixelsToDp(holder.legend.yOffset)
+        legend.xOffset = mAppContext().convertPixelsToDp(holder.legend.xOffset)
+        legend.textSize = mAppContext().convertPixelsToDp(holder.legend.textSize)
+        legend.formSize = holder.legend.formSize
     }
 
     fun <T: BarLineScatterCandleBubbleData<*>> copyIntoBarLineChart(
