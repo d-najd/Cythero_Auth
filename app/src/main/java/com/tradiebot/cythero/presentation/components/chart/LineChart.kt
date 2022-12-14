@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 
 /**
- * TODO just look at the number of parameters
+ * TODO anything above 10 parameters is unacceptable
  */
 @Composable
 fun LineChart(
@@ -46,7 +46,7 @@ fun LineChart(
         },
 
         update = { lineChart ->
-            lineChart.apply {
+            with(lineChart) {
                 var curDataSet: LineDataSet
                 runBlocking {
                     curDataSet = dataSets.last()[0]
@@ -58,7 +58,6 @@ fun LineChart(
 
                 ChartsHelper.copyIntoBarLineChart(
                     chart = this,
-                    legend = legend,
                     holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )

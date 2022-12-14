@@ -3,7 +3,6 @@ package com.tradiebot.cythero.presentation.components.chart
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
@@ -36,7 +35,6 @@ import java.util.*
 fun PieChart(
     modifier: Modifier = Modifier,
     dataSet: Flow<PieDataSet>,
-    offsets: Offset = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP),
     sliceSize: Float = 5f,
     
     chartSettingsHolder: ChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings(),
@@ -49,7 +47,7 @@ fun PieChart(
         },
 
         update = { pieChart ->
-            pieChart.apply {
+            with(pieChart) {
                 var curDataSet: PieDataSet
                 runBlocking {
                     curDataSet = dataSet.last()
@@ -63,7 +61,6 @@ fun PieChart(
 
                 ChartsHelper.copyIntoChart(
                     chart = this,
-                    legend = legend,
                     holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )

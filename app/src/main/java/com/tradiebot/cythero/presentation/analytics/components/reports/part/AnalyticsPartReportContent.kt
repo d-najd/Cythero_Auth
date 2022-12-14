@@ -1,6 +1,5 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.part
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.*
@@ -16,7 +15,6 @@ import com.tradiebot.cythero.presentation.analytics.components.reports.part.card
 @Composable
 fun AnalyticsPartReportContent(
     state: AnalyticsScreenState.PartSuccess,
-    contentPadding: PaddingValues,
 ) {
     var selectedCoverageType by remember { mutableStateOf(CoverageType.OVERALL) }
 

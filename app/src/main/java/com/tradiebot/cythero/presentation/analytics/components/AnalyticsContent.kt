@@ -22,7 +22,7 @@ import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.util.convertPixelsToDp
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.util.Date
+import java.util.*
 import kotlin.math.roundToInt
 
 @Composable
@@ -64,13 +64,11 @@ fun AnalyticsContent(
             is AnalyticsScreenState.UserSuccess -> {
                 AnalyticsUserReportContent(
                     state = state,
-                    contentPadding = contentPadding,
                 )
             }
             is AnalyticsScreenState.PartSuccess -> {
                 AnalyticsPartReportContent(
                     state = state,
-                    contentPadding = contentPadding
                 )
             }
             is AnalyticsScreenState.UsageSuccess -> {

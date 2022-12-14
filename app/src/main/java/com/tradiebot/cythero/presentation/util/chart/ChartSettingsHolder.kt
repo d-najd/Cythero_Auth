@@ -26,44 +26,40 @@ class ChartSettingsHolder {
             ChartValueFormatterType = ChartValueFormatterType.DEFAULT
 
     init {
-        legend.form = LegendForm.CIRCLE
-        legend.isEnabled = true
-        legend.formSize = 15f
-        legend.textSize = 12f
-        legend.xEntrySpace = 25f
-        legend.yEntrySpace = 15f
+        with(legend) {
+            form = LegendForm.CIRCLE
+            isEnabled = true
+            formSize = 15f
+            textSize = 12f
+            xEntrySpace = 25f
+            yEntrySpace = 15f
+        }
         
         description.isEnabled = false
     }
 
     companion object {
-        fun defaultPieCSettings(): ChartSettingsHolder {
-            val holder = ChartSettingsHolder()
-            
-            holder.legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
-            holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-            holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
-            holder.legend.orientation = Legend.LegendOrientation.VERTICAL
-            
-            return holder
+        fun defaultPieCSettings() = ChartSettingsHolder().apply {
+            offsets = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP)
+    
+            legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+            legend.orientation = Legend.LegendOrientation.VERTICAL
         }
 
-        fun defaultBarLineCSettings(): ChartSettingsHolder {
-            val holder = ChartSettingsHolder()
-
-            holder.xAxisValueFormatter = ChartValueFormatterType.DEFAULT
-            holder.leftValueFormatter = ChartValueFormatterType.DEFAULT
-            holder.rightValueFormatter = ChartValueFormatterType.DEFAULT
-            
-            holder.xAxis.position = XAxis.XAxisPosition.TOP
-            holder.xAxis.axisMinimum = 0f
-            holder.xAxis.axisMaximum = 0f
-
-            holder.legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-            holder.legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
-            holder.legend.orientation = Legend.LegendOrientation.HORIZONTAL
-
-            return holder
+        fun defaultBarLineCSettings() = ChartSettingsHolder().apply {
+            xAxisValueFormatter = ChartValueFormatterType.DEFAULT
+            leftValueFormatter = ChartValueFormatterType.DEFAULT
+            rightValueFormatter = ChartValueFormatterType.DEFAULT
+    
+            xAxis.position = XAxis.XAxisPosition.TOP
+            xAxis.axisMinimum = 0f
+            xAxis.axisMaximum = 0f
+    
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+            legend.orientation = Legend.LegendOrientation.HORIZONTAL
         }
     }
 }

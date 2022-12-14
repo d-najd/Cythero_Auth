@@ -12,6 +12,7 @@ import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
 import kotlin.math.abs
 
+@Suppress("MemberVisibilityCanBePrivate")
 object ChartsHelper {
     /**
      * @param [legend] the legend which is being modified
@@ -21,39 +22,41 @@ object ChartsHelper {
         legend: Legend,
         holder: ChartSettingsHolder
     ) {
-        legend.isEnabled = holder.legend.isEnabled
-
-        legend.form = holder.legend.form
-        legend.horizontalAlignment = holder.legend.horizontalAlignment
-        legend.verticalAlignment = holder.legend.verticalAlignment
-        legend.orientation = holder.legend.orientation
-        legend.yEntrySpace = mAppContext().convertPixelsToDp(holder.legend.yEntrySpace)
-        legend.xEntrySpace = mAppContext().convertPixelsToDp(holder.legend.xEntrySpace)
-        legend.yOffset = mAppContext().convertPixelsToDp(holder.legend.yOffset)
-        legend.xOffset = mAppContext().convertPixelsToDp(holder.legend.xOffset)
-        legend.textSize = mAppContext().convertPixelsToDp(holder.legend.textSize)
-        legend.formSize = holder.legend.formSize
+        with(legend) {
+            isEnabled = holder.legend.isEnabled
+    
+            form = holder.legend.form
+            horizontalAlignment = holder.legend.horizontalAlignment
+            verticalAlignment = holder.legend.verticalAlignment
+            orientation = holder.legend.orientation
+            yEntrySpace = mAppContext().convertPixelsToDp(holder.legend.yEntrySpace)
+            xEntrySpace = mAppContext().convertPixelsToDp(holder.legend.xEntrySpace)
+            yOffset = mAppContext().convertPixelsToDp(holder.legend.yOffset)
+            xOffset = mAppContext().convertPixelsToDp(holder.legend.xOffset)
+            textSize = mAppContext().convertPixelsToDp(holder.legend.textSize)
+            formSize = holder.legend.formSize
+        }
     }
 
     fun <T: BarLineScatterCandleBubbleData<*>> copyIntoBarLineChart(
         chart: BarLineChartBase<T>,
-        legend: Legend,
         holder: ChartSettingsHolder,
         dataSet: IDataSet<*> = chart.data.dataSets[0]
     ) {
-        chart.axisLeft.setValueFormatterIfNotDefault(
-            type = holder.leftValueFormatter,
-            dataSet = dataSet
-        )
-
-        chart.axisRight.setValueFormatterIfNotDefault(
-            type = holder.rightValueFormatter,
-            dataSet = dataSet
-        )
+        with(chart) {
+            axisLeft.setValueFormatterIfNotDefault(
+                type = holder.leftValueFormatter,
+                dataSet = dataSet
+            )
+    
+            axisRight.setValueFormatterIfNotDefault(
+                type = holder.rightValueFormatter,
+                dataSet = dataSet
+            )
+        }
 
         copyIntoChart(
             chart = chart,
-            legend = legend,
             holder = holder,
             dataSet = dataSet
         )
@@ -61,7 +64,6 @@ object ChartsHelper {
 
     fun <T: ChartData<*>> copyIntoChart(
         chart: Chart<T>,
-        legend: Legend,
         holder: ChartSettingsHolder,
         dataSet: IDataSet<*> = chart.data.dataSets[0]
     ) {
@@ -87,7 +89,7 @@ object ChartsHelper {
         }
         
         copyIntoLegend(
-            legend = legend,
+            legend = chart.legend,
             holder = holder
         )
     }
