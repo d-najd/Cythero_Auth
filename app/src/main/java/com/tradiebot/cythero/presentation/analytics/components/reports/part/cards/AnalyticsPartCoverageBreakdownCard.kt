@@ -65,56 +65,93 @@ private fun mDataSet(
     selectedCoverageType: CoverageType,
 ): PieDataSet {
     val colorsList = listOf(
-        Grade.C.rgb,
-        Grade.A.rgb,
-        Grade.B.rgb
+            Grade.C.rgb,
+            Grade.A.rgb,
+            Grade.B.rgb,
+            Grade.NAN.rgb
     )
 
     val coveragePrimer = PieChartHelper.dataFromEntriesAndColors(
-        entries = listOf(
-            PieEntry(round(analytics.averageHighCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_high)),
-            PieEntry(round(analytics.averageGoodCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_good)),
-            PieEntry(round(analytics.averageLowCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_low)),
-        ),
-        colors = colorsList
+            entries = listOf(
+                    PieEntry(round(analytics.averageHighCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_high)),
+                    PieEntry(round(analytics.averageGoodCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_good)),
+                    PieEntry(round(analytics.averageLowCoveragePrimer).toFloat(), stringResource(R.string.field_coverage_low)),
+                    PieEntry((
+                            100f - (round(analytics.averageHighCoveragePrimer) +
+                                    round(analytics.averageGoodCoveragePrimer) +
+                                    round(analytics.averageLowCoveragePrimer))
+                            ).toFloat(),
+                            stringResource(R.string.field_coverage_no_coverage)
+                    )
+            ),
+            colors = colorsList
     )
+
     val coverageBase = PieChartHelper.dataFromEntriesAndColors(
-        entries = listOf(
-            PieEntry(round(analytics.averageHighCoverageBase).toFloat(), stringResource(R.string.field_coverage_high)),
-            PieEntry(round(analytics.averageGoodCoverageBase).toFloat(), stringResource(R.string.field_coverage_good)),
-            PieEntry(round(analytics.averageLowCoverageBase).toFloat(), stringResource(R.string.field_coverage_low)),
-        ),
-        colors = colorsList
+            entries = listOf(
+                    PieEntry(round(analytics.averageHighCoverageBase).toFloat(), stringResource(R.string.field_coverage_high)),
+                    PieEntry(round(analytics.averageGoodCoverageBase).toFloat(), stringResource(R.string.field_coverage_good)),
+                    PieEntry(round(analytics.averageLowCoverageBase).toFloat(), stringResource(R.string.field_coverage_low)),
+                    PieEntry((
+                            100f - (round(analytics.averageHighCoverageBase) +
+                                    round(analytics.averageGoodCoverageBase) +
+                                    round(analytics.averageLowCoverageBase))
+                            ).toFloat(),
+                            stringResource(R.string.field_coverage_no_coverage)
+                    )
+            ),
+            colors = colorsList
     )
+
     val coverageClear = PieChartHelper.dataFromEntriesAndColors(
-        entries = listOf(
-            PieEntry(round(analytics.averageHighCoverageClear).toFloat(), stringResource(R.string.field_coverage_high)),
-            PieEntry(round(analytics.averageGoodCoverageClear).toFloat(), stringResource(R.string.field_coverage_good)),
-            PieEntry(round(analytics.averageLowCoverageClear).toFloat(), stringResource(R.string.field_coverage_low)),
-        ),
-        colors = colorsList
+            entries = listOf(
+                    PieEntry(round(analytics.averageHighCoverageClear).toFloat(), stringResource(R.string.field_coverage_high)),
+                    PieEntry(round(analytics.averageGoodCoverageClear).toFloat(), stringResource(R.string.field_coverage_good)),
+                    PieEntry(round(analytics.averageLowCoverageClear).toFloat(), stringResource(R.string.field_coverage_low)),
+                    PieEntry((
+                            100f - (round(analytics.averageHighCoverageClear) +
+                                    round(analytics.averageGoodCoverageClear) +
+                                    round(analytics.averageLowCoverageClear))
+                            ).toFloat(),
+                            stringResource(R.string.field_coverage_no_coverage)
+                    )
+            ),
+            colors = colorsList
     )
+
+    val coverageOverallHigh = round((analytics.averageHighCoverageBase + analytics.averageHighCoverageClear + analytics.averageHighCoveragePrimer)
+                    / 3f).toFloat()
+
+    val coverageOverallGood = round((analytics.averageGoodCoverageBase + analytics.averageGoodCoverageClear + analytics.averageGoodCoveragePrimer)
+                    / 3f).toFloat()
+
+    val coverageOverallLow = round((analytics.averageLowCoverageBase + analytics.averageLowCoverageClear + analytics.averageLowCoveragePrimer)
+                    / 3f).toFloat()
 
     // Using the other coverage's entry sets will be error prone
     val coverageOverall = PieChartHelper.dataFromEntriesAndColors(
-        entries = listOf(
-            PieEntry(
-                round( (analytics.averageHighCoverageBase + analytics.averageHighCoverageClear + analytics.averageHighCoveragePrimer)
-                        /3f).toFloat(), stringResource(id = R.string.field_coverage_high)
+            entries = listOf(
+                    PieEntry(
+                            coverageOverallHigh,
+                            stringResource(id = R.string.field_coverage_high)
+                    ),
+                    PieEntry(
+                            coverageOverallGood,
+                            stringResource(id = R.string.field_coverage_good)
+                    ),
+                    PieEntry(
+                            coverageOverallLow,
+                            stringResource(id = R.string.field_coverage_low)
+                    ),
+                    PieEntry(
+                            100f - (coverageOverallHigh + coverageOverallGood + coverageOverallLow),
+                            stringResource(R.string.field_coverage_no_coverage)
+                    )
             ),
-            PieEntry(
-                round((analytics.averageGoodCoverageBase + analytics.averageGoodCoverageClear + analytics.averageGoodCoveragePrimer)
-                        /3f).toFloat(), stringResource(id = R.string.field_coverage_good)
-            ),
-            PieEntry(
-                round((analytics.averageLowCoverageBase + analytics.averageLowCoverageClear + analytics.averageLowCoveragePrimer)
-                        /3f).toFloat(), stringResource(id = R.string.field_coverage_low)
-            )
-        ),
-        colors = colorsList
+            colors = colorsList
     )
 
-    val curDataSet = when(selectedCoverageType) {
+    val curDataSet = when (selectedCoverageType) {
         CoverageType.OVERALL -> coverageOverall
         CoverageType.PRIMER -> coveragePrimer
         CoverageType.BASE -> coverageBase
