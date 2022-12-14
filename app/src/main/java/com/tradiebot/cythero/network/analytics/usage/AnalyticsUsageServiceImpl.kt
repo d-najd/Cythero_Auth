@@ -40,12 +40,11 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
         try {
             val response: Response = client.newCall(request).execute().printResponse()
             
-            if (response.isSuccessful) {
-                response.use {
-                    val test = response.body.string()
-                    
-                    return gson.fromJson(response.body.string(), AnalyticsUsageHolder::class.java).analyticsUsage
-                }
+            response.takeIf { res -> res.isSuccessful }.use { res ->
+                // Yes it is possible to do this in one line and yes it does crash the app
+                val temp = gson.fromJson(res!!.body.string(), AnalyticsUsageHolder::class.java)
+    
+                return temp.analyticsUsage
             }
         } catch (e: IOException) {
             e.printStackTrace()

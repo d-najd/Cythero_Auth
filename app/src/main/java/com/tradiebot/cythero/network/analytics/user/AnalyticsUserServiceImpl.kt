@@ -12,7 +12,7 @@ import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.io.IOException
-import java.util.Date
+import java.util.*
 
 object AnalyticsUserServiceImpl: AnalyticsUserService {
     private val client = Injekt.get<OkHttpClient>()
@@ -39,12 +39,10 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
 
         try {
             val response: Response = client.newCall(request).execute().printResponse()
-
-            if (response.isSuccessful) {
-                response.use {
-                    val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
-                    return gson.fromJson(response.body.string(), analyticsUserType)
-                }
+    
+            response.takeIf { res -> res.isSuccessful }.use { res ->
+                val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
+                return gson.fromJson(res!!.body.string(), analyticsUserType)
             }
         } catch (e: IOException) {
             e.printStackTrace()

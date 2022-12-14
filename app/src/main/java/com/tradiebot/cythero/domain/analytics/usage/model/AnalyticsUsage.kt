@@ -1,28 +1,29 @@
 package com.tradiebot.cythero.domain.analytics.usage.model
 
 
-import android.provider.Telephony.Mms.Part
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.util.Date
 
 data class AnalyticsUsageHolder(
     @SerializedName("table") val analyticsUsage: AnalyticsUsage
 )
 
 data class AnalyticsUsage(
-    @SerializedName("Date") val date: List<Date>,
+    @SerializedName("Date") val date: List<String>,
     @SerializedName("Paint Used (Ml)") val paintUsedMl: List<Double>,
-    @SerializedName("Part") val part: List<Part>,
+    @SerializedName("Part") val part: List<String>,
     @SerializedName("Session ID") val sessionID: List<String>,
     @SerializedName("Total Time Spent (min)") val totalTimeSpentMin: List<Double>,
     @SerializedName("User") val user: List<String>
 ) {
     companion object {
         fun mockInstance(): AnalyticsUsage {
-            return Injekt.get<Gson>().fromJson(MOCK_USAGE_ANALYTICS, AnalyticsUsageHolder::class.java).analyticsUsage
+            // Yes it is possible to do this in one line and yes it does crash the app
+            val temp = Injekt.get<Gson>().fromJson(MOCK_USAGE_ANALYTICS, AnalyticsUsageHolder::class.java)
+    
+            return temp.analyticsUsage
         }
     }
 }

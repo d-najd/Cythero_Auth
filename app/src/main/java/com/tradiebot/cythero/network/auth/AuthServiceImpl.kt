@@ -35,11 +35,9 @@ object AuthServiceImpl : AuthService {
 
         try {
             val response: Response = client.newCallAndPrint(request)
-
-            if (response.isSuccessful) {
-                response.use {
-                    return gson.fromJson(response.body.string(), Auth::class.java)
-                }
+    
+            response.takeIf { res -> res.isSuccessful }.use { res ->
+                return gson.fromJson(res!!.body.string(), Auth::class.java)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -67,11 +65,9 @@ object AuthServiceImpl : AuthService {
 
         try {
             val response: Response = client.newCallAndPrint(request)
-
-            if (response.isSuccessful) {
-                response.use {
-                    return gson.fromJson(response.body.string(), Auth::class.java)
-                }
+    
+            response.takeIf { res -> res.isSuccessful }.use { res ->
+                return gson.fromJson(res!!.body.string(), Auth::class.java)
             }
         } catch (e: IOException) {
             e.printStackTrace()

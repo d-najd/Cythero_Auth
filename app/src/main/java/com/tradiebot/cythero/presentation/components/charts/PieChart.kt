@@ -96,12 +96,9 @@ object PieChartHelper {
             entries.add(PieEntry(grade.value.toFloat(), "Grade ${Injekt.get<ContextHolder>().getString(grade.key.nameId)}"))
             colors.add(
                 when (grade.key){
-                    Grade.A -> android.graphics.Color.parseColor(
-                        Grade.A.rgb)
-                    Grade.B -> android.graphics.Color.parseColor(
-                        Grade.B.rgb)
-                    Grade.C -> android.graphics.Color.parseColor(
-                        Grade.C.rgb)
+                    Grade.A -> android.graphics.Color.parseColor(Grade.A.rgb)
+                    Grade.B -> android.graphics.Color.parseColor(Grade.B.rgb)
+                    Grade.C -> android.graphics.Color.parseColor(Grade.C.rgb)
                     else -> throw IllegalStateException("Invalid grade")
                 }
             )

@@ -41,7 +41,7 @@ class DomainModule : InjektModule {
                 addSingletonFactory<AuthService> { AuthServiceMock }
                 addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceMock }
                 addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
-                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceImpl }
+                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
             }
             false -> {
                 addSingletonFactory<AuthService> { AuthServiceImpl }
