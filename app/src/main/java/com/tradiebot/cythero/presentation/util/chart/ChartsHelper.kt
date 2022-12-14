@@ -8,7 +8,6 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.BarLineScatterCandleBubbleData
 import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.interfaces.datasets.IDataSet
-import com.tradiebot.cythero.presentation.components.chart.LineChartHelper
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
 
@@ -87,7 +86,7 @@ object ChartsHelper {
         @Suppress("ComplexRedundantLet")
         takeIf { type != ChartValueFormatterType.DEFAULT }.let {
             setValueFormatter { value, _ ->
-                LineChartHelper.LineValueFormatter.format(
+                ChartValueFormatter.format(
                     type,
                     dataSet,
                     value

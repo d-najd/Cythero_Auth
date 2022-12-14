@@ -41,7 +41,7 @@ fun AnalyticsPartGradesBreakdownCard(
         CoverageType.CLEAR -> stringResource(analytics.averageGradeClear.nameId)
     }
 
-    val gradePieDataSet = mDataSet(
+    val gradePieDataSet = generateDataSet(
         analytics = analytics,
         selectedCoverageType = selectedCoverageType
     )
@@ -91,7 +91,7 @@ fun AnalyticsPartGradesBreakdownCard(
 
 @Suppress("UselessCallOnCollection") // it is not useless 
 @Composable
-private fun mDataSet(
+private fun generateDataSet(
     analytics: AnalyticsPart,
     selectedCoverageType: CoverageType,
 ): Flow<PieDataSet> {

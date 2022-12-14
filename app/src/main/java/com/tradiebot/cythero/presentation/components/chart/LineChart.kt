@@ -11,22 +11,13 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.interfaces.datasets.IDataSet
-import com.tradiebot.cythero.R
-import com.tradiebot.cythero.app.util.view.ContextHolder
-import com.tradiebot.cythero.domain.analytics.Grade
-import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
-import com.tradiebot.cythero.presentation.util.chart.ChartValueFormatterType
 import com.tradiebot.cythero.presentation.util.chart.ChartsHelper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 /**
  * TODO just look at the number of parameters
@@ -114,102 +105,17 @@ fun LineChart(
 }
 
 object LineChartHelper{
-    object LineValueFormatter {
-        fun format(
-            type: ChartValueFormatterType,
-            dataSet: IDataSet<*>,
-            position: Float
-        ): String {
-            (return when (type) {
-                ChartValueFormatterType.VALUE_POSITION -> {
-                    "${position.toInt() + 1}" +
-                            " ${dataSet.getEntryForIndex(position.toInt()).data}"
-                }
-                ChartValueFormatterType.VALUE -> {
-                    "${(dataSet.getEntryForIndex(position.toInt()).data)}"
-                }
-                ChartValueFormatterType.DEFAULT -> {
-                    ChartValueFormatterType.DEFAULT.toString()
-                }
-            })
-        }
-    }
-
-    fun generatePartTimeTakenData(
-        timeList: List<Int>,
-        dates: List<String>,
-    ): List<LineDataSet> {
-
-        val formattedList = timeList.takeLast(10)
-            .map { o -> o/60f }
-            .zip(dates)
-
-        val dataSet = generateDataSet(
-            data = formattedList,
-            label = Injekt.get<ContextHolder>().getString(R.string.field_sessions),
-            color = Grade.A.rgb
-        )
-
-        return listOf(dataSet)
-    }
-
-    fun generateUserPartsData(
-        analyticsUser: AnalyticsUser
-    ): List<LineDataSet> {
-        val analyticsTable = analyticsUser.analyticsUserTable
-
-        val parts = analyticsTable.part.takeLast(10).map { Injekt.get<ContextHolder>().getString(it.nameId) }
-
-        val lowCoverage = analyticsTable.clearLowCoverage.takeLast(10)
-            .zip( analyticsTable.baseLowCoverage.takeLast(10)) { f, s -> f + s  }
-            .zip( analyticsTable.primerLowCoverage.takeLast(10)) { f, s -> (f + s)/3 }
-            .map { o -> o.roundToInt().toFloat() }
-            .zip(parts)
-
-        val goodCoverage = analyticsTable.clearGoodCoverage.takeLast(10)
-            .zip( analyticsTable.baseGoodCoverage.takeLast(10)) { f, s -> f + s  }
-            .zip( analyticsTable.primerGoodCoverage.takeLast(10)) { f, s -> (f + s)/3 }
-            .map { o -> o.roundToInt().toFloat() }
-            .zip(parts)
-
-        val highCoverage = analyticsTable.clearHighCoverage.takeLast(10)
-            .zip( analyticsTable.baseHighCoverage.takeLast(10)) { f, s -> f + s  }
-            .zip( analyticsTable.primerHighCoverage.takeLast(10)) { f, s -> (f + s)/3 }
-            .map { o -> o.roundToInt().toFloat() }
-            .zip(parts)
-
-        val lowCoverageDataSet = generateDataSet(
-            data = lowCoverage,
-            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_low),
-            color = Grade.B.rgb,
-        )
-
-        val goodCoverageDataSet = generateDataSet(
-            data = goodCoverage,
-            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_good),
-            color = Grade.A.rgb,
-        )
-
-        val highCoverageDataSet  = generateDataSet(
-            data = highCoverage,
-            label = Injekt.get<ContextHolder>().getString(R.string.field_coverage_high),
-            color = Grade.C.rgb,
-        )
-
-        return listOf(lowCoverageDataSet, goodCoverageDataSet, highCoverageDataSet)
-
-    }
-
     /**
-     * general [LineDataSet] generator,
+     * General [LineDataSet] generator
      *
-     * @param data list of pairs where the "first" is float representing the height of the entry
-     * and the "second" representing the name of the entry
-     * @param color color of the dataset, if undefined
-     * @param label label of the entry set
+     * @param data list of pairs where [Pair.first] is float representing the height of the entry
+     * and [Pair.second] representing the name of the entry
+     * @param color color of the dataset
+     * @param label label of the dataset
+     * @return dataset
      */
     fun generateDataSet(
-        data: List<Pair<Float, Any>>,
+        data: List<Pair<Float, String>>,
         color: String,
         label: String = "",
     ): LineDataSet {

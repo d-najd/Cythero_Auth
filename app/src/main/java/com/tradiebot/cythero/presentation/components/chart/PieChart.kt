@@ -11,16 +11,14 @@ import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
 import com.tradiebot.cythero.presentation.util.chart.ChartsHelper
+import com.tradiebot.cythero.util.mAppContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
 import java.util.*
 
 /**
@@ -88,12 +86,20 @@ fun PieChart(
 }
 
 object PieChartHelper {
+    
+    /**
+     * [PieDataSet] generator from given [Grade] map, this generator does not check if [Map.Entry.value]
+     * is empty or not, the colors are generated from [Grade.rgb]
+     * @param grades map where [Map.Entry.key] is the label of the entry and [Map.Entry.value]
+     * is the value
+     * @return dataset
+     */
     fun dataFromGrades(grades: SortedMap<Grade, Int>): PieDataSet {
         val entries = mutableListOf<PieEntry>()
         val colors = mutableListOf<Int>()
 
         for (grade in grades) {
-            entries.add(PieEntry(grade.value.toFloat(), "Grade ${Injekt.get<ContextHolder>().getString(grade.key.nameId)}"))
+            entries.add(PieEntry(grade.value.toFloat(), "Grade ${mAppContext().getString(grade.key.nameId)}"))
             colors.add(
                 when (grade.key){
                     Grade.A -> android.graphics.Color.parseColor(Grade.A.rgb)
@@ -108,22 +114,34 @@ object PieChartHelper {
 
         return dataSet
     }
-
-    fun dataFromEntriesAndColors(
-        entries: List<PieEntry>,
+    
+    /**
+     * General [PieDataSet] generator which includes values that are positive
+     *
+     * @param data list of pairs where [Pair.first] is float representing the height of the entry
+     * and [Pair.second] representing the name of the entry, if [Pair.first] is negative the data for
+     * that entry and the color will not be included in the dataset
+     * @param colors colors of the dataset, the color will not be included if the an entry from the
+     * [data] list does not exist or it's [Pair.first] is not positive
+     * @param label label of the dataset
+     * @return dataset which contains only positive values
+     */
+    fun generateDataSetPositive(
+        data: List<Pair<Float, String>>,
         colors: List<String>,
+        label: String = "",
     ): PieDataSet {
         val mColors = mutableListOf<Int>()
         val mEntries = mutableListOf<PieEntry>()
-        if(colors.size < entries.size) throw IllegalArgumentException()
-        for(i in entries.indices){
-            if(entries[i].value > 0){
-                mEntries.add(entries[i])
+        if(colors.size < data.size) throw IllegalArgumentException()
+        for(i in data.indices){
+            if(data[i].first > 0){
+                mEntries.add(PieEntry(data[i].first, data[i].second))
                 mColors.add(android.graphics.Color.parseColor(colors[i]))
             }
         }
 
-        val dataSet = PieDataSet(mEntries, "")
+        val dataSet = PieDataSet(mEntries, label)
         dataSet.colors = mColors
 
         return dataSet
