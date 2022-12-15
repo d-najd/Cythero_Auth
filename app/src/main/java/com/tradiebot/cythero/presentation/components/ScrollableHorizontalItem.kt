@@ -1,5 +1,6 @@
 package com.tradiebot.cythero.presentation.components
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -23,6 +24,8 @@ fun ScrollableHorizontalItem(
         selectedTabIndex = 0,
         divider = { },
     ) {
-        content()
+        Column {
+            content()
+        }
     }
 }

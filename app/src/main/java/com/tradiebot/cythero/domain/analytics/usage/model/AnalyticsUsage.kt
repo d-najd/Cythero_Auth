@@ -1,19 +1,20 @@
 package com.tradiebot.cythero.domain.analytics.usage.model
 
-
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import com.tradiebot.cythero.domain.analytics.Part
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.util.*
 
 data class AnalyticsUsageHolder(
     @SerializedName("table") val analyticsUsage: AnalyticsUsage
 )
 
 data class AnalyticsUsage(
-    @SerializedName("Date") val date: List<String>,
+    @SerializedName("Date") val date: List<Date>,
     @SerializedName("Paint Used (Ml)") val paintUsedMl: List<Double>,
-    @SerializedName("Part") val part: List<String>,
+    @SerializedName("Part") val part: List<Part>,
     @SerializedName("Session ID") val sessionID: List<String>,
     @SerializedName("Total Time Spent (min)") val totalTimeSpentMin: List<Double>,
     @SerializedName("User") val user: List<String>

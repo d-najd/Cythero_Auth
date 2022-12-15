@@ -32,14 +32,11 @@ class AnalyticsScreen(
         AnalyticsScreen(
             presenter = state,
             onBackClicked = router::popCurrentController,
-            onGenerateUserReportClicked = {
-                screenModel.requestUserAnalytics(auth, userID = 4L, it)
-            },
-            onGeneratePartReportClicked = {
-                screenModel.requestPartAnalytics(auth, userID = 4L, it)
-            },
-            onGenerateUsageReportClicked = {
-                screenModel.requestUsageAnalytics(auth, userID = 4L, it)
+            onGenerateUserReportClicked = { screenModel.requestUserAnalytics(auth, userID = 4L, it) },
+            onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
+            onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
+            sortUsageReport = { type, reverse ->
+            
             }
         )
     }

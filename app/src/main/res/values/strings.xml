@@ -18,6 +18,7 @@
     <string name="field_times_played">Times Played</string>
     <string name="field_most_painted_part">Most Painted Part</string>
     <string name="field_total_time_played">Total Time Played</string>
+    <string name="field_total_time_spent">Total Time Spent (min)</string>
     <string name="field_coverage_graph_last_sessions">Coverage Graph (Last 10 sessions)</string>
     <string name="field_grades_breakdown">Grades Breakdown</string>
     <string name="field_latest_session">Latest Session</string>
@@ -46,6 +47,19 @@
     <string name="field_part_propeller">Propeller</string>
     <string name="field_part_beam">Beam</string>
     <string name="field_part_rail_section">Rail Section</string>
+
+    <string name="field_coverage_type_overall">Overall</string>
+    <string name="field_coverage_type_primer">Primer</string>
+    <string name="field_coverage_type_base">Base</string>
+    <string name="field_coverage_type_clear">Clear</string>
+
+    <string name="field_average_grade">Average Grade</string>
+    <string name="field_time_taken_last_sessions">Time Taken (Last 10 sessions)</string>
+    <string name="field_sessions">Sessions</string>
+    <string name="field_coverage_breakdown">Coverage Breakdown</string>
+    <string name="field_paint_used_last_sessions">Paint Used (Last 10 sessions)</string>
+    <string name="field_date">Date</string>
+    <string name="field_paint_used_ml">Paint Used (Ml)</string>
 
     <!-- info -->
     <string name="info_sign_in_to_access">Sign in to access your account</string>
@@ -85,14 +99,5 @@
     <string name="placeholder_first_name">Cosmos</string>
     <string name="placeholder_last_name">Redshift</string>
     <string name="placeholder_username">Andromeda</string>
-    <string name="field_coverage_type_overall">Overall</string>
-    <string name="field_coverage_type_primer">Primer</string>
-    <string name="field_coverage_type_base">Base</string>
-    <string name="field_coverage_type_clear">Clear</string>
-    <string name="field_average_grade">Average Grade</string>
-    <string name="field_time_taken_last_sessions">Time Taken (Last 10 sessions)</string>
-    <string name="field_sessions">Sessions</string>
-    <string name="field_coverage_breakdown">Coverage Breakdown</string>
-    <string name="field_paint_used_last_sessions">Paint Used (Last 10 sessions)</string>
 
 </resources>

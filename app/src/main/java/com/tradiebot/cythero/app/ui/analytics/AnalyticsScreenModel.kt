@@ -8,7 +8,8 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
+import com.tradiebot.cythero.domain.analytics.usage.model.toAnalyticsSortable
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -150,7 +151,7 @@ class AnalyticsScreenModel(
                 mutableState.update {
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
-                        analytics = userAnalytics,
+                        analytics = userAnalytics.toAnalyticsSortable(),
                     )
                 }
             } else {
@@ -204,7 +205,7 @@ sealed class AnalyticsScreenState {
     @Immutable
     data class UsageSuccess(
         val auth: Auth,
-        val analytics: AnalyticsUsage,
+        val analytics: List<AnalyticsUsageSortable>,
     ) : AnalyticsScreenState()
     
 }

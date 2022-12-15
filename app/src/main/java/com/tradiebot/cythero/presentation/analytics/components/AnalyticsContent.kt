@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Part
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.presentation.analytics.components.reports.part.AnalyticsPartReportContent
+import com.tradiebot.cythero.presentation.analytics.components.reports.usage.AnalyticsUsageReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.AnalyticsUserReportContent
 import com.tradiebot.cythero.presentation.analytics.components.reports.user.cards.*
 import com.tradiebot.cythero.presentation.components.LoadingScreen
@@ -31,7 +33,10 @@ fun AnalyticsContent(
     contentPadding: PaddingValues,
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
     onGeneratePartReportClicked: (Part) -> Unit,
+    
+    // Usage
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
+    sortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -72,7 +77,10 @@ fun AnalyticsContent(
                 )
             }
             is AnalyticsScreenState.UsageSuccess -> {
-            
+                AnalyticsUsageReportContent(
+                    state = state,
+                    sortUsageReport = sortUsageReport,
+                )
             }
         }
     }
