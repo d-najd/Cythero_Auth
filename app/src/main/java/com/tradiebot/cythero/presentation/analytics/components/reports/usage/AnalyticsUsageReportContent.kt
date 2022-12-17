@@ -2,34 +2,45 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.usage
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.NavigateBefore
+import androidx.compose.material.icons.rounded.NavigateNext
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
+import com.tradiebot.cythero.util.CytheroDateFormat
 
+@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsUsageReportContent(
 	state: AnalyticsScreenState.UsageSuccess,
 	sortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
 ) {
-	// The index of the selected screen in the report
-	var screenIndex = remember { mutableStateOf(0) }
+	val analytics = state.analytics
 	
-	val width = 700.dp
+	// The index of the selected screen in the report
+	var screenIndex by remember { mutableStateOf(0) }
+	
+	val analyticsSublist = analytics.analyticsList.subList(
+		fromIndex = screenIndex * 10,
+		toIndex = minOf(analytics.analyticsList.size, (screenIndex * 10) + 10)
+	)
+	
+	val width = 800.dp
 	val numOfFields = 5
 	
 	ScrollableHorizontalItem(
@@ -42,27 +53,73 @@ fun AnalyticsUsageReportContent(
 		) {
 			Row(
 				modifier = Modifier
-					.padding(bottom = 4.dp, start = 8.dp, end = 8.dp)
+					.padding(start = 8.dp, end = 8.dp)
+			
 			) {
-				Text(
+				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
-					text = stringResource(R.string.field_user)
+					state = analyticsUsageToggleableStateHelper(
+						analytics = analytics,
+						type = AnalyticsUsageSortType.USER
+					),
+					text = stringResource(R.string.field_user),
+					onClick = { prevState ->
+						if(prevState == ToggleableState.On) {
+							sortUsageReport(AnalyticsUsageSortType.USER, false)
+						} else sortUsageReport(AnalyticsUsageSortType.USER, true)
+					}
 				)
-				Text(
+				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
-					text = stringResource(R.string.field_part)
+					state = analyticsUsageToggleableStateHelper(
+						analytics = analytics,
+						type = AnalyticsUsageSortType.PART
+					),
+					text = stringResource(R.string.field_part),
+					onClick = { prevState ->
+						if(prevState == ToggleableState.On) {
+							sortUsageReport(AnalyticsUsageSortType.PART, false)
+						} else sortUsageReport(AnalyticsUsageSortType.PART, true)
+					}
 				)
-				Text(
+				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
-					text = stringResource(R.string.field_date)
+					state = analyticsUsageToggleableStateHelper(
+						analytics = analytics,
+						type = AnalyticsUsageSortType.DATE
+					),
+					text = stringResource(R.string.field_date),
+					onClick = { prevState ->
+						if(prevState == ToggleableState.On) {
+							sortUsageReport(AnalyticsUsageSortType.DATE, false)
+						} else sortUsageReport(AnalyticsUsageSortType.DATE, true)
+					}
 				)
-				Text(
+				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
-					text = stringResource(R.string.field_paint_used_ml)
+					state = analyticsUsageToggleableStateHelper(
+						analytics = analytics,
+						type = AnalyticsUsageSortType.PAINT_USED
+					),
+					text = stringResource(R.string.field_paint_used),
+					onClick = { prevState ->
+						if(prevState == ToggleableState.On) {
+							sortUsageReport(AnalyticsUsageSortType.PAINT_USED, false)
+						} else sortUsageReport(AnalyticsUsageSortType.PAINT_USED, true)
+					}
 				)
-				Text(
+				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
-					text = stringResource(R.string.field_total_time_played)
+					state = analyticsUsageToggleableStateHelper(
+						analytics = analytics,
+						type = AnalyticsUsageSortType.TOTAL_TIME_SPENT
+					),
+					text = stringResource(R.string.field_total_time_spent),
+					onClick = { prevState ->
+						if(prevState == ToggleableState.On) {
+							sortUsageReport(AnalyticsUsageSortType.TOTAL_TIME_SPENT, false)
+						} else sortUsageReport(AnalyticsUsageSortType.TOTAL_TIME_SPENT, true)
+					}
 				)
 			}
 			
@@ -72,11 +129,8 @@ fun AnalyticsUsageReportContent(
 					.fillMaxWidth()
 			)
 			
-			LazyColumn(
-				modifier = Modifier
-					.height(500.dp)
-			) {
-				items(state.analytics) { analytic ->
+			Column() {
+				for(analytic in analyticsSublist) {
 					Card(
 						modifier = Modifier
 							.padding(vertical = 2.dp)
@@ -100,13 +154,13 @@ fun AnalyticsUsageReportContent(
 								modifier = Modifier
 									.width(width / numOfFields),
 								color = MaterialTheme.colorScheme.onSurfaceVariant,
-								text = analytic.part,
+								text = stringResource(analytic.part.nameId),
 							)
 							Text(
 								modifier = Modifier
 									.width(width / numOfFields),
 								color = MaterialTheme.colorScheme.onSurfaceVariant,
-								text = analytic.date,
+								text = CytheroDateFormat.defaultRequestDateFormat().format(analytic.date),
 							)
 							Text(
 								modifier = Modifier
@@ -126,4 +180,40 @@ fun AnalyticsUsageReportContent(
 			}
 		}
 	}
+	
+	Row(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(vertical = 20.dp),
+		horizontalArrangement = Arrangement.Center,
+	) {
+		IconButton(
+			onClick = { /*TODO*/ },
+		) {
+			Icon(
+				imageVector = Icons.Rounded.NavigateBefore,
+				contentDescription = ""
+			)
+		}
+		
+		Text(
+			modifier = Modifier
+				.padding(horizontal = 12.dp),
+			text = "0/2",
+			color = MaterialTheme.colorScheme.onSurfaceVariant,
+			textAlign = TextAlign.Center,
+			fontWeight = FontWeight.Bold,
+			fontSize = TextUnit(16f, TextUnitType.Sp),
+		)
+		
+		IconButton(
+			onClick = { /*TODO*/ },
+		) {
+			Icon(
+				imageVector = Icons.Rounded.NavigateNext,
+				contentDescription = ""
+			)
+		}
+	}
+	
 }

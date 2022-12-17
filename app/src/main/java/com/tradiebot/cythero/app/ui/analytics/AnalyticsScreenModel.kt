@@ -8,12 +8,15 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
+import com.tradiebot.cythero.domain.analytics.usage.model.sortByType
 import com.tradiebot.cythero.domain.analytics.usage.model.toAnalyticsSortable
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.util.launchIO
+import com.tradiebot.cythero.util.launchUI
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import logcat.logcat
@@ -148,10 +151,11 @@ class AnalyticsScreenModel(
             mutableState.update { AnalyticsScreenState.LoadingType }
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             if(userAnalytics != null) {
+                val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
                 mutableState.update {
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
-                        analytics = userAnalytics.toAnalyticsSortable(),
+                        analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
                     )
                 }
             } else {
@@ -161,6 +165,22 @@ class AnalyticsScreenModel(
                         auth = auth,
                     )
                 }
+            }
+        }
+    }
+    
+    fun sortUsageAnalytics(type: AnalyticsUsageSortType, reverse: Boolean){
+        coroutineScope.launchUI {
+            mutableState.update {
+                if(state.value !is AnalyticsScreenState.UsageSuccess)
+                    throw IllegalStateException("Sorting usage analytics when not in usage analytics?")
+                AnalyticsScreenState.UsageSuccess(
+                    auth = auth,
+                    analytics = (state.value as AnalyticsScreenState.UsageSuccess).analytics.sortByType(
+                        type = type,
+                        reverse = reverse
+                    )
+                )
             }
         }
     }
@@ -205,7 +225,7 @@ sealed class AnalyticsScreenState {
     @Immutable
     data class UsageSuccess(
         val auth: Auth,
-        val analytics: List<AnalyticsUsageSortable>,
+        val analytics: AnalyticsUsageSortable,
     ) : AnalyticsScreenState()
     
 }

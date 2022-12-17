@@ -35,9 +35,7 @@ class AnalyticsScreen(
             onGenerateUserReportClicked = { screenModel.requestUserAnalytics(auth, userID = 4L, it) },
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
-            sortUsageReport = { type, reverse ->
-            
-            }
+            sortUsageReport = screenModel::sortUsageAnalytics
         )
     }
 }
