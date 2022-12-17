@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContent
 import java.util.*
 
@@ -19,7 +20,8 @@ fun AnalyticsScreen(
     
     // Usage
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
-    sortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
+    onSortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
+    onShowUsageItemInfo: (AnalyticsUsageSortable) -> Unit,
 ) {
     Scaffold { contentPadding ->
         BackHandler { onBackClicked() }
@@ -30,7 +32,8 @@ fun AnalyticsScreen(
             onGenerateUserReportClicked = onGenerateUserReportClicked,
             onGeneratePartReportClicked = onGeneratePartReportClicked,
             onGenerateUsageReportClicked = onGenerateUsageReportClicked,
-            sortUsageReport =  sortUsageReport,
+            onSortUsageReport = onSortUsageReport,
+            onShowUsageItemInfo = onShowUsageItemInfo,
         )
     }
 }

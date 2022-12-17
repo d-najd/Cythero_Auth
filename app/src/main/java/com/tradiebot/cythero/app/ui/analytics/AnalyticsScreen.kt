@@ -9,6 +9,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.analytics.AnalyticsScreen
+import com.tradiebot.cythero.presentation.analytics.components.reports.usage.components.AnalyticsUsageItemInfoDialog
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.util.LocalRouter
 
@@ -28,15 +29,28 @@ class AnalyticsScreen(
             LoadingScreen()
             return
         }
-        
+    
         AnalyticsScreen(
             presenter = state,
             onBackClicked = router::popCurrentController,
             onGenerateUserReportClicked = { screenModel.requestUserAnalytics(auth, userID = 4L, it) },
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
-            sortUsageReport = screenModel::sortUsageAnalytics
+            onSortUsageReport = screenModel::sortUsageAnalytics,
+            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it)) }
         )
+    
+    
+        if(state is AnalyticsScreenState.UsageSuccess){
+            when(val dialog = (state as AnalyticsScreenState.UsageSuccess).dialog){
+                null -> {}
+                is AnalyticsUsageDialog.ItemInfo -> {
+                    AnalyticsUsageItemInfoDialog(
+                        onDismissRequest = screenModel::dismissUsageDialog,
+                    )
+                }
+            }
+        }
     }
 }
 

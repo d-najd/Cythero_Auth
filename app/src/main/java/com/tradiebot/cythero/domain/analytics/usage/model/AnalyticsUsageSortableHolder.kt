@@ -5,18 +5,18 @@ import com.tradiebot.cythero.util.mAppContext
 import java.util.*
 
 
-/**
- * Analytics that are much easier to sort than [AnalyticsUsage] because in [AnalyticsUsage] the
- * structure is single object which contains lists as fields, in [AnalyticsUsageSortableHolder] it is
- * list of objects which contain objects as fields instead.
- */
-data class AnalyticsUsageSortable(
-	val analyticsList: List<AnalyticsUsageSortableHolder>,
+data class AnalyticsUsageSortableHolder(
+	val analyticsList: List<AnalyticsUsageSortable>,
 	val sortType: AnalyticsUsageSortType,
 	val reverse: Boolean
 )
 
-data class AnalyticsUsageSortableHolder(
+/**
+ * Analytics that are much easier to sort than [AnalyticsUpdate] because in [AnalyticsUpdate] the
+ * structure is single object which contains lists as fields, in [AnalyticsUsageSortable] it is
+ * list of objects which contain objects as fields instead.
+ */
+data class AnalyticsUsageSortable(
 	val date: Date,
 	val paintUsedMl: Double,
 	val part: Part,
@@ -25,14 +25,14 @@ data class AnalyticsUsageSortableHolder(
 	val user: String
 )
 
-fun AnalyticsUsage.toAnalyticsSortable() = AnalyticsUsageSortable(
+fun AnalyticsUpdate.toAnalyticsSortable() = AnalyticsUsageSortableHolder(
 	analyticsList = this.toAnalyticsSortableHolder(),
 	sortType = AnalyticsUsageSortType.USER,
 	reverse = true,
 )
 
-fun AnalyticsUsage.toAnalyticsSortableHolder() = List(this.sessionID.size) { i ->
-	AnalyticsUsageSortableHolder(
+fun AnalyticsUpdate.toAnalyticsSortableHolder() = List(this.sessionID.size) { i ->
+	AnalyticsUsageSortable(
 		date = this.date[i],
 		paintUsedMl = this.paintUsedMl[i],
 		part = this.part[i],
@@ -42,10 +42,10 @@ fun AnalyticsUsage.toAnalyticsSortableHolder() = List(this.sessionID.size) { i -
 	)
 }
 
-fun AnalyticsUsageSortable.sortByType(
+fun AnalyticsUsageSortableHolder.sortByType(
 	type: AnalyticsUsageSortType,
 	reverse: Boolean = false,
-): AnalyticsUsageSortable {
+): AnalyticsUsageSortableHolder {
 	val analyticsSorted = when(type){
 		AnalyticsUsageSortType.DATE -> if(!reverse) analyticsList.sortedBy { it.date }
 			else analyticsList.sortedByDescending { it.date }
@@ -61,7 +61,7 @@ fun AnalyticsUsageSortable.sortByType(
 			else analyticsList.sortedByDescending { it.user }
 	}
 	
-	return AnalyticsUsageSortable(
+	return AnalyticsUsageSortableHolder(
 		analyticsList = analyticsSorted,
 		sortType = type,
 		reverse = reverse

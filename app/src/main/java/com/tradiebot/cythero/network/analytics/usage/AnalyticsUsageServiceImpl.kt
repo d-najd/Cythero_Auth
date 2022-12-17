@@ -1,7 +1,7 @@
 package com.tradiebot.cythero.network.analytics.usage
 
 import com.google.gson.Gson
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUpdate
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageHolder
 import com.tradiebot.cythero.domain.analytics.usage.service.AnalyticsUsageService
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -22,7 +22,7 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
         userAuth: Auth,
         userIDs: List<Long>,
         dateRange: Pair<Date, Date>
-    ): AnalyticsUsage? {
+    ): AnalyticsUpdate? {
         val dateFormat = CytheroDateFormat.defaultRequestDateFormat()
         
         val body = MultipartBodyBuilder()
@@ -44,7 +44,7 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
                 // Yes it is possible to do this in one line and yes it does crash the app
                 val temp = gson.fromJson(it!!.body.string(), AnalyticsUsageHolder::class.java)
     
-                return temp.analyticsUsage
+                return temp.analyticsUpdate
             }
         } catch (e: IOException) {
             e.printStackTrace()

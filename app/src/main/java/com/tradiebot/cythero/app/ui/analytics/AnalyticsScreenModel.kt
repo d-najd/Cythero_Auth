@@ -8,10 +8,7 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
-import com.tradiebot.cythero.domain.analytics.usage.model.sortByType
-import com.tradiebot.cythero.domain.analytics.usage.model.toAnalyticsSortable
+import com.tradiebot.cythero.domain.analytics.usage.model.*
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -185,8 +182,35 @@ class AnalyticsScreenModel(
         }
     }
     
-    //endregion
+    fun showUsageDialog(dialog: AnalyticsUsageDialog) {
+        mutableState.update {
+            when (it) {
+                is AnalyticsScreenState.UsageSuccess -> { it.copy(dialog = dialog) }
+                else -> it
+            }
+        }
+    }
+    
+    fun dismissUsageDialog() {
+        mutableState.update {
+            when (it) {
+                is AnalyticsScreenState.UsageSuccess -> it.copy(dialog = null)
+                else -> it
+            }
+        }
+    }
+    
+    // endregion
+    
+}
 
+sealed class AnalyticsUsageDialog {
+    data class ItemInfo(val analytic: AnalyticsUsageSortable): AnalyticsUsageDialog()
+    /*
+    object Create : CategoryDialog()
+    data class Rename(val category: Category) : CategoryDialog()
+    data class Delete(val category: Category) : CategoryDialog()
+     */
 }
 
 sealed class AnalyticsScreenState {
@@ -225,7 +249,8 @@ sealed class AnalyticsScreenState {
     @Immutable
     data class UsageSuccess(
         val auth: Auth,
-        val analytics: AnalyticsUsageSortable,
+        val analytics: AnalyticsUsageSortableHolder,
+        val dialog: AnalyticsUsageDialog? = null,
     ) : AnalyticsScreenState()
     
 }

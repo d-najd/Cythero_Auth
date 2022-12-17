@@ -8,10 +8,10 @@ import uy.kohesive.injekt.api.get
 import java.util.*
 
 data class AnalyticsUsageHolder(
-    @SerializedName("table") val analyticsUsage: AnalyticsUsage
+    @SerializedName("table") val analyticsUpdate: AnalyticsUpdate
 )
 
-data class AnalyticsUsage(
+data class AnalyticsUpdate(
     @SerializedName("Date") val date: List<Date>,
     @SerializedName("Paint Used (Ml)") val paintUsedMl: List<Double>,
     @SerializedName("Part") val part: List<Part>,
@@ -20,11 +20,11 @@ data class AnalyticsUsage(
     @SerializedName("User") val user: List<String>
 ) {
     companion object {
-        fun mockInstance(): AnalyticsUsage {
+        fun mockInstance(): AnalyticsUpdate {
             // Yes it is possible to do this in one line and yes it does crash the app
             val temp = Injekt.get<Gson>().fromJson(MOCK_USAGE_ANALYTICS, AnalyticsUsageHolder::class.java)
     
-            return temp.analyticsUsage
+            return temp.analyticsUpdate
         }
     }
 }

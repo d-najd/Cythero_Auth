@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortableHolder
 import com.tradiebot.cythero.presentation.components.CytheroCard
 
 @Composable
@@ -74,12 +74,12 @@ fun AnalyticsUsageTriStateRow(
 
 /**
  * helper used to determine the analyticsUsageState
- * @return [ToggleableState.On] if [AnalyticsUsageSortable.sortType] matches [type] and [AnalyticsUsageSortable.reverse] is false,
- * [ToggleableState.Off] if [AnalyticsUsageSortable.sortType] matches [type] and [AnalyticsUsageSortable.reverse] is true,
- * [ToggleableState.Indeterminate] if [AnalyticsUsageSortable.sortType] doesn't match [type] regardless of [AnalyticsUsageSortable.reverse]
+ * @return [ToggleableState.On] if [AnalyticsUsageSortableHolder.sortType] matches [type] and [AnalyticsUsageSortableHolder.reverse] is false,
+ * [ToggleableState.Off] if [AnalyticsUsageSortableHolder.sortType] matches [type] and [AnalyticsUsageSortableHolder.reverse] is true,
+ * [ToggleableState.Indeterminate] if [AnalyticsUsageSortableHolder.sortType] doesn't match [type] regardless of [AnalyticsUsageSortableHolder.reverse]
  */
 fun analyticsUsageToggleableStateHelper(
-	analytics: AnalyticsUsageSortable,
+	analytics: AnalyticsUsageSortableHolder,
 	type: AnalyticsUsageSortType,
 ): ToggleableState = if(analytics.sortType == type && analytics.reverse) {
 	ToggleableState.On
