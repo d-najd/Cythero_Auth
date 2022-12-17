@@ -30,13 +30,13 @@ fun AnalyticsUsageTriStateRow(
 	indeterminateStateIcon: ImageVector = Icons.Rounded.FilterList,
 ){
 	Row(
-		modifier = modifier
+		modifier = modifier,
+		verticalAlignment = Alignment.CenterVertically
 	) {
 		Column(
 			verticalArrangement = Arrangement.Center,
 			modifier = Modifier
-				.fillMaxHeight()
-				.padding(top = (3.5).dp)
+				.fillMaxHeight(),
 		) {
 			Text(
 				maxLines = 2,

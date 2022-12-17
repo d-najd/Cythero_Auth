@@ -56,7 +56,7 @@ fun CytheroMultipurposeMenu(
             Text(
                 modifier = Modifier
                     .padding(
-                        top = 3.5.dp,
+                        top = (3.5).dp,
                         bottom = 8.dp,
                         start = MULTIPURPOSE_MENU_TEXT_START_PADDING + 1.dp
                     ),

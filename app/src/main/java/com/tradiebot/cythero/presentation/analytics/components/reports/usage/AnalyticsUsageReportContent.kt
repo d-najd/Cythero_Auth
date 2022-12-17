@@ -23,6 +23,7 @@ import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
 import com.tradiebot.cythero.util.CytheroDateFormat
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -33,11 +34,11 @@ fun AnalyticsUsageReportContent(
 	val analytics = state.analytics
 	
 	// The index of the selected screen in the report
-	var screenIndex by remember { mutableStateOf(0) }
+	var screenIndex by remember { mutableStateOf(1) }
 	
 	val analyticsSublist = analytics.analyticsList.subList(
-		fromIndex = screenIndex * 10,
-		toIndex = minOf(analytics.analyticsList.size, (screenIndex * 10) + 10)
+		fromIndex = (screenIndex * 10) - 10,
+		toIndex = minOf(analytics.analyticsList.size, screenIndex * 10)
 	)
 	
 	val width = 800.dp
@@ -54,7 +55,6 @@ fun AnalyticsUsageReportContent(
 			Row(
 				modifier = Modifier
 					.padding(start = 8.dp, end = 8.dp)
-			
 			) {
 				AnalyticsUsageTriStateRow(
 					modifier = Modifier.width(width / numOfFields),
@@ -129,7 +129,7 @@ fun AnalyticsUsageReportContent(
 					.fillMaxWidth()
 			)
 			
-			Column() {
+			Column {
 				for(analytic in analyticsSublist) {
 					Card(
 						modifier = Modifier
@@ -183,12 +183,16 @@ fun AnalyticsUsageReportContent(
 	
 	Row(
 		modifier = Modifier
-			.fillMaxWidth()
-			.padding(vertical = 20.dp),
+			.fillMaxWidth(),
 		horizontalArrangement = Arrangement.Center,
+		verticalAlignment = Alignment.CenterVertically,
 	) {
 		IconButton(
-			onClick = { /*TODO*/ },
+			onClick = {
+					  if(screenIndex > 1){
+						  screenIndex--
+					  }
+			},
 		) {
 			Icon(
 				imageVector = Icons.Rounded.NavigateBefore,
@@ -199,7 +203,7 @@ fun AnalyticsUsageReportContent(
 		Text(
 			modifier = Modifier
 				.padding(horizontal = 12.dp),
-			text = "0/2",
+			text = "$screenIndex/${(analytics.analyticsList.size/10f).roundToInt()}",
 			color = MaterialTheme.colorScheme.onSurfaceVariant,
 			textAlign = TextAlign.Center,
 			fontWeight = FontWeight.Bold,
@@ -207,7 +211,11 @@ fun AnalyticsUsageReportContent(
 		)
 		
 		IconButton(
-			onClick = { /*TODO*/ },
+			onClick = {
+					  if(screenIndex < (analytics.analyticsList.size/10f).roundToInt()) {
+						  screenIndex++
+					  }
+			},
 		) {
 			Icon(
 				imageVector = Icons.Rounded.NavigateNext,
