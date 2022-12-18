@@ -7,8 +7,9 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
+import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestUsageAnalyticsLabels
+import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
-import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalyticsLabels
 import com.tradiebot.cythero.domain.analytics.usage.model.*
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
@@ -260,7 +261,7 @@ sealed class AnalyticsScreenState {
     data class UsageSuccess(
         val auth: Auth,
         val analytics: AnalyticsUsageSortableHolder,
-        val analyticsLabels: List<AnalyticsUsageLabel>,
+        val analyticsLabels: List<AnalyticsLabel>,
         val dialog: AnalyticsUsageDialog? = null,
     ) : AnalyticsScreenState()
     

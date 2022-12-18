@@ -1,7 +1,6 @@
 package com.tradiebot.cythero.network.analytics.usage
 
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageLabel
 import com.tradiebot.cythero.domain.analytics.usage.service.AnalyticsUsageService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import java.util.*
@@ -15,12 +14,6 @@ object AnalyticsUsageServiceMock: AnalyticsUsageService {
         dateRange: Pair<Date, Date>
     ): AnalyticsUsage? {
         return AnalyticsUsage.mockInstance()
-    }
-    
-    override suspend fun getLabels(
-        userAuth: Auth
-    ): List<AnalyticsUsageLabel> {
-        return AnalyticsUsageLabel.mockInstance()
     }
     
 }

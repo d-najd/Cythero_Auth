@@ -1,10 +1,10 @@
 package com.tradiebot.cythero.network.analytics.usage
 
 import com.google.gson.Gson
+import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
+import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabelsHolder
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageHolder
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageLabel
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageLabelsHolder
 import com.tradiebot.cythero.domain.analytics.usage.service.AnalyticsUsageService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
@@ -52,26 +52,5 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
             e.printStackTrace()
         }
         return null
-    }
-    
-    override suspend fun getLabels(userAuth: Auth): List<AnalyticsUsageLabel> {
-        val request = GET(
-            url = Urls.ANALYTICS_USAGE_LABELS,
-            headers = HeadersBuilder().addBearerToken(userAuth).build(),
-        )
-    
-        try {
-            val response: Response = client.newCall(request).execute().printResponse()
-        
-            response.takeIf { res ->  res.isSuccessful }.let {
-                // Yes it is possible to do this in one line and yes it does crash the app
-                val temp = gson.fromJson(it!!.body.string(), AnalyticsUsageLabelsHolder::class.java)
-            
-                return temp.analyticsUsageLabels
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return emptyList()
     }
 }

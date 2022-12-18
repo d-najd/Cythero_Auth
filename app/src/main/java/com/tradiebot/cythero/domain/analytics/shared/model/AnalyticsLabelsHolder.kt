@@ -1,4 +1,4 @@
-package com.tradiebot.cythero.domain.analytics.usage.model
+package com.tradiebot.cythero.domain.analytics.shared.model
 
 
 import com.google.gson.Gson
@@ -6,25 +6,25 @@ import com.google.gson.annotations.SerializedName
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
-data class AnalyticsUsageLabelsHolder(
-    @SerializedName("labels") val analyticsUsageLabels: List<AnalyticsUsageLabel>
+data class AnalyticsLabelsHolder(
+    @SerializedName("labels") val analyticsLabels: List<AnalyticsLabel>
 )
 
-data class AnalyticsUsageLabel(
+data class AnalyticsLabel(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String
 ) {
     companion object {
-        fun mockInstance(): List<AnalyticsUsageLabel> {
+        fun mockInstance(): List<AnalyticsLabel> {
             // Yes it is possible to do this in one line and yes it does crash the app
-            val temp = Injekt.get<Gson>().fromJson(MOCK_ANALYTICS_USAGE_LABELS, AnalyticsUsageLabelsHolder::class.java)
+            val temp = Injekt.get<Gson>().fromJson(MOCK_ANALYTICS_LABELS, AnalyticsLabelsHolder::class.java)
             
-            return temp.analyticsUsageLabels
+            return temp.analyticsLabels
         }
     }
 }
 
-private const val MOCK_ANALYTICS_USAGE_LABELS = "" +
+private const val MOCK_ANALYTICS_LABELS = "" +
     "{\n" +
     "  \"labels\": [\n" +
     "    null,\n" +
