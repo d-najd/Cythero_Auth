@@ -12,7 +12,7 @@ data class AnalyticsUsageSortableHolder(
 )
 
 /**
- * Analytics that are much easier to sort than [AnalyticsUpdate] because in [AnalyticsUpdate] the
+ * Analytics that are much easier to sort than [AnalyticsUsage] because in [AnalyticsUsage] the
  * structure is single object which contains lists as fields, in [AnalyticsUsageSortable] it is
  * list of objects which contain objects as fields instead.
  */
@@ -25,13 +25,13 @@ data class AnalyticsUsageSortable(
 	val user: String
 )
 
-fun AnalyticsUpdate.toAnalyticsSortable() = AnalyticsUsageSortableHolder(
+fun AnalyticsUsage.toAnalyticsSortable() = AnalyticsUsageSortableHolder(
 	analyticsList = this.toAnalyticsSortableHolder(),
 	sortType = AnalyticsUsageSortType.USER,
 	reverse = true,
 )
 
-fun AnalyticsUpdate.toAnalyticsSortableHolder() = List(this.sessionID.size) { i ->
+fun AnalyticsUsage.toAnalyticsSortableHolder() = List(this.sessionID.size) { i ->
 	AnalyticsUsageSortable(
 		date = this.date[i],
 		paintUsedMl = this.paintUsedMl[i],

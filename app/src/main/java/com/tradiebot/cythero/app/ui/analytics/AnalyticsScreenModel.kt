@@ -8,6 +8,7 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
+import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalyticsLabels
 import com.tradiebot.cythero.domain.analytics.usage.model.*
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
@@ -26,7 +27,10 @@ class AnalyticsScreenModel(
     val auth: Auth,
     private val requestUserAnalytics: RequestUserAnalytics = Injekt.get(),
     private val requestPartAnalytics: RequestPartAnalytics = Injekt.get(),
+    
+    // Usage
     private val requestUsageAnalytics: RequestUsageAnalytics = Injekt.get(),
+    private val requestUsageAnalyticsLabels: RequestUsageAnalyticsLabels = Injekt.get(),
 ) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
 
     init {
@@ -146,13 +150,17 @@ class AnalyticsScreenModel(
     fun requestUsageAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
+            
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
-            if(userAnalytics != null) {
+            val analyticsLabels = requestUsageAnalyticsLabels.await(auth)
+            
+            if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
                 mutableState.update {
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
                         analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
+                        analyticsLabels = analyticsLabels,
                     )
                 }
             } else {
@@ -171,12 +179,14 @@ class AnalyticsScreenModel(
             mutableState.update {
                 if(state.value !is AnalyticsScreenState.UsageSuccess)
                     throw IllegalStateException("Sorting usage analytics when not in usage analytics?")
+                val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
                 AnalyticsScreenState.UsageSuccess(
                     auth = auth,
-                    analytics = (state.value as AnalyticsScreenState.UsageSuccess).analytics.sortByType(
+                    analytics = usageState.analytics.sortByType(
                         type = type,
-                        reverse = reverse
-                    )
+                        reverse = reverse,
+                    ),
+                    usageState.analyticsLabels
                 )
             }
         }
@@ -250,6 +260,7 @@ sealed class AnalyticsScreenState {
     data class UsageSuccess(
         val auth: Auth,
         val analytics: AnalyticsUsageSortableHolder,
+        val analyticsLabels: List<AnalyticsUsageLabel>,
         val dialog: AnalyticsUsageDialog? = null,
     ) : AnalyticsScreenState()
     
