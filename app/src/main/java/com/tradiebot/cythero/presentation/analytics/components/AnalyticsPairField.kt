@@ -26,12 +26,12 @@ import com.tradiebot.cythero.presentation.components.CytheroCard
 fun AnalyticsPairField(
     key: String,
     value: String,
+    modifier: Modifier = Modifier,
 ){
     val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(

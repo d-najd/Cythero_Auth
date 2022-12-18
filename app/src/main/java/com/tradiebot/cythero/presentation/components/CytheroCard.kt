@@ -15,12 +15,13 @@ import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairFiel
 fun CytheroCard(
     modifier: Modifier = Modifier,
     title: String? = null,
+    applyPadding: Boolean = true,
     content: @Composable ColumnScope.() -> Unit,
     ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(ANALYTICS_CARD_PADDING),
+            .padding(if(applyPadding) ANALYTICS_CARD_PADDING else PaddingValues(0.dp)),
     ) {
 
         Column(modifier = Modifier

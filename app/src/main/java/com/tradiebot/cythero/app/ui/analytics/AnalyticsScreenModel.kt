@@ -164,7 +164,7 @@ class AnalyticsScreenModel(
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
                         analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
-                        analyticsLabels = analyticsLabels,
+                        analyticsLabels = analyticsLabels.filterNotNull(),
                     )
                 }
             } else {

@@ -100,5 +100,10 @@
     <string name="placeholder_last_name">Redshift</string>
     <string name="placeholder_username">Andromeda</string>
     <string name="field_session_info">Session Info</string>
+    <string name="field_time_spent_seconds">Time spent (Seconds)</string>
+    <string name="field_primer">Primer</string>
+    <string name="field_base">Base</string>
+    <string name="field_clear">Clear</string>
+    <string name="field_color_used_mililiters">Colors Used (Millileters)</string>
 
 </resources>

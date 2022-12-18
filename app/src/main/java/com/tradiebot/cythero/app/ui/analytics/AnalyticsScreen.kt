@@ -37,7 +37,7 @@ class AnalyticsScreen(
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
             onSortUsageReport = screenModel::sortUsageAnalytics,
-            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, "Kqsm7XOH3h4")) }
+            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, it.sessionID)) }
         )
     
         if(state is AnalyticsScreenState.UsageSuccess){
@@ -47,7 +47,8 @@ class AnalyticsScreen(
                 is AnalyticsUsageDialog.ItemInfo -> {
                     AnalyticsUsageItemInfoDialog(
                         onDismissRequest = screenModel::dismissUsageDialog,
-                        analyticSessionInfo = usageState.analyticsSessionInfo!!
+                        analyticSessionInfo = usageState.analyticsSessionInfo!!,
+                        analyticsLabels = usageState.analyticsLabels,
                     )
                 }
             }
