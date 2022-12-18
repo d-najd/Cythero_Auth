@@ -25,10 +25,12 @@ object Urls {
     //region Analytics
     const val ANALYTICS_RAW = "/analytics"
     const val ANALYTICS = API + ANALYTICS_RAW
-
+    
+    const val ANALYTICS_LABELS = "$ANALYTICS/anal_labels?hashed=true"
+    const val ANALYTICS_ANALYTICS = ANALYTICS + ANALYTICS_RAW
+    
     const val ANALYTICS_USER_SPRAYVERSE = "$ANALYTICS/sprayverse_user_report"
     const val ANALYTICS_PART_SPRAYVERSE = "$ANALYTICS/sprayverse_part_report"
     const val ANALYTICS_USAGE = "$ANALYTICS/usage_report"
-    const val ANALYTICS_USAGE_LABELS = "$ANALYTICS/anal_labels?hashed=true"
     
 }

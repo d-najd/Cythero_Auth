@@ -16,7 +16,7 @@ data class AnalyticsLabel(
 ) {
     companion object {
         fun mockInstance(): List<AnalyticsLabel> {
-            // Yes it is possible to do this in one line and yes it does crash the app
+            // This may crash if we don't do this
             val temp = Injekt.get<Gson>().fromJson(MOCK_ANALYTICS_LABELS, AnalyticsLabelsHolder::class.java)
             
             return temp.analyticsLabels

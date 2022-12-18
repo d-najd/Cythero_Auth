@@ -4,7 +4,7 @@ import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
 import com.tradiebot.cythero.domain.analytics.shared.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.model.Auth
 
-class RequestUsageAnalyticsLabels(
+class RequestAnalyticsLabels(
 	private val analyticsService: AnalyticsService,
 ) {
 	
