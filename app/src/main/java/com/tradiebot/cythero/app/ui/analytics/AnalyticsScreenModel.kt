@@ -7,6 +7,7 @@ import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
+import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticSessionInfo
 import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticsLabels
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
@@ -32,6 +33,7 @@ class AnalyticsScreenModel(
     // Usage
     private val requestUsageAnalytics: RequestUsageAnalytics = Injekt.get(),
     private val requestAnalyticsLabels: RequestAnalyticsLabels = Injekt.get(),
+    private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
 ) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
 
     init {
@@ -154,6 +156,7 @@ class AnalyticsScreenModel(
             
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             val analyticsLabels = requestAnalyticsLabels.await(auth)
+            val analyticSessionInfo = requestAnalyticsSessionInfo.await(auth, "4ums7PTFGa3")
             
             if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()

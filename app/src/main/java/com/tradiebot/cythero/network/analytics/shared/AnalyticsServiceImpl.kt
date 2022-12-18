@@ -8,7 +8,6 @@ import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsSessionHolde
 import com.tradiebot.cythero.domain.analytics.shared.service.AnalyticsService
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import uy.kohesive.injekt.Injekt
@@ -25,14 +24,14 @@ object AnalyticsServiceImpl: AnalyticsService {
             url = Urls.ANALYTICS_LABELS,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-    
+        
         try {
             val response: Response = client.newCall(request).execute().printResponse()
-        
-            response.takeIf { res ->  res.isSuccessful }.let {
+            
+            response.takeIf { res -> res.isSuccessful }.let {
                 // Yes it is possible to do this in one line and yes it does crash the app
                 val temp = gson.fromJson(it!!.body.string(), AnalyticsLabelsHolder::class.java)
-            
+                
                 return temp.analyticsLabels
             }
         } catch (e: IOException) {
@@ -43,21 +42,17 @@ object AnalyticsServiceImpl: AnalyticsService {
     
     override suspend fun getSessionInfo(userAuth: Auth, sessionID: String): List<AnalyticSession> {
         val request = GET(
-            url = HttpUrl.Builder()
-                .host(Urls.ANALYTICS_ANALYTICS)
-                .addQueryParameter("session_id", sessionID)
-                .build()
-                .toUrl(),
+            url = Urls.ANALYTICS_ANALYTICS + "?session_id=$sessionID",
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-    
+        
         try {
             val response: Response = client.newCall(request).execute().printResponse()
-        
-            response.takeIf { res ->  res.isSuccessful }.let {
+            
+            response.takeIf { res -> res.isSuccessful }.let {
                 // Doing it this way because it may crash in 1 liner for some reason
                 val temp = gson.fromJson(it!!.body.string(), AnalyticsSessionHolder::class.java)
-            
+                
                 return temp.analyticSessions
             }
         } catch (e: IOException) {

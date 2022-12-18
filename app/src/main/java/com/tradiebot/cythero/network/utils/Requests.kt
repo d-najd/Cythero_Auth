@@ -3,7 +3,6 @@
 package com.tradiebot.cythero.network.utils
 
 import okhttp3.*
-import java.net.URL
 import java.util.concurrent.TimeUnit.MINUTES
 
 private val DEFAULT_CACHE_CONTROL = CacheControl.Builder().maxAge(10, MINUTES).build()
@@ -14,39 +13,33 @@ fun GET(
     url: String,
     headers: Headers = DEFAULT_HEADERS,
     cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request {
-    return Request.Builder()
+): Request = Request.Builder()
         .url(url)
         .headers(headers)
         .cacheControl(cache)
         .build()
-}
 
 fun GET(
-    url: URL,
+    url: HttpUrl,
     headers: Headers = DEFAULT_HEADERS,
     cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request {
-    return Request.Builder()
+): Request = Request.Builder()
         .url(url)
         .headers(headers)
         .cacheControl(cache)
         .build()
-}
 
 fun POST(
     url: String,
     headers: Headers = DEFAULT_HEADERS,
     body: RequestBody = DEFAULT_BODY,
     cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request {
-    return Request.Builder()
+): Request = Request.Builder()
         .url(url)
         .post(body)
         .headers(headers)
         .cacheControl(cache)
         .build()
-}
 
 @Suppress("unused")
 fun PUT(
@@ -54,14 +47,12 @@ fun PUT(
     headers: Headers = DEFAULT_HEADERS,
     body: RequestBody = DEFAULT_BODY,
     cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request {
-    return Request.Builder()
+): Request = Request.Builder()
         .url(url)
         .put(body)
         .headers(headers)
         .cacheControl(cache)
         .build()
-}
 
 @Suppress("unused")
 fun DELETE(
@@ -69,11 +60,9 @@ fun DELETE(
     headers: Headers = DEFAULT_HEADERS,
     body: RequestBody = DEFAULT_BODY,
     cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request {
-    return Request.Builder()
+): Request = Request.Builder()
         .url(url)
         .delete(body)
         .headers(headers)
         .cacheControl(cache)
         .build()
-}
