@@ -3,6 +3,7 @@ package com.tradiebot.cythero.domain
 import com.google.gson.GsonBuilder
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.service.AnalyticsPartService
+import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticSessionInfo
 import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticsLabels
 import com.tradiebot.cythero.domain.analytics.shared.service.AnalyticsService
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
@@ -66,5 +67,7 @@ class DomainModule : InjektModule {
         addFactory { RequestPartAnalytics(get()) }
         addFactory { RequestUsageAnalytics(get()) }
         addFactory { RequestAnalyticsLabels(get()) }
+        addFactory { RequestAnalyticSessionInfo(get()) }
+        
     }
 }
