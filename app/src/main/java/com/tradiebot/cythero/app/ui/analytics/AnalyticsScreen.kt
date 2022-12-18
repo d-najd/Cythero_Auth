@@ -37,16 +37,17 @@ class AnalyticsScreen(
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
             onSortUsageReport = screenModel::sortUsageAnalytics,
-            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it)) }
+            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, "Kqsm7XOH3h4")) }
         )
     
-    
         if(state is AnalyticsScreenState.UsageSuccess){
-            when(val dialog = (state as AnalyticsScreenState.UsageSuccess).dialog){
+            val usageState = (state as AnalyticsScreenState.UsageSuccess)
+            when(val dialog = usageState.dialog){
                 null -> {}
                 is AnalyticsUsageDialog.ItemInfo -> {
                     AnalyticsUsageItemInfoDialog(
                         onDismissRequest = screenModel::dismissUsageDialog,
+                        analyticSessionInfo = usageState.analyticsSessionInfo!!
                     )
                 }
             }

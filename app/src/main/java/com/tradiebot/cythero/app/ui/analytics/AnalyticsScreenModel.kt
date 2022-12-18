@@ -9,6 +9,7 @@ import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalyti
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
 import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticSessionInfo
 import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticsLabels
+import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticSession
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
 import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
 import com.tradiebot.cythero.domain.analytics.usage.model.*
@@ -156,7 +157,6 @@ class AnalyticsScreenModel(
             
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             val analyticsLabels = requestAnalyticsLabels.await(auth)
-            val analyticSessionInfo = requestAnalyticsSessionInfo.await(auth, "4ums7PTFGa3")
             
             if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
@@ -181,29 +181,57 @@ class AnalyticsScreenModel(
     fun sortUsageAnalytics(type: AnalyticsUsageSortType, reverse: Boolean){
         coroutineScope.launchUI {
             mutableState.update {
-                if(state.value !is AnalyticsScreenState.UsageSuccess)
+                if(it !is AnalyticsScreenState.UsageSuccess)
                     throw IllegalStateException("Sorting usage analytics when not in usage analytics?")
-                val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
-                AnalyticsScreenState.UsageSuccess(
-                    auth = auth,
-                    analytics = usageState.analytics.sortByType(
+                it.copy(
+                    analytics = it.analytics.sortByType(
                         type = type,
                         reverse = reverse,
                     ),
-                    usageState.analyticsLabels
                 )
             }
         }
     }
     
+    
     fun showUsageDialog(dialog: AnalyticsUsageDialog) {
-        mutableState.update {
-            when (it) {
-                is AnalyticsScreenState.UsageSuccess -> { it.copy(dialog = dialog) }
-                else -> it
+        if (this.state.value !is AnalyticsScreenState.UsageSuccess) throw IllegalStateException()
+        val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
+    
+        when (dialog) {
+            is AnalyticsUsageDialog.ItemInfo -> {
+                coroutineScope.launchIO {
+                    val analyticSessionInfo = requestAnalyticsSessionInfo.await(
+                        userAuth = usageState.auth,
+                        sessionID = dialog.sessionID,
+                    )
+                    if (analyticSessionInfo.isNotEmpty()) {
+                        mutableState.update {
+                            (it as AnalyticsScreenState.UsageSuccess).copy(
+                                analyticsSessionInfo = analyticSessionInfo,
+                                dialog = dialog
+                            )
+                        }
+                    }
+                    else {
+                        logcat { "Something went wrong" }
+                    }
+                }
             }
         }
     }
+    
+    
+    /*
+    fun showDialog(dialog: AnalyticsUsageDialog) {
+        mutableState.update {
+            when (it) {
+                CategoryScreenState.Loading -> it
+                is CategoryScreenState.Success -> it.copy(dialog = dialog)
+            }
+        }
+    }
+     */
     
     fun dismissUsageDialog() {
         mutableState.update {
@@ -219,7 +247,7 @@ class AnalyticsScreenModel(
 }
 
 sealed class AnalyticsUsageDialog {
-    data class ItemInfo(val analytic: AnalyticsUsageSortable): AnalyticsUsageDialog()
+    data class ItemInfo(val analytic: AnalyticsUsageSortable, val sessionID: String) : AnalyticsUsageDialog()
     /*
     object Create : CategoryDialog()
     data class Rename(val category: Category) : CategoryDialog()
@@ -229,7 +257,7 @@ sealed class AnalyticsUsageDialog {
 
 sealed class AnalyticsScreenState {
 
-    /** if the screen is loading in */
+    /** if the screen is loading in, can be used to temporarily store state */
     @Immutable
     object Loading : AnalyticsScreenState()
 
@@ -266,6 +294,7 @@ sealed class AnalyticsScreenState {
         val analytics: AnalyticsUsageSortableHolder,
         val analyticsLabels: List<AnalyticsLabel>,
         val dialog: AnalyticsUsageDialog? = null,
+        val analyticsSessionInfo: List<AnalyticSession>? = null,
     ) : AnalyticsScreenState()
     
 }
