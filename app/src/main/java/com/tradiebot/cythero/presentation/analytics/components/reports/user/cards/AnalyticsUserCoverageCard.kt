@@ -13,7 +13,7 @@ import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
+import com.tradiebot.cythero.presentation.components.CytheroHorizontallyScrollableColumn
 import com.tradiebot.cythero.presentation.components.chart.LineChart
 import com.tradiebot.cythero.presentation.components.chart.LineChartHelper
 import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 fun AnalyticsCoverageGraph(
     state: AnalyticsScreenState.UserSuccess,
 ) {
-    ScrollableHorizontalItem {
+    CytheroHorizontallyScrollableColumn {
         CytheroCard(
             modifier = Modifier
                 .height(400.dp)

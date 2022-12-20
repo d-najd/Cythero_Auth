@@ -14,7 +14,7 @@ import com.tradiebot.cythero.app.util.view.ContextHolder
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
+import com.tradiebot.cythero.presentation.components.CytheroHorizontallyScrollableColumn
 import com.tradiebot.cythero.presentation.components.chart.LineChart
 import com.tradiebot.cythero.presentation.components.chart.LineChartHelper
 import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
@@ -32,7 +32,7 @@ fun AnalyticsTimeTakenCard(
 ){
     val analytics = state.analytics[0]
 
-    ScrollableHorizontalItem {
+    CytheroHorizontallyScrollableColumn {
         CytheroCard(
             modifier = Modifier
                 .width(750.dp),

@@ -23,7 +23,7 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
-import com.tradiebot.cythero.presentation.components.ScrollableHorizontalItem
+import com.tradiebot.cythero.presentation.components.CytheroHorizontallyScrollableColumn
 import com.tradiebot.cythero.util.CytheroDateFormat
 import kotlin.math.roundToInt
 
@@ -47,7 +47,7 @@ fun AnalyticsUsageReportContent(
 	val width = 800.dp
 	val numOfFields = 5
 	
-	ScrollableHorizontalItem(
+	CytheroHorizontallyScrollableColumn(
 		modifier = Modifier
 			.width(width)
 			.fillMaxHeight()
