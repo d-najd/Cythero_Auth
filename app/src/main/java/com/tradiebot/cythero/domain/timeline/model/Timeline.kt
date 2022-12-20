@@ -3,11 +3,12 @@ package com.tradiebot.cythero.domain.timeline.model
 import com.google.gson.Gson
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.io.Serializable
 
 @Deprecated("")
 data class Timeline (
     val timeline: List<TimelineEntry>,
-) {
+): Serializable {
     companion object {
         fun mockInstance() = Injekt.get<Gson>().fromJson(MOCK_TIMELINE, Timeline::class.java)!!
     }
@@ -20,7 +21,7 @@ data class TimelineEntry (
     val session_start: String,
     val time_spent: Float,
     val user_id: Long,
-)
+): Serializable
 
 private const val MOCK_TIMELINE =
             "{\n" +

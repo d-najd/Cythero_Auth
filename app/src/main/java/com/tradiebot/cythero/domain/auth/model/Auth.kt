@@ -11,7 +11,7 @@ data class Auth(
     val refresh: String,
     val token: String,
     val user: User,
-) : Serializable {
+): Serializable {
     companion object{
         fun mockInstance(): Auth {
             return Injekt.get<Gson>().fromJson(MOCK_AUTH, Auth::class.java)

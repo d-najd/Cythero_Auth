@@ -3,8 +3,9 @@ package com.tradiebot.cythero.domain.analytics
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.R
+import java.io.Serializable
 
-enum class Part(@StringRes val nameId: Int){
+enum class Part(@StringRes val nameId: Int): Serializable {
     @SerializedName("Fender")
     FENDER(R.string.field_part_fender),
     @SerializedName("Hood")

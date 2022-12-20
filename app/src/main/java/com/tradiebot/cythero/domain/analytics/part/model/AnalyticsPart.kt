@@ -1,9 +1,10 @@
 package com.tradiebot.cythero.domain.analytics.part.model
 
 import com.google.gson.annotations.SerializedName
-import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.Grade
-import java.util.Date
+import com.tradiebot.cythero.domain.analytics.Part
+import java.io.Serializable
+import java.util.*
 
 data class AnalyticsPart (
     @SerializedName("Part") val part: Part,
@@ -62,7 +63,7 @@ data class AnalyticsPart (
     @SerializedName("Times Played") val timesPlayed: Int,
     @SerializedName("Parts") val parts: List<Part>,
     @SerializedName("User ID") val userIDs: List<Int>,
-) {
+): Serializable {
     /*
     companion object {
         fun mockInstance(): List<AnalyticsPart> {

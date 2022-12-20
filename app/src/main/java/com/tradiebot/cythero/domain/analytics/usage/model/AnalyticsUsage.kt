@@ -5,11 +5,12 @@ import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.domain.analytics.Part
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.io.Serializable
 import java.util.*
 
 data class AnalyticsUsageHolder(
     @SerializedName("table") val analyticsUsage: AnalyticsUsage
-)
+): Serializable
 
 data class AnalyticsUsage(
     @SerializedName("Date") val date: List<Date>,
@@ -18,7 +19,7 @@ data class AnalyticsUsage(
     @SerializedName("Session ID") val sessionID: List<String>,
     @SerializedName("Total Time Spent (min)") val totalTimeSpentMin: List<Double>,
     @SerializedName("User") val user: List<String>
-) {
+): Serializable {
     companion object {
         fun mockInstance(): AnalyticsUsage {
             // Yes it is possible to do this in one line and yes it does crash the app

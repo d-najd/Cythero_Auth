@@ -2,6 +2,7 @@ package com.tradiebot.cythero.domain.analytics.usage.model
 
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.util.mAppContext
+import java.io.Serializable
 import java.util.*
 
 
@@ -9,7 +10,7 @@ data class AnalyticsUsageSortableHolder(
 	val analyticsList: List<AnalyticsUsageSortable>,
 	val sortType: AnalyticsUsageSortType,
 	val reverse: Boolean
-)
+): Serializable
 
 /**
  * Analytics that are much easier to sort than [AnalyticsUsage] because in [AnalyticsUsage] the
@@ -23,7 +24,16 @@ data class AnalyticsUsageSortable(
 	val sessionID: String,
 	val totalTimeSpentMin: Double,
 	val user: String
-)
+): Serializable
+
+enum class AnalyticsUsageSortType: Serializable {
+	DATE,
+	PAINT_USED,
+	PART,
+	SESSION_ID,
+	TOTAL_TIME_SPENT,
+	USER,
+}
 
 fun AnalyticsUsage.toAnalyticsSortable() = AnalyticsUsageSortableHolder(
 	analyticsList = this.toAnalyticsSortableHolder(),
@@ -66,13 +76,4 @@ fun AnalyticsUsageSortableHolder.sortByType(
 		sortType = type,
 		reverse = reverse
 	)
-}
-
-enum class AnalyticsUsageSortType {
-	DATE,
-	PAINT_USED,
-	PART,
-	SESSION_ID,
-	TOTAL_TIME_SPENT,
-	USER,
 }

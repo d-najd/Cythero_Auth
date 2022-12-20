@@ -11,4 +11,4 @@ data class AnalyticsUserCalculated(
     @SerializedName("Most Paint") val mostPaint: Double,
     @SerializedName("Shortest Time") val shortestTime: Float,
     @SerializedName("User IDs") val userIDs: List<Long>,
-)
+): Serializable

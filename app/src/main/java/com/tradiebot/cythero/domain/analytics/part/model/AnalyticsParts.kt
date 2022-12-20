@@ -4,10 +4,11 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.io.Serializable
 
 data class AnalyticsParts(
     @SerializedName("Parts") val AnalyticsParts: List<AnalyticsPart>
-) {
+): Serializable {
     companion object {
         fun mockInstance(): List<AnalyticsPart> {
             return Injekt.get<Gson>().fromJson(MOCK_PARTS_ANALYTICS, AnalyticsParts::class.java).AnalyticsParts

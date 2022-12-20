@@ -3,6 +3,7 @@ package com.tradiebot.cythero.domain.analytics.user.model
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.Part
+import java.io.Serializable
 
 /**
  *
@@ -30,4 +31,4 @@ data class AnalyticsUserTable(
     @SerializedName("Total Time Played") val totalTimePlayedSec: List<Double>,
     @SerializedName("Total Time Spent") val totalTimeSpentMin: List<Double>,
     @SerializedName("User ID") val userIDs: List<Long>,
-)
+): Serializable

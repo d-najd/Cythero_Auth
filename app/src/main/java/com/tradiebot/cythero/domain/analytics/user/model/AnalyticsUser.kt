@@ -11,7 +11,7 @@ import java.io.Serializable
 data class AnalyticsUser(
     @SerializedName("calculated_data") val calculatedData: AnalyticsUserCalculated,
     @SerializedName("table") val analyticsUserTable: AnalyticsUserTable,
-) {
+): Serializable {
     companion object{
         fun mockInstance(): Map<Long, AnalyticsUser> {
             val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>() {}.type

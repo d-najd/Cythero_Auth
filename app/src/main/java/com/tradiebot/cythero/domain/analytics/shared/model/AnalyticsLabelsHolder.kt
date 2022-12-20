@@ -5,15 +5,16 @@ import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import java.io.Serializable
 
 data class AnalyticsLabelsHolder(
     @SerializedName("labels") val analyticsLabels: List<AnalyticsLabel>
-)
+): Serializable
 
 data class AnalyticsLabel(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String
-) {
+): Serializable {
     companion object {
         fun mockInstance(): List<AnalyticsLabel> {
             // This may crash if we don't do this

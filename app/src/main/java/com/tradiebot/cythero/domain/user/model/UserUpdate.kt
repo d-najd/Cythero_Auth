@@ -1,6 +1,7 @@
 package com.tradiebot.cythero.domain.user.model
 
 import logcat.logcat
+import java.io.Serializable
 
 /**
  * Data class used for logging in user
@@ -15,7 +16,7 @@ data class UserLogin (
     val device_nickname: String? = null,
     val pin: Int? = null,
     val from_web: Boolean = true,
-) {
+): Serializable {
     init {
         if(username == null && email == null){
             throw IllegalStateException("username and email can't be null at the same time")
@@ -48,7 +49,7 @@ data class UserRegister(
     val password: String,
     val pin: Int? = null,
     val from_web: Boolean = true,
-) {
+): Serializable  {
     init {
         if(!from_web){
             logcat { "from_web is false, this is probably unintended behaviour" }

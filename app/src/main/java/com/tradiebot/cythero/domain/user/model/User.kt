@@ -1,5 +1,7 @@
 package com.tradiebot.cythero.domain.user.model
 
+import java.io.Serializable
+
 
 /**
  * data class containing all possible possible parameters for a user.
@@ -23,7 +25,7 @@ data class User(
     val device_nickname: String? = null,
     val from_web: Boolean? = null,
     val application_id: Long? = null,
-) {
+): Serializable {
     companion object {
         @Suppress("unused")
         fun mockInstance() = User(

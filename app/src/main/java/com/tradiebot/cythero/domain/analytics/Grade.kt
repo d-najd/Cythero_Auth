@@ -3,8 +3,9 @@ package com.tradiebot.cythero.domain.analytics
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import com.tradiebot.cythero.R
+import java.io.Serializable
 
-enum class Grade(val rgb: String, @StringRes val nameId: Int){
+enum class Grade(val rgb: String, @StringRes val nameId: Int): Serializable {
     @SerializedName("A")
     A("#00A83D", R.string.field_grade_a),
     @SerializedName("B")
