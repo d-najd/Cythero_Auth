@@ -1,16 +1,15 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.usage.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,10 +22,12 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticSession
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
+import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.chart.PieChart
 import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
+import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
 import kotlinx.coroutines.flow.flow
 
 @OptIn(ExperimentalUnitApi::class)
@@ -35,13 +36,19 @@ fun AnalyticsUsageItemInfoDialog(
 	onDismissRequest: () -> Unit,
 	analyticSessionInfo: List<AnalyticSession>,
 	analyticsLabels: List<AnalyticsLabel>,
+	analyticUsage: AnalyticsUsageSortable
 ) {
 	AlertDialog(
 		modifier = Modifier
 			.fillMaxHeight()
-			.padding(vertical = 16.dp),
+			.padding(vertical = 24.dp),
 		onDismissRequest = onDismissRequest,
-		confirmButton = { },
+		confirmButton = {
+			Text(
+				modifier = Modifier.clickable { onDismissRequest() },
+				text = stringResource(R.string.action_close)
+			)
+		},
 		dismissButton = { },
 		title = {
 			Text(text = stringResource(R.string.field_session_info))
@@ -52,7 +59,8 @@ fun AnalyticsUsageItemInfoDialog(
 			) {
 				Text(
 					modifier = Modifier.align(Alignment.CenterHorizontally),
-					text = "Somebody's Session Card",
+					text = "${analyticUsage.user}'s Session Card",
+					//  text = "Somebody's Session Card",
 					color = MaterialTheme.colorScheme.onSurfaceVariant,
 					textAlign = TextAlign.Center,
 					fontWeight = FontWeight.Bold,
@@ -87,12 +95,18 @@ fun AnalyticsUsageItemInfoDialog(
 					color = Color.Transparent
 				)
 				
+				
+				val pieChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings()
+				pieChartSettingsHolder.offsets = Offset(-25f, 0f)
 				CytheroCard(
 					title = stringResource(R.string.field_time_spent_seconds),
 					modifier = Modifier.height(200.dp),
 					applyPadding = false,
 				) {
-					PieChart(dataSet = flow { emit(timeSpentDataSet) })
+					PieChart(
+						chartSettingsHolder = pieChartSettingsHolder,
+						dataSet = flow { emit(timeSpentDataSet) }
+					)
 				}
 				
 				Divider(
@@ -128,7 +142,10 @@ fun AnalyticsUsageItemInfoDialog(
 					modifier = Modifier.height(200.dp),
 					applyPadding = false,
 				) {
-					PieChart(dataSet = flow { emit(colorUsedDataSet) })
+					PieChart(
+						chartSettingsHolder = pieChartSettingsHolder,
+						dataSet = flow { emit(colorUsedDataSet) }
+					)
 				}
 				
 				Divider(

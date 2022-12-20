@@ -49,6 +49,7 @@ class AnalyticsScreen(
                         onDismissRequest = screenModel::dismissUsageDialog,
                         analyticSessionInfo = usageState.analyticsSessionInfo!!,
                         analyticsLabels = usageState.analyticsLabels,
+                        analyticUsage = dialog.analytic,
                     )
                 }
             }
