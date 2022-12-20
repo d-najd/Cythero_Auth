@@ -61,7 +61,7 @@ fun LineChart(
                     holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )
-
+                
                 runBlocking {
                     dataSets.collectLatest {
                         val dataSetsLatest = dataSets.last()
@@ -69,7 +69,7 @@ fun LineChart(
 
                         xAxis.axisMaximum = if(curDataSet.entryCount > labelCount) labelCount.toFloat() else curDataSet.entryCount.toFloat() - 1f
                         xAxis.labelCount = if(curDataSet.entryCount > labelCount) labelCount else curDataSet.entryCount - 1
-
+                        
                         for(dataSet in dataSetsLatest){
                             dataSet.lineWidth = lineWidth
                             dataSet.circleRadius = circleRadius
@@ -80,10 +80,10 @@ fun LineChart(
                         }
 
                         data = LineData(dataSetsLatest)
-
                         invalidate()
                     }
                 }
+                notifyDataSetChanged()
             }
         }
     )

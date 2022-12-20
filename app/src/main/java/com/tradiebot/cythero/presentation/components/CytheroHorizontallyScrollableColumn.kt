@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 /**
- * Single horizontally scrollable tab row
+ * Single horizontally scrollable tab column
  *
  * @param modifier modifier that will be applied to the row
  * @param content the tab row content

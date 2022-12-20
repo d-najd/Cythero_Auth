@@ -3,7 +3,6 @@ package com.tradiebot.cythero.presentation.analytics.components.reports.part.car
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.components.XAxis
@@ -78,7 +77,7 @@ fun AnalyticsPartPaintUsed(
                 val chartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()
                 chartSettingsHolder.xAxis.position = XAxis.XAxisPosition.BOTTOM
                 chartSettingsHolder.xAxisValueFormatter = ChartValueFormatterType.VALUE
-                chartSettingsHolder.offsets = Offset(0f, -10f)
+                chartSettingsHolder.bottomOffset = 10f
 
                 LineChart(
                     dataSets = dataSet,

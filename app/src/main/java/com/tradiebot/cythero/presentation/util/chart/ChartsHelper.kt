@@ -10,7 +10,6 @@ import com.github.mikephil.charting.data.ChartData
 import com.github.mikephil.charting.interfaces.datasets.IDataSet
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
-import kotlin.math.abs
 
 @Suppress("MemberVisibilityCanBePrivate")
 object ChartsHelper {
@@ -22,19 +21,27 @@ object ChartsHelper {
         legend: Legend,
         holder: ChartSettingsHolder
     ) {
+        val hLegend = holder.legend
+        
         with(legend) {
-            isEnabled = holder.legend.isEnabled
+            isEnabled = hLegend.isEnabled
     
-            form = holder.legend.form
-            horizontalAlignment = holder.legend.horizontalAlignment
-            verticalAlignment = holder.legend.verticalAlignment
-            orientation = holder.legend.orientation
-            yEntrySpace = mAppContext().convertPixelsToDp(holder.legend.yEntrySpace)
-            xEntrySpace = mAppContext().convertPixelsToDp(holder.legend.xEntrySpace)
-            yOffset = mAppContext().convertPixelsToDp(holder.legend.yOffset)
-            xOffset = mAppContext().convertPixelsToDp(holder.legend.xOffset)
-            textSize = mAppContext().convertPixelsToDp(holder.legend.textSize)
-            formSize = holder.legend.formSize
+            form = hLegend.form
+            horizontalAlignment = hLegend.horizontalAlignment
+            verticalAlignment = hLegend.verticalAlignment
+            orientation = hLegend.orientation
+            
+            yOffset = mAppContext().convertPixelsToDp(hLegend.yOffset)
+            xOffset = mAppContext().convertPixelsToDp(hLegend.xOffset)
+            
+            textSize = mAppContext().convertPixelsToDp(hLegend.textSize)
+            formSize = hLegend.formSize
+    
+            yEntrySpace = mAppContext().convertPixelsToDp(hLegend.yEntrySpace)
+            xEntrySpace = mAppContext().convertPixelsToDp(hLegend.xEntrySpace)
+            
+            mNeededHeight = hLegend.mNeededHeight
+            mNeededWidth = hLegend.mNeededWidth
         }
     }
 
@@ -69,10 +76,10 @@ object ChartsHelper {
     ) {
         with(chart) {
             // Setting the offset for the pie-chart the "intended" way makes it smaller, guess somebody doesn't understand the meaning of offset...
-            extraTopOffset.takeIf { holder.offsets.y > 0 && chart !is PieChart }.apply { holder.offsets.y }
-            extraBottomOffset.takeIf { holder.offsets.y < 0 && chart !is PieChart }.apply { abs(holder.offsets.y) }
-            extraLeftOffset.takeIf { holder.offsets.x > 0 && chart !is PieChart }.apply { holder.offsets.x }
-            extraRightOffset.takeIf { holder.offsets.x < 0 && chart !is PieChart }.apply { abs(holder.offsets.x) }
+            extraTopOffset = holder.topOffset
+            extraBottomOffset = holder.bottomOffset
+            extraRightOffset = holder.rightOffset
+            extraLeftOffset = holder.leftOffset
     
             // Pie chart doesn't have xAxis
             if(this !is PieChart) {
@@ -84,9 +91,8 @@ object ChartsHelper {
                 xAxis.position = holder.xAxis.position
                 xAxis.axisMaximum = holder.xAxis.axisMaximum
                 xAxis.axisMinimum = holder.xAxis.axisMinimum
-            } else {
-                extraTopOffset = holder.offsets.y
-                extraLeftOffset = holder.offsets.x
+                xAxis.yOffset = holder.xAxis.yOffset
+                xAxis.xOffset = holder.xAxis.xOffset
             }
     
             description.isEnabled = holder.description.isEnabled

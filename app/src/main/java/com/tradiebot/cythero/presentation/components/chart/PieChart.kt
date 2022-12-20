@@ -57,13 +57,13 @@ fun PieChart(
                 setHoleColor(Color.Transparent.toArgb())
                 setDrawMarkers(true)
                 setTransparentCircleAlpha(0)
-
+    
                 ChartsHelper.copyIntoChart(
                     chart = this,
                     holder = chartSettingsHolder,
                     dataSet = curDataSet
                 )
-
+                
                 runBlocking {
                     dataSet.collectLatest {
                         curDataSet = dataSet.last()
@@ -74,6 +74,7 @@ fun PieChart(
                         invalidate()
                     }
                 }
+                notifyDataSetChanged()
             }
         })
 }
@@ -139,12 +140,4 @@ object PieChartHelper {
 
         return dataSet
     }
-
-    /** default offset on the chart */
-    const val PIE_CHART_OFFSET_TOP = 0f
-    /** default offset on the chart */
-    const val PIE_CHART_OFFSET_LEFT = -50f
-
-    /** default offset on the legend */
-    const val PIE_CHART_LEGEND_X_OFFSET = 12.5f
 }

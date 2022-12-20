@@ -9,7 +9,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -95,9 +94,8 @@ fun AnalyticsUsageItemInfoDialog(
 					color = Color.Transparent
 				)
 				
-				
 				val pieChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings()
-				pieChartSettingsHolder.offsets = Offset(-25f, 0f)
+				pieChartSettingsHolder.rightOffset = -5f
 				CytheroCard(
 					title = stringResource(R.string.field_time_spent_seconds),
 					modifier = Modifier.height(200.dp),

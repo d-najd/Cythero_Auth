@@ -1,12 +1,10 @@
 package com.tradiebot.cythero.presentation.util.chart
 
-import androidx.compose.ui.geometry.Offset
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
-import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 
 // probably needs more appropriate name
 class ChartSettingsHolder {
@@ -16,7 +14,10 @@ class ChartSettingsHolder {
     var yAxis: YAxis = YAxis()
     var description = Description()
     
-    var offsets: Offset = Offset(0f,0f)
+    var topOffset = 0f
+    var bottomOffset = 0f
+    var leftOffset = 0f
+    var rightOffset = 0f
     
     var xAxisValueFormatter:
             ChartValueFormatterType = ChartValueFormatterType.DEFAULT
@@ -40,9 +41,9 @@ class ChartSettingsHolder {
 
     companion object {
         fun defaultPieCSettings() = ChartSettingsHolder().apply {
-            offsets = Offset(PieChartHelper.PIE_CHART_OFFSET_LEFT, PieChartHelper.PIE_CHART_OFFSET_TOP)
-    
-            legend.xOffset = PieChartHelper.PIE_CHART_LEGEND_X_OFFSET
+            leftOffset = -50f
+            
+            legend.xOffset = 5f
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             legend.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
             legend.orientation = Legend.LegendOrientation.VERTICAL
@@ -57,6 +58,7 @@ class ChartSettingsHolder {
             xAxis.axisMinimum = 0f
             xAxis.axisMaximum = 0f
     
+            legend.yEntrySpace = 20f
             legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
             legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
             legend.orientation = Legend.LegendOrientation.HORIZONTAL
