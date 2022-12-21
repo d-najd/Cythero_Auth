@@ -14,13 +14,12 @@ import com.tradiebot.cythero.presentation.analytics.components.reports.usage.ana
 
 @Composable
 fun AnalyticsUsageReportLabels(
-	width: Dp,
-	numOfFields: Int,
 	analytics: AnalyticsUsageSortableHolder,
+	width: Dp,
 	onSortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
 ) {
 	AnalyticsUsageTriStateRow(
-		modifier = Modifier.width(width/numOfFields),
+		modifier = Modifier.width(width),
 		state = analyticsUsageToggleableStateHelper(
 			analytics = analytics,
 			type = AnalyticsUsageSortType.USER
@@ -33,7 +32,7 @@ fun AnalyticsUsageReportLabels(
 		}
 	)
 	AnalyticsUsageTriStateRow(
-		modifier = Modifier.width(width / numOfFields),
+		modifier = Modifier.width(width),
 		state = analyticsUsageToggleableStateHelper(
 			analytics = analytics,
 			type = AnalyticsUsageSortType.PART
@@ -46,7 +45,7 @@ fun AnalyticsUsageReportLabels(
 		}
 	)
 	AnalyticsUsageTriStateRow(
-		modifier = Modifier.width(width / numOfFields),
+		modifier = Modifier.width(width),
 		state = analyticsUsageToggleableStateHelper(
 			analytics = analytics,
 			type = AnalyticsUsageSortType.DATE
@@ -59,7 +58,7 @@ fun AnalyticsUsageReportLabels(
 		}
 	)
 	AnalyticsUsageTriStateRow(
-		modifier = Modifier.width(width / numOfFields),
+		modifier = Modifier.width(width),
 		state = analyticsUsageToggleableStateHelper(
 			analytics = analytics,
 			type = AnalyticsUsageSortType.PAINT_USED
@@ -72,7 +71,7 @@ fun AnalyticsUsageReportLabels(
 		}
 	)
 	AnalyticsUsageTriStateRow(
-		modifier = Modifier.width(width / numOfFields),
+		modifier = Modifier.width(width),
 		state = analyticsUsageToggleableStateHelper(
 			analytics = analytics,
 			type = AnalyticsUsageSortType.TOTAL_TIME_SPENT
