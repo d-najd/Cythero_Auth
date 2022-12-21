@@ -1,22 +1,36 @@
 package com.tradiebot.cythero.util
 
 import java.math.RoundingMode
-import java.text.DecimalFormat
 
-fun Double.includeDecimals(decimals: Int): Double {
-    if(decimals < 1) throw IllegalArgumentException("1 or more decimal spaces are required")
-    val pattern = "#." + "#".repeat(decimals)
-    val df = DecimalFormat(pattern)
-    df.roundingMode = RoundingMode.HALF_UP
-    return df.format(this).toDouble()
+fun Double.includeDecimals(
+    decimals: Int,
+    roundingMode: RoundingMode = RoundingMode.HALF_UP
+): Double = toBigDecimal().setScale(decimals, roundingMode).toDouble()
+
+@Suppress("unused")
+fun Float.includeDecimals(
+    decimals: Int,
+    roundingMode: RoundingMode = RoundingMode.HALF_UP
+): Float = toBigDecimal().setScale(decimals, roundingMode).toFloat()
+
+fun Float.conditionalIncludeDecimals(
+    condition: Boolean,
+    ifTrue: Int = 1,
+    ifFalse: Int = 0,
+    roundingModeTrue: RoundingMode = RoundingMode.HALF_UP,
+    roundModeFalse: RoundingMode = RoundingMode.HALF_UP,
+): Float = when(condition){
+    true -> this.includeDecimals(ifTrue, roundingModeTrue)
+    false -> this.includeDecimals(ifFalse, roundModeFalse)
 }
 
-
-fun Float.includeDecimals(decimals: Int): Float {
-    if(decimals < 1) throw IllegalArgumentException("1 or more decimal spaces are required")
-    val pattern = "#." + "#".repeat(decimals)
-    val df = DecimalFormat(pattern)
-    df.roundingMode = RoundingMode.HALF_UP
-    df.format(this)
-    return df.format(this).toFloat()
+fun Double.conditionalIncludeDecimals(
+    condition: Boolean,
+    ifTrue: Int = 1,
+    ifFalse: Int = 0,
+    roundingModeTrue: RoundingMode = RoundingMode.HALF_UP,
+    roundModeFalse: RoundingMode = RoundingMode.HALF_UP,
+): Double = when(condition){
+    true -> this.includeDecimals(ifTrue, roundingModeTrue)
+    false -> this.includeDecimals(ifFalse, roundModeFalse)
 }

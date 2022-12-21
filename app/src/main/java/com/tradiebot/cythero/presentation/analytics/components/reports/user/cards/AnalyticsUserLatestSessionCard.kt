@@ -9,6 +9,7 @@ import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
+import com.tradiebot.cythero.util.conditionalIncludeDecimals
 import com.tradiebot.cythero.util.includeDecimals
 
 @Composable
@@ -26,9 +27,11 @@ fun AnalyticsLatestSessionCard(
                 (analyticsTable.clearHighCoverage.lastOrNull() ?: 0.0)) / 3.0))
         .includeDecimals(1)
     }%"
+    
+    val lastPaintUsedDouble = analyticsTable.totalPaintUsedMilliliters.lastOrNull() ?: 0.0
     val lastPaintUsed =
-        "${AnalyticsContentHelper.shouldIncludeDecimals(analyticsTable.totalPaintUsedMilliliters.lastOrNull() ?: 0.0)} ml"
-
+        "${lastPaintUsedDouble.conditionalIncludeDecimals(condition = lastPaintUsedDouble < 10)} ml"
+    
     val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.lastOrNull()?.toLong() ?: 0L
     val lastTimePlayedString =
         AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
