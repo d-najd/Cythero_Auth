@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticSession
@@ -65,29 +66,6 @@ fun AnalyticsUsageItemInfoDialog(
 					fontSize = TextUnit(16f, TextUnitType.Sp),
 				)
 				
-				val primerTimeSpent =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 104 }?.score?.toFloatOrNull()
-						?: 0f
-				val baseTimeSpent =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 110 }?.score?.toFloatOrNull()
-						?: 0f
-				val clearTimeSpent =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 116 }?.score?.toFloatOrNull()
-						?: 0f
-				
-				val timeSpentDataSet = PieChartHelper.generateDataSetPositive(
-					data = listOf(
-						Pair(primerTimeSpent, stringResource(R.string.field_primer)),
-						Pair(baseTimeSpent, stringResource(R.string.field_base)),
-						Pair(clearTimeSpent, stringResource(R.string.field_clear)),
-					),
-					colors = listOf(
-						Grade.A.rgb,
-						Grade.B.rgb,
-						Grade.C.rgb,
-					)
-				)
-				
 				Divider(
 					modifier = Modifier.padding(vertical = 12.dp),
 					color = Color.Transparent
@@ -95,6 +73,11 @@ fun AnalyticsUsageItemInfoDialog(
 				
 				val pieChartSettingsHolder = ChartSettingsHolder.defaultPieCSettings()
 				pieChartSettingsHolder.rightOffset = -5f
+				
+				val timeSpentDataSet = generateTimeSpentDataSet(
+					analyticSessionInfo = analyticSessionInfo,
+				)
+				
 				CytheroCard(
 					title = stringResource(R.string.field_time_spent_seconds),
 					modifier = Modifier.height(200.dp),
@@ -111,27 +94,8 @@ fun AnalyticsUsageItemInfoDialog(
 					color = Color.Transparent
 				)
 				
-				val primerColorUsed =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 105 }?.score?.toFloatOrNull()
-						?: 0f
-				val baseColorUsed =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 111 }?.score?.toFloatOrNull()
-						?: 0f
-				val clearColorUsed =
-					analyticSessionInfo.firstOrNull { o -> o.labelId == 117 }?.score?.toFloatOrNull()
-						?: 0f
-				
-				val colorUsedDataSet = PieChartHelper.generateDataSetPositive(
-					data = listOf(
-						Pair(primerColorUsed, stringResource(R.string.field_primer)),
-						Pair(baseColorUsed, stringResource(R.string.field_base)),
-						Pair(clearColorUsed, stringResource(R.string.field_clear)),
-					),
-					colors = listOf(
-						Grade.A.rgb,
-						Grade.B.rgb,
-						Grade.C.rgb,
-					)
+				val colorUsedDataSet = generateColorUsedDataSet(
+					analyticSessionInfo = analyticSessionInfo,
 				)
 				
 				CytheroCard(
@@ -168,5 +132,61 @@ fun AnalyticsUsageItemInfoDialog(
 				}
 			}
 		}
+	)
+}
+
+@Composable
+private fun generateColorUsedDataSet(
+	analyticSessionInfo: List<AnalyticSession>,
+): PieDataSet {
+	val primerColorUsed =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 105 }?.score?.toFloatOrNull()
+			?: 0f
+	val baseColorUsed =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 111 }?.score?.toFloatOrNull()
+			?: 0f
+	val clearColorUsed =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 117 }?.score?.toFloatOrNull()
+			?: 0f
+	
+	return PieChartHelper.generateDataSetPositive(
+		data = listOf(
+			Pair(primerColorUsed, stringResource(R.string.field_primer)),
+			Pair(baseColorUsed, stringResource(R.string.field_base)),
+			Pair(clearColorUsed, stringResource(R.string.field_clear)),
+		),
+		colors = listOf(
+			Grade.A.rgb,
+			Grade.B.rgb,
+			Grade.C.rgb,
+		)
+	)
+}
+
+@Composable
+private fun generateTimeSpentDataSet(
+	analyticSessionInfo: List<AnalyticSession>,
+): PieDataSet {
+	val primerTimeSpent =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 104 }?.score?.toFloatOrNull()
+			?: 0f
+	val baseTimeSpent =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 110 }?.score?.toFloatOrNull()
+			?: 0f
+	val clearTimeSpent =
+		analyticSessionInfo.firstOrNull { o -> o.labelId == 116 }?.score?.toFloatOrNull()
+			?: 0f
+	
+	return PieChartHelper.generateDataSetPositive(
+		data = listOf(
+			Pair(primerTimeSpent, stringResource(R.string.field_primer)),
+			Pair(baseTimeSpent, stringResource(R.string.field_base)),
+			Pair(clearTimeSpent, stringResource(R.string.field_clear)),
+		),
+		colors = listOf(
+			Grade.A.rgb,
+			Grade.B.rgb,
+			Grade.C.rgb,
+		)
 	)
 }
