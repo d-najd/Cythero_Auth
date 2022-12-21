@@ -34,11 +34,4 @@ fun AnalyticsUserReportContent(
     Divider(
         modifier = Modifier.padding(horizontal = 4.dp, vertical = 16.dp)
     )
-
-    /*
-    AnalyticsBasicFields(
-        state = state,
-    )
-     */
-
 }
