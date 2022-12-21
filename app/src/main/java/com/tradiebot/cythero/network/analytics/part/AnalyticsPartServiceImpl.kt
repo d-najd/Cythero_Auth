@@ -40,10 +40,14 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
             response.takeIf { res -> res.isSuccessful }.let {
                 return gson.fromJson(it!!.body.string(), AnalyticsParts::class.java).AnalyticsParts
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return emptyList()
-
     }
 }

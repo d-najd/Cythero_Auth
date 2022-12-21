@@ -55,8 +55,13 @@ object AnalyticsServiceImpl: AnalyticsService {
                 
                 return temp.analyticSessions
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return emptyList()
     }

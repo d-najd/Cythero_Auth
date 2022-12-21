@@ -44,8 +44,13 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
                 val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
                 return gson.fromJson(it!!.body.string(), analyticsUserType)
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return emptyMap()
     }

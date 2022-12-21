@@ -152,8 +152,14 @@ class AnalyticsScreenModel(
     
     /** requesting analytics for single user and updates the state */
     fun requestUsageAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
+    
+        val authe = auth
+        val userIDe = userID
+        val daterangee = dateRange
+        
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
+            
             
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             val analyticsLabels = requestAnalyticsLabels.await(auth)

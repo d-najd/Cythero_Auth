@@ -48,8 +48,13 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
     
                 return temp.analyticsUsage
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return null
     }

@@ -69,8 +69,13 @@ object AuthServiceImpl : AuthService {
             response.takeIf { res -> res.isSuccessful }.let {
                 return gson.fromJson(it!!.body.string(), Auth::class.java)
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return null
     }
