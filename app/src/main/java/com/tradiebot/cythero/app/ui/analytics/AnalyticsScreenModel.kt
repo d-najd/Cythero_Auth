@@ -105,7 +105,7 @@ class AnalyticsScreenModel(
             mutableState.update { AnalyticsScreenState.LoadingType }
             val partAnalytics = requestPartAnalytics.await(auth, userID, part)
             if (partAnalytics != null) {
-                val temp = listOf(partAnalytics) // TODO fix crash here when large object's mutable state tries to be updated
+                val temp = listOf(partAnalytics)
                 mutableState.update {
                     AnalyticsScreenState.PartSuccess(
                         auth = auth,
@@ -152,14 +152,8 @@ class AnalyticsScreenModel(
     
     /** requesting analytics for single user and updates the state */
     fun requestUsageAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
-    
-        val authe = auth
-        val userIDe = userID
-        val daterangee = dateRange
-        
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
-            
             
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             val analyticsLabels = requestAnalyticsLabels.await(auth)
@@ -167,6 +161,7 @@ class AnalyticsScreenModel(
             if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
                 mutableState.update {
+                    @Suppress("UselessCallOnCollection")
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
                         analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),

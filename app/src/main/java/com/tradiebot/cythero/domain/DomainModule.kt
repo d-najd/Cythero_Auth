@@ -28,7 +28,9 @@ import okhttp3.OkHttpClient
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
-    private val USE_MOCKS = true
+    companion object {
+        private const val USE_MOCKS = true
+    }
     
     override fun InjektRegistrar.registerInjectables() {
         addSingletonFactory {

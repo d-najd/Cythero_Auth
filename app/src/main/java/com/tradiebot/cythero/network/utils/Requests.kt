@@ -19,16 +19,6 @@ fun GET(
         .cacheControl(cache)
         .build()
 
-fun GET(
-    url: HttpUrl,
-    headers: Headers = DEFAULT_HEADERS,
-    cache: CacheControl = DEFAULT_CACHE_CONTROL,
-): Request = Request.Builder()
-        .url(url)
-        .headers(headers)
-        .cacheControl(cache)
-        .build()
-
 fun POST(
     url: String,
     headers: Headers = DEFAULT_HEADERS,

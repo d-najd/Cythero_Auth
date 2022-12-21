@@ -1,8 +1,10 @@
 package com.tradiebot.cythero.presentation.analytics.components.reports.part.cards
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.components.XAxis
@@ -84,10 +86,11 @@ fun AnalyticsPartPaintUsed(
                     chartSettingsHolder = chartSettingsHolder,
                 )
             }
-            Column(
+            Divider(
                 modifier = Modifier
+                    .alpha(0f)
                     .padding(2.dp)
-            ) { }
+            )
         }
     }
 }

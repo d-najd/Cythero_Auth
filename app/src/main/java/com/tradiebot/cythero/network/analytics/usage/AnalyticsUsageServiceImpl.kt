@@ -1,8 +1,6 @@
 package com.tradiebot.cythero.network.analytics.usage
 
 import com.google.gson.Gson
-import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
-import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabelsHolder
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsage
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageHolder
 import com.tradiebot.cythero.domain.analytics.usage.service.AnalyticsUsageService

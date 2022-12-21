@@ -34,7 +34,6 @@ object Urls {
     const val ANALYTICS_USAGE = "$ANALYTICS/usage_report"
     
     fun clearHttps(url: String): String{
-        val test = url.substring(8)
         return url.substring(8)
     }
 }

@@ -53,7 +53,7 @@ fun AnalyticsPartGradesBreakdownCard(
             modifier = Modifier
                 .height(150.dp)
         ) {
-            PieChart(dataSet = gradePieDataSet)
+            PieChart(dataSet = flow { emit(gradePieDataSet) })
         }
 
         Row(
@@ -94,19 +94,16 @@ fun AnalyticsPartGradesBreakdownCard(
 private fun generateDataSet(
     analytics: AnalyticsPart,
     selectedCoverageType: CoverageType,
-): Flow<PieDataSet> {
+): PieDataSet {
     val gradesOverall = PieChartHelper.dataFromGrades(analytics.overallGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
     val gradesPrimer = PieChartHelper.dataFromGrades(analytics.primerGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
     val gradesBase = PieChartHelper.dataFromGrades(analytics.baseGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
     val gradesClear = PieChartHelper.dataFromGrades(analytics.clearGrade.filterNotNull().groupingBy { it }.eachCount().toSortedMap())
 
-    val gradePieDataSet: Flow<PieDataSet> = flow {
-        when(selectedCoverageType) {
-            CoverageType.OVERALL -> emit(gradesOverall)
-            CoverageType.PRIMER -> emit(gradesPrimer)
-            CoverageType.BASE -> emit(gradesBase)
-            CoverageType.CLEAR -> emit(gradesClear)
-        }
+    return when(selectedCoverageType) {
+        CoverageType.OVERALL -> gradesOverall
+        CoverageType.PRIMER -> gradesPrimer
+        CoverageType.BASE -> gradesBase
+        CoverageType.CLEAR -> gradesClear
     }
-    return gradePieDataSet
 }

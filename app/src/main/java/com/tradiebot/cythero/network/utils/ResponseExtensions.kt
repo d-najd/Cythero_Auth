@@ -1,6 +1,5 @@
 package com.tradiebot.cythero.network.utils
 
-import logcat.LogPriority
 import logcat.logcat
 import okhttp3.Response
 

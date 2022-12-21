@@ -152,12 +152,10 @@ private fun generateDataSet(
         colors = colorsList
     )
 
-    val curDataSet = when (selectedCoverageType) {
+    return when (selectedCoverageType) {
         CoverageType.OVERALL -> coverageOverall
         CoverageType.PRIMER -> coveragePrimer
         CoverageType.BASE -> coverageBase
         CoverageType.CLEAR -> coverageClear
     }
-
-    return curDataSet
 }

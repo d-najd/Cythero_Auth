@@ -59,7 +59,6 @@ fun AnalyticsUsageItemInfoDialog(
 				Text(
 					modifier = Modifier.align(Alignment.CenterHorizontally),
 					text = "${analyticUsage.user}'s Session Card",
-					//  text = "Somebody's Session Card",
 					color = MaterialTheme.colorScheme.onSurfaceVariant,
 					textAlign = TextAlign.Center,
 					fontWeight = FontWeight.Bold,

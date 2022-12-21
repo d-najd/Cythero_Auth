@@ -32,12 +32,11 @@ fun AnalyticsSelectAnalyticsCard(
     onGeneratePartReportClicked: (Part) -> Unit,
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
 ) {
-    var selectedReportType by remember { mutableStateOf(AnalyticsType.USAGE) }
+    var selectedReportType by remember { mutableStateOf(AnalyticsType.USER) }
 
     var dateRange by remember { mutableStateOf(Pair(
         first = Date(Date().time - Duration.Companion.convert(
-            // 168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
-            3000.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
+            168.0, DurationUnit.HOURS, DurationUnit.MILLISECONDS).toLong()),
         second = Date()
     )) }
     var selectedPartType by remember { mutableStateOf(Part.FENDER) }
