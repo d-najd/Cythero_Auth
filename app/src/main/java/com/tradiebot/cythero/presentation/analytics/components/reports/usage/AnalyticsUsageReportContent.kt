@@ -12,17 +12,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
+import com.tradiebot.cythero.presentation.analytics.components.reports.usage.components.AnalyticsUsageReportLabels
 import com.tradiebot.cythero.presentation.components.CytheroHorizontallyScrollableColumn
 import com.tradiebot.cythero.util.CytheroDateFormat
 import kotlin.math.roundToInt
@@ -44,12 +43,12 @@ fun AnalyticsUsageReportContent(
 		toIndex = minOf(analytics.analyticsList.size, screenIndex * 10)
 	)
 	
-	val width = 800.dp
+	val reportWidth = 800.dp
 	val numOfFields = 5
 	
 	CytheroHorizontallyScrollableColumn(
 		modifier = Modifier
-			.width(width)
+			.width(reportWidth)
 			.fillMaxHeight()
 	) {
 		Column(
@@ -59,70 +58,11 @@ fun AnalyticsUsageReportContent(
 				modifier = Modifier
 					.padding(start = 8.dp, end = 8.dp)
 			) {
-				AnalyticsUsageTriStateRow(
-					modifier = Modifier.width(width / numOfFields),
-					state = analyticsUsageToggleableStateHelper(
-						analytics = analytics,
-						type = AnalyticsUsageSortType.USER
-					),
-					text = stringResource(R.string.field_user),
-					onClick = { prevState ->
-						if(prevState == ToggleableState.On) {
-							onSortUsageReport(AnalyticsUsageSortType.USER, false)
-						} else onSortUsageReport(AnalyticsUsageSortType.USER, true)
-					}
-				)
-				AnalyticsUsageTriStateRow(
-					modifier = Modifier.width(width / numOfFields),
-					state = analyticsUsageToggleableStateHelper(
-						analytics = analytics,
-						type = AnalyticsUsageSortType.PART
-					),
-					text = stringResource(R.string.field_part),
-					onClick = { prevState ->
-						if(prevState == ToggleableState.On) {
-							onSortUsageReport(AnalyticsUsageSortType.PART, false)
-						} else onSortUsageReport(AnalyticsUsageSortType.PART, true)
-					}
-				)
-				AnalyticsUsageTriStateRow(
-					modifier = Modifier.width(width / numOfFields),
-					state = analyticsUsageToggleableStateHelper(
-						analytics = analytics,
-						type = AnalyticsUsageSortType.DATE
-					),
-					text = stringResource(R.string.field_date),
-					onClick = { prevState ->
-						if(prevState == ToggleableState.On) {
-							onSortUsageReport(AnalyticsUsageSortType.DATE, false)
-						} else onSortUsageReport(AnalyticsUsageSortType.DATE, true)
-					}
-				)
-				AnalyticsUsageTriStateRow(
-					modifier = Modifier.width(width / numOfFields),
-					state = analyticsUsageToggleableStateHelper(
-						analytics = analytics,
-						type = AnalyticsUsageSortType.PAINT_USED
-					),
-					text = stringResource(R.string.field_paint_used),
-					onClick = { prevState ->
-						if(prevState == ToggleableState.On) {
-							onSortUsageReport(AnalyticsUsageSortType.PAINT_USED, false)
-						} else onSortUsageReport(AnalyticsUsageSortType.PAINT_USED, true)
-					}
-				)
-				AnalyticsUsageTriStateRow(
-					modifier = Modifier.width(width / numOfFields),
-					state = analyticsUsageToggleableStateHelper(
-						analytics = analytics,
-						type = AnalyticsUsageSortType.TOTAL_TIME_SPENT
-					),
-					text = stringResource(R.string.field_total_time_spent),
-					onClick = { prevState ->
-						if(prevState == ToggleableState.On) {
-							onSortUsageReport(AnalyticsUsageSortType.TOTAL_TIME_SPENT, false)
-						} else onSortUsageReport(AnalyticsUsageSortType.TOTAL_TIME_SPENT, true)
-					}
+				AnalyticsUsageReportLabels(
+					width = reportWidth,
+					numOfFields = numOfFields,
+					analytics = analytics,
+					onSortUsageReport = onSortUsageReport,
 				)
 			}
 			
@@ -149,23 +89,23 @@ fun AnalyticsUsageReportContent(
 							verticalAlignment = Alignment.CenterVertically,
 						) {
 							AnalyticsUsageBoxText(
-								modifier = Modifier.width(width/numOfFields) ,
+								modifier = Modifier.width(reportWidth/numOfFields) ,
 								text = analytic.user,
 							)
 							AnalyticsUsageBoxText(
-								modifier = Modifier.width(width/numOfFields) ,
+								modifier = Modifier.width(reportWidth/numOfFields) ,
 								text = stringResource(analytic.part.nameId),
 							)
 							AnalyticsUsageBoxText(
-								modifier = Modifier.width(width/numOfFields) ,
+								modifier = Modifier.width(reportWidth/numOfFields) ,
 								text = CytheroDateFormat.defaultRequestDateFormat().format(analytic.date),
 							)
 							AnalyticsUsageBoxText(
-								modifier = Modifier.width(width/numOfFields) ,
+								modifier = Modifier.width(reportWidth/numOfFields) ,
 								text = analytic.paintUsedMl.toString(),
 							)
 							AnalyticsUsageBoxText(
-								modifier = Modifier.width(width/numOfFields) ,
+								modifier = Modifier.width(reportWidth/numOfFields) ,
 								text = analytic.totalTimeSpentMin.toString(),
 							)
 						}

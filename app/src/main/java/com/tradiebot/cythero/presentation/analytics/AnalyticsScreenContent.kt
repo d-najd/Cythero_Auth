@@ -12,7 +12,7 @@ import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AnalyticsScreen(
+fun AnalyticsScreenContent(
     presenter: AnalyticsScreenState,
     onBackClicked: () -> Unit,
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,

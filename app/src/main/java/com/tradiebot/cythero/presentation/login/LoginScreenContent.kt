@@ -8,7 +8,7 @@ import com.tradiebot.cythero.presentation.login.components.LoginContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
+fun LoginScreenContent(
     presenter: LoginScreenState.Success,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,

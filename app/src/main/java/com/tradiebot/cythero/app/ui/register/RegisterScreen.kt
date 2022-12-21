@@ -12,7 +12,7 @@ import com.bluelinelabs.conductor.asTransaction
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.presentation.components.LoadingScreen
-import com.tradiebot.cythero.presentation.register.RegisterScreen
+import com.tradiebot.cythero.presentation.register.RegisterScreenContent
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import com.tradiebot.cythero.util.toast
 import kotlinx.coroutines.flow.collectLatest
@@ -35,7 +35,7 @@ object RegisterScreen : Screen {
 
         val successState = state as RegisterScreenState.Success
 
-        RegisterScreen(
+        RegisterScreenContent(
             presenter = successState,
             onClickUserRegister = screenModel::registerUser,
             onClickLogin = { router.setRoot(LoginController().asTransaction()) },

@@ -9,7 +9,7 @@ import com.tradiebot.cythero.presentation.register.components.RegisterContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(
+fun RegisterScreenContent(
     presenter: RegisterScreenState.Success,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
