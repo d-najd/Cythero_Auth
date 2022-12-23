@@ -29,7 +29,7 @@ import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
     companion object {
-        private const val USE_MOCKS = true
+        private const val USE_MOCKS = false
     }
     
     override fun InjektRegistrar.registerInjectables() {
