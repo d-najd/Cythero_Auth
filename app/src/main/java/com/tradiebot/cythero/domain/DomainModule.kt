@@ -70,6 +70,5 @@ class DomainModule : InjektModule {
         addFactory { RequestUsageAnalytics(get()) }
         addFactory { RequestAnalyticsLabels(get()) }
         addFactory { RequestAnalyticSessionInfo(get()) }
-        
     }
 }
