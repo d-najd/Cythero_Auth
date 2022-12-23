@@ -22,19 +22,17 @@ import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.chart.PieChart
 import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 import com.tradiebot.cythero.presentation.components.dialogs.CytheroButtonDefaults
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 @Composable
 fun AnalyticsPartGradesBreakdownCard(
     state: AnalyticsScreenState.PartSuccess,
-    selectedCoverageType: CoverageType,
     onSelectedCoverageTypeChange: (CoverageType) -> Unit,
 ){
     val analytics = state.analytics[0]
 
     val timesPlayed = analytics.timesPlayed
-    val averageGrade = when(selectedCoverageType) {
+    val averageGrade = when(state.selectedCoverageType) {
         CoverageType.OVERALL -> stringResource(analytics.averageGradeOverall.nameId)
         CoverageType.PRIMER -> stringResource(analytics.averageGradePrimer.nameId)
         CoverageType.BASE -> stringResource(analytics.averageGradeBase.nameId)
@@ -43,7 +41,7 @@ fun AnalyticsPartGradesBreakdownCard(
 
     val gradePieDataSet = generateDataSet(
         analytics = analytics,
-        selectedCoverageType = selectedCoverageType
+        selectedCoverageType = state.selectedCoverageType
     )
 
     CytheroCard(
@@ -68,10 +66,10 @@ fun AnalyticsPartGradesBreakdownCard(
                         .padding(horizontal = 4.dp),
                     shape = RoundedCornerShape(CytheroButtonDefaults.BUTTON_CORNER_ROUNDING),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if(selectedCoverageType == coverage)
+                        containerColor = if(state.selectedCoverageType == coverage)
                             MaterialTheme.colorScheme.primary else
                             Color.Transparent,
-                        contentColor = if(selectedCoverageType == coverage)
+                        contentColor = if(state.selectedCoverageType == coverage)
                             MaterialTheme.colorScheme.onPrimary else
                             MaterialTheme.colorScheme.onBackground,
                     ),

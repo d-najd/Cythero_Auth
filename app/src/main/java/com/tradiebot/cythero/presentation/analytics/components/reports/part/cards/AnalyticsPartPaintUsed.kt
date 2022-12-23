@@ -28,7 +28,6 @@ import kotlin.math.round
 @Composable
 fun AnalyticsPartPaintUsed(
     state: AnalyticsScreenState.PartSuccess,
-    selectedCoverageType: CoverageType,
 ) {
     val analytics = state.analytics[0]
 
@@ -68,7 +67,7 @@ fun AnalyticsPartPaintUsed(
                 )
 
                 val dataSet: Flow<List<LineDataSet>> = flow {
-                    when (selectedCoverageType) {
+                    when (state.selectedCoverageType) {
                         CoverageType.OVERALL -> emit(listOf(overallTimeData))
                         CoverageType.PRIMER -> emit(listOf(primerTimeData))
                         CoverageType.BASE -> emit(listOf(baseTimeData))

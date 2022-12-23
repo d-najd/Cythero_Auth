@@ -27,7 +27,6 @@ import uy.kohesive.injekt.api.get
 @Composable
 fun AnalyticsTimeTakenCard(
     state: AnalyticsScreenState.PartSuccess,
-    selectedCoverageType: CoverageType,
 ){
     val analytics = state.analytics[0]
     
@@ -44,7 +43,7 @@ fun AnalyticsTimeTakenCard(
             ) {
                 val partTimeTakenDataSet = generateDataSet(
                     analytics = analytics,
-                    coverageType = selectedCoverageType
+                    coverageType = state.selectedCoverageType
                 )
                 
                 val chartSettingsHolder = ChartSettingsHolder.defaultBarLineCSettings()

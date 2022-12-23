@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
+import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortType
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
@@ -25,8 +26,13 @@ import java.util.*
 fun AnalyticsContent(
     state: AnalyticsScreenState,
     contentPadding: PaddingValues,
+    
+    // User
     onGenerateUserReportClicked: (Pair<Date, Date>) -> Unit,
+    
+    // Part
     onGeneratePartReportClicked: (Part) -> Unit,
+    onUpdateSelectedCoverageType: (CoverageType) -> Unit,
     
     // Usage
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
@@ -70,6 +76,7 @@ fun AnalyticsContent(
             is AnalyticsScreenState.PartSuccess -> {
                 AnalyticsPartReportContent(
                     state = state,
+                    onUpdateSelectedCoverageType = onUpdateSelectedCoverageType
                 )
             }
             is AnalyticsScreenState.UsageSuccess -> {

@@ -15,18 +15,15 @@ import com.tradiebot.cythero.presentation.analytics.components.reports.part.card
 @Composable
 fun AnalyticsPartReportContent(
     state: AnalyticsScreenState.PartSuccess,
+    onUpdateSelectedCoverageType: (CoverageType) -> Unit,
 ) {
-    var selectedCoverageType by remember { mutableStateOf(CoverageType.OVERALL) }
-
     AnalyticsPartGradesBreakdownCard(
         state = state,
-        selectedCoverageType = selectedCoverageType,
-        onSelectedCoverageTypeChange = { selectedCoverageType = it }
+        onSelectedCoverageTypeChange = onUpdateSelectedCoverageType
     )
 
     AnalyticsTimeTakenCard(
         state = state,
-        selectedCoverageType = selectedCoverageType
     )
 
     Divider(
@@ -35,12 +32,10 @@ fun AnalyticsPartReportContent(
 
     AnalyticsPartCoverageBreakdownCard(
         state = state,
-        selectedCoverageType = selectedCoverageType
     )
 
     AnalyticsPartPaintUsed(
         state = state,
-        selectedCoverageType = selectedCoverageType
     )
 
     Divider(

@@ -1,9 +1,10 @@
 package com.tradiebot.cythero.app.ui.analytics
 
 import android.content.Context
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.*
 import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
+import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.Part
 import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
 import com.tradiebot.cythero.domain.analytics.part.model.AnalyticsPart
@@ -36,7 +37,6 @@ class AnalyticsScreenModel(
     private val requestAnalyticsLabels: RequestAnalyticsLabels = Injekt.get(),
     private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
 ) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
-
     init {
         coroutineScope.launch {
             mutableState.update {
@@ -100,6 +100,16 @@ class AnalyticsScreenModel(
 
     //region part
 
+    fun updatePartCoverageType(selectedCoverageType: CoverageType){
+        coroutineScope.launchUI {
+            mutableState.update {
+                (it as AnalyticsScreenState.PartSuccess).copy(
+                    selectedCoverageType = selectedCoverageType
+                )
+            }
+        }
+    }
+    
     fun requestPartAnalytics(auth: Auth, userID: Long = auth.user.id!!, part: Part) {
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
@@ -184,9 +194,7 @@ class AnalyticsScreenModel(
     fun sortUsageAnalytics(type: AnalyticsUsageSortType, reverse: Boolean){
         coroutineScope.launchUI {
             mutableState.update {
-                if(it !is AnalyticsScreenState.UsageSuccess)
-                    throw IllegalStateException("Sorting usage analytics when not in usage analytics?")
-                it.copy(
+                (it as AnalyticsScreenState.UsageSuccess).copy(
                     analytics = it.analytics.sortByType(
                         type = type,
                         reverse = reverse,
@@ -198,7 +206,6 @@ class AnalyticsScreenModel(
     
     
     fun showUsageDialog(dialog: AnalyticsUsageDialog) {
-        if (this.state.value !is AnalyticsScreenState.UsageSuccess) throw IllegalStateException()
         val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
     
         when (dialog) {
@@ -210,7 +217,7 @@ class AnalyticsScreenModel(
                     )
                     if (analyticSessionInfo.isNotEmpty()) {
                         mutableState.update {
-                            (it as AnalyticsScreenState.UsageSuccess).copy(
+                            usageState.copy(
                                 analyticsSessionInfo = analyticSessionInfo,
                                 dialog = dialog
                             )
@@ -287,6 +294,7 @@ sealed class AnalyticsScreenState {
     data class PartSuccess(
         val auth: Auth,
         val analytics: List<AnalyticsPart>,
+        var selectedCoverageType: CoverageType = CoverageType.OVERALL,
     ) : AnalyticsScreenState()
     
     

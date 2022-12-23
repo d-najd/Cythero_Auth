@@ -35,6 +35,7 @@ class AnalyticsScreen(
             onBackClicked = router::popCurrentController,
             onGenerateUserReportClicked = { screenModel.requestUserAnalytics(auth, userID = 4L, it) },
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
+            onUpdateSelectedCoverageType = { screenModel.updatePartCoverageType(selectedCoverageType = it) },
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
             onSortUsageReport = screenModel::sortUsageAnalytics,
             onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, it.sessionID)) }

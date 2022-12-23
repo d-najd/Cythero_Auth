@@ -22,13 +22,12 @@ import kotlin.math.round
 @Composable
 fun AnalyticsPartCoverageBreakdownCard(
     state: AnalyticsScreenState.PartSuccess,
-    selectedCoverageType: CoverageType,
 ) {
     val analytics = state.analytics[0]
 
     val gradePieDataSet = generateDataSet(
         analytics = analytics,
-        selectedCoverageType = selectedCoverageType
+        selectedCoverageType = state.selectedCoverageType
     )
 
     CytheroCard(
