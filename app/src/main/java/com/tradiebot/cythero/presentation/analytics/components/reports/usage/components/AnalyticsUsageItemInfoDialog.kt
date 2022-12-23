@@ -19,9 +19,9 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticSession
-import com.tradiebot.cythero.domain.analytics.shared.model.AnalyticsLabel
 import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortable
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
@@ -33,11 +33,13 @@ import kotlinx.coroutines.flow.flow
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsUsageItemInfoDialog(
+	state: AnalyticsScreenState.UsageSuccess,
+	analyticUsage: AnalyticsUsageSortable,
 	onDismissRequest: () -> Unit,
-	analyticSessionInfo: List<AnalyticSession>,
-	analyticsLabels: List<AnalyticsLabel>,
-	analyticUsage: AnalyticsUsageSortable
 ) {
+	if (state.analyticsSessionInfo == null) throw IllegalStateException("Session info should not " +
+		"be null when calling this dialog")
+	
 	AlertDialog(
 		modifier = Modifier
 			.fillMaxHeight()
@@ -75,7 +77,7 @@ fun AnalyticsUsageItemInfoDialog(
 				pieChartSettingsHolder.rightOffset = -5f
 				
 				val timeSpentDataSet = generateTimeSpentDataSet(
-					analyticSessionInfo = analyticSessionInfo,
+					analyticSessionInfo = state.analyticsSessionInfo,
 				)
 				
 				CytheroCard(
@@ -95,7 +97,7 @@ fun AnalyticsUsageItemInfoDialog(
 				)
 				
 				val colorUsedDataSet = generateColorUsedDataSet(
-					analyticSessionInfo = analyticSessionInfo,
+					analyticSessionInfo = state.analyticsSessionInfo,
 				)
 				
 				CytheroCard(
@@ -121,10 +123,10 @@ fun AnalyticsUsageItemInfoDialog(
 						.horizontalScroll(rememberScrollState()),
 					applyPadding = false,
 				) {
-					for (session in analyticSessionInfo) {
+					for (session in state.analyticsSessionInfo) {
 						AnalyticsPairField(
 							modifier = Modifier.width(375.dp),
-							key = analyticsLabels.find { o -> o.id == session.labelId }?.name
+							key = state.analyticsLabels.find { o -> o.id == session.labelId }?.name
 								?: "",
 							value = session.score
 						)

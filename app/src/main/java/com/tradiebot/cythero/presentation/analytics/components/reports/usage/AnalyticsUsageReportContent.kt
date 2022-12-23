@@ -16,17 +16,15 @@ import com.tradiebot.cythero.presentation.components.CytheroHorizontallyScrollab
 @Composable
 fun AnalyticsUsageReportContent(
 	state: AnalyticsScreenState.UsageSuccess,
+	onUpdateUsageScreenIndex: (Boolean) -> Unit,
 	onSortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
-	onShowUsageItemInfo: (AnalyticsUsageSortable) -> Unit,
+	onShowUsageItemInfoDialog: (AnalyticsUsageSortable) -> Unit,
 ) {
 	val analytics = state.analytics
 	
-	// The index of the selected screen in the report
-	var screenIndex by remember { mutableStateOf(1) }
-	
 	val analyticsSublist = analytics.analyticsList.subList(
-		fromIndex = (screenIndex * 10) - 10,
-		toIndex = minOf(analytics.analyticsList.size, screenIndex * 10)
+		fromIndex = (state.screenIndex * 10) - 10,
+		toIndex = minOf(analytics.analyticsList.size, state.screenIndex * 10)
 	)
 	
 	val reportWidth = 800.dp
@@ -62,7 +60,7 @@ fun AnalyticsUsageReportContent(
 					AnalyticsUsageReportCard(
 						analytic = analytic,
 						width = reportWidth/numOfFields,
-						onShowUsageItemInfo = onShowUsageItemInfo,
+						onShowUsageItemInfo = onShowUsageItemInfoDialog,
 					)
 				}
 			}
@@ -70,9 +68,8 @@ fun AnalyticsUsageReportContent(
 	}
 	
 	AnalyticsUsageChangeScreenContent(
-		analytics = analytics,
-		screenIndex = screenIndex,
-		onChangeScreenIndex = { screenIndex = it }
+		state = state,
+		onUpdateUsageScreenIndex = onUpdateUsageScreenIndex
 	)
 }
 

@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.flow
 @Composable
 fun AnalyticsPartGradesBreakdownCard(
     state: AnalyticsScreenState.PartSuccess,
-    onSelectedCoverageTypeChange: (CoverageType) -> Unit,
+    onUpdatePartSelectedCoverageType: (CoverageType) -> Unit,
 ){
     val analytics = state.analytics[0]
 
@@ -73,7 +73,7 @@ fun AnalyticsPartGradesBreakdownCard(
                             MaterialTheme.colorScheme.onPrimary else
                             MaterialTheme.colorScheme.onBackground,
                     ),
-                    onClick = { onSelectedCoverageTypeChange(coverage) }
+                    onClick = { onUpdatePartSelectedCoverageType(coverage) }
                 ) {
                     Text(
                         text = stringResource(coverage.nameId),

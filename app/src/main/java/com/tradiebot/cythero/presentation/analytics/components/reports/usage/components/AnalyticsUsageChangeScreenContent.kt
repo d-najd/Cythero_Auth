@@ -20,15 +20,14 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import com.tradiebot.cythero.domain.analytics.usage.model.AnalyticsUsageSortableHolder
+import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsUsageChangeScreenContent(
-	analytics: AnalyticsUsageSortableHolder,
-	screenIndex: Int,
-	onChangeScreenIndex: (Int) -> Unit
+	state: AnalyticsScreenState.UsageSuccess,
+	onUpdateUsageScreenIndex: (Boolean) -> Unit
 ) {
 	Row(
 		modifier = Modifier
@@ -37,11 +36,7 @@ fun AnalyticsUsageChangeScreenContent(
 		verticalAlignment = Alignment.CenterVertically,
 	) {
 		IconButton(
-			onClick = {
-				if(screenIndex > 1){
-					onChangeScreenIndex(screenIndex - 1)
-				}
-			},
+			onClick = { onUpdateUsageScreenIndex(false) },
 		) {
 			Icon(
 				imageVector = Icons.Rounded.NavigateBefore,
@@ -52,7 +47,7 @@ fun AnalyticsUsageChangeScreenContent(
 		Text(
 			modifier = Modifier
 				.padding(horizontal = 12.dp),
-			text = "$screenIndex/${(analytics.analyticsList.size/10f).roundToInt()}",
+			text = "${state.screenIndex}/${(state.analytics.analyticsList.size/10f).roundToInt()}",
 			color = MaterialTheme.colorScheme.onSurfaceVariant,
 			textAlign = TextAlign.Center,
 			fontWeight = FontWeight.Bold,
@@ -60,11 +55,7 @@ fun AnalyticsUsageChangeScreenContent(
 		)
 		
 		IconButton(
-			onClick = {
-				if(screenIndex < (analytics.analyticsList.size/10f).roundToInt()) {
-					onChangeScreenIndex(screenIndex + 1)
-				}
-			},
+			onClick = { onUpdateUsageScreenIndex(true) },
 		) {
 			Icon(
 				imageVector = Icons.Rounded.NavigateNext,

@@ -35,10 +35,11 @@ class AnalyticsScreen(
             onBackClicked = router::popCurrentController,
             onGenerateUserReportClicked = { screenModel.requestUserAnalytics(auth, userID = 4L, it) },
             onGeneratePartReportClicked = { screenModel.requestPartAnalytics(auth, userID = 4L, it) },
-            onUpdateSelectedCoverageType = { screenModel.updatePartCoverageType(selectedCoverageType = it) },
+            onUpdatePartSelectedCoverageType = screenModel::updatePartCoverageType,
             onGenerateUsageReportClicked = { screenModel.requestUsageAnalytics(auth, userID = 4L, it) },
+            onUpdateUsageScreenIndex = screenModel::updateUsageScreenIndex,
             onSortUsageReport = screenModel::sortUsageAnalytics,
-            onShowUsageItemInfo = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, it.sessionID)) }
+            onShowUsageItemInfoDialog = { screenModel.showUsageDialog(AnalyticsUsageDialog.ItemInfo(it, it.sessionID)) },
         )
     
         if(state is AnalyticsScreenState.UsageSuccess){
@@ -47,10 +48,9 @@ class AnalyticsScreen(
                 null -> {}
                 is AnalyticsUsageDialog.ItemInfo -> {
                     AnalyticsUsageItemInfoDialog(
-                        onDismissRequest = screenModel::dismissUsageDialog,
-                        analyticSessionInfo = usageState.analyticsSessionInfo!!,
-                        analyticsLabels = usageState.analyticsLabels,
+                        state = usageState,
                         analyticUsage = dialog.analytic,
+                        onDismissRequest = screenModel::dismissUsageDialog,
                     )
                 }
             }

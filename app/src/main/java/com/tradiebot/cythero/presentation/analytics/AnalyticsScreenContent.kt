@@ -22,12 +22,13 @@ fun AnalyticsScreenContent(
     
     // Part
     onGeneratePartReportClicked: (Part) -> Unit,
-    onUpdateSelectedCoverageType: (CoverageType) -> Unit,
+    onUpdatePartSelectedCoverageType: (CoverageType) -> Unit,
     
     // Usage
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
+    onUpdateUsageScreenIndex: (Boolean) -> Unit,
     onSortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
-    onShowUsageItemInfo: (AnalyticsUsageSortable) -> Unit,
+    onShowUsageItemInfoDialog: (AnalyticsUsageSortable) -> Unit,
 ) {
     Scaffold { contentPadding ->
         BackHandler { onBackClicked() }
@@ -37,10 +38,11 @@ fun AnalyticsScreenContent(
             contentPadding = contentPadding,
             onGenerateUserReportClicked = onGenerateUserReportClicked,
             onGeneratePartReportClicked = onGeneratePartReportClicked,
-            onUpdateSelectedCoverageType = onUpdateSelectedCoverageType,
+            onUpdatePartSelectedCoverageType = onUpdatePartSelectedCoverageType,
             onGenerateUsageReportClicked = onGenerateUsageReportClicked,
+            onUpdateUsageScreenIndex = onUpdateUsageScreenIndex,
             onSortUsageReport = onSortUsageReport,
-            onShowUsageItemInfo = onShowUsageItemInfo,
+            onShowUsageItemInfoDialog = onShowUsageItemInfoDialog,
         )
     }
 }

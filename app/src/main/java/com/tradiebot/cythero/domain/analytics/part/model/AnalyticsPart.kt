@@ -64,6 +64,8 @@ data class AnalyticsPart (
     @SerializedName("Parts") val parts: List<Part>,
     @SerializedName("User ID") val userIDs: List<Int>,
 ): Serializable {
+    init {
+    }
     /*
     companion object {
         fun mockInstance(): List<AnalyticsPart> {

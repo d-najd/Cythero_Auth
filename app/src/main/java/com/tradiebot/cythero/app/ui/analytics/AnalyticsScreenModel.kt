@@ -25,6 +25,7 @@ import logcat.logcat
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.util.*
+import kotlin.math.roundToInt
 
 class AnalyticsScreenModel(
     val context: Context,
@@ -100,16 +101,6 @@ class AnalyticsScreenModel(
 
     //region part
 
-    fun updatePartCoverageType(selectedCoverageType: CoverageType){
-        coroutineScope.launchUI {
-            mutableState.update {
-                (it as AnalyticsScreenState.PartSuccess).copy(
-                    selectedCoverageType = selectedCoverageType
-                )
-            }
-        }
-    }
-    
     fun requestPartAnalytics(auth: Auth, userID: Long = auth.user.id!!, part: Part) {
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
@@ -155,7 +146,17 @@ class AnalyticsScreenModel(
             }
         }
     }
-
+    
+    fun updatePartCoverageType(selectedCoverageType: CoverageType){
+        coroutineScope.launchUI {
+            mutableState.update {
+                (it as AnalyticsScreenState.PartSuccess).copy(
+                    selectedCoverageType = selectedCoverageType
+                )
+            }
+        }
+    }
+    
     //endregion
     
     //region usage
@@ -191,6 +192,22 @@ class AnalyticsScreenModel(
         }
     }
     
+    fun updateUsageScreenIndex(increment: Boolean){
+        coroutineScope.launchUI {
+            mutableState.update {
+                (it as AnalyticsScreenState.UsageSuccess).copy(
+                    screenIndex = if(increment &&
+                        it.screenIndex < (it.analytics.analyticsList.size/10f).roundToInt())
+                            it.screenIndex + 1
+                        else if (!increment && it.screenIndex > 1)
+                            it.screenIndex - 1
+                        else
+                            it.screenIndex
+                )
+            }
+        }
+    }
+    
     fun sortUsageAnalytics(type: AnalyticsUsageSortType, reverse: Boolean){
         coroutineScope.launchUI {
             mutableState.update {
@@ -203,7 +220,6 @@ class AnalyticsScreenModel(
             }
         }
     }
-    
     
     fun showUsageDialog(dialog: AnalyticsUsageDialog) {
         val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
@@ -230,18 +246,6 @@ class AnalyticsScreenModel(
             }
         }
     }
-    
-    
-    /*
-    fun showDialog(dialog: AnalyticsUsageDialog) {
-        mutableState.update {
-            when (it) {
-                CategoryScreenState.Loading -> it
-                is CategoryScreenState.Success -> it.copy(dialog = dialog)
-            }
-        }
-    }
-     */
     
     fun dismissUsageDialog() {
         mutableState.update {
@@ -294,7 +298,7 @@ sealed class AnalyticsScreenState {
     data class PartSuccess(
         val auth: Auth,
         val analytics: List<AnalyticsPart>,
-        var selectedCoverageType: CoverageType = CoverageType.OVERALL,
+        val selectedCoverageType: CoverageType = CoverageType.OVERALL,
     ) : AnalyticsScreenState()
     
     
@@ -304,8 +308,9 @@ sealed class AnalyticsScreenState {
         val auth: Auth,
         val analytics: AnalyticsUsageSortableHolder,
         val analyticsLabels: List<AnalyticsLabel>,
-        val dialog: AnalyticsUsageDialog? = null,
         val analyticsSessionInfo: List<AnalyticSession>? = null,
+        val screenIndex: Int = 1,
+        val dialog: AnalyticsUsageDialog? = null,
     ) : AnalyticsScreenState()
     
 }

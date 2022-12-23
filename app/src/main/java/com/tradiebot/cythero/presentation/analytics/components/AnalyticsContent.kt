@@ -32,12 +32,13 @@ fun AnalyticsContent(
     
     // Part
     onGeneratePartReportClicked: (Part) -> Unit,
-    onUpdateSelectedCoverageType: (CoverageType) -> Unit,
+    onUpdatePartSelectedCoverageType: (CoverageType) -> Unit,
     
     // Usage
     onGenerateUsageReportClicked: (Pair<Date, Date>) -> Unit,
+    onUpdateUsageScreenIndex: (Boolean) -> Unit,
     onSortUsageReport: (AnalyticsUsageSortType, Boolean) -> Unit,
-    onShowUsageItemInfo: (AnalyticsUsageSortable) -> Unit,
+    onShowUsageItemInfoDialog: (AnalyticsUsageSortable) -> Unit,
 ) {
     val scrollState = rememberScrollState()
 
@@ -76,14 +77,15 @@ fun AnalyticsContent(
             is AnalyticsScreenState.PartSuccess -> {
                 AnalyticsPartReportContent(
                     state = state,
-                    onUpdateSelectedCoverageType = onUpdateSelectedCoverageType
+                    onUpdatePartSelectedCoverageType = onUpdatePartSelectedCoverageType
                 )
             }
             is AnalyticsScreenState.UsageSuccess -> {
                 AnalyticsUsageReportContent(
                     state = state,
+                    onUpdateUsageScreenIndex = onUpdateUsageScreenIndex,
                     onSortUsageReport = onSortUsageReport,
-                    onShowUsageItemInfo = onShowUsageItemInfo,
+                    onShowUsageItemInfoDialog = onShowUsageItemInfoDialog,
                 )
             }
         }
