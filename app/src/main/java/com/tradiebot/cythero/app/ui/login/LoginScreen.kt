@@ -8,10 +8,10 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.bluelinelabs.conductor.asTransaction
 import com.tradiebot.cythero.app.ui.base.controller.pushController
 import com.tradiebot.cythero.app.ui.register.RegisterController
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
+import com.tradiebot.cythero.app.ui.base.controller.setRoot
 import com.tradiebot.cythero.presentation.components.LoadingScreen
 import com.tradiebot.cythero.presentation.login.LoginScreenContent
 import com.tradiebot.cythero.presentation.util.LocalRouter
@@ -43,7 +43,7 @@ object LoginScreen : Screen {
         LoginScreenContent(
             presenter = successState,
             onClickUserLogin = screenModel::loginUser,
-            onClickRegister = { router.setRoot(RegisterController().asTransaction()) },
+            onClickRegister = { router.setRoot(RegisterController()) },
             onMissingFields = { screenModel.showLocalizedEvent(LoginEvent.MissingFields) },
         )
 

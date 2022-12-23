@@ -24,6 +24,7 @@ import kotlin.time.ExperimentalTime
  * @sample DateRangePickerDialogPreview()
  */
 @SuppressLint("ComposableNaming")
+//suppressed because the dialog is converted to sort of a composable
 @OptIn(ExperimentalTime::class)
 @Composable
 fun DateRangePickerDialog(

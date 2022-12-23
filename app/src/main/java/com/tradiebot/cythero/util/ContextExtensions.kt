@@ -43,7 +43,6 @@ fun Context.convertPixelsToDp(px: Float): Float {
  * @param resource the text resource.
  * @param duration the duration of the toast. Defaults to short.
  */
-@Suppress("unused")
 fun Context.toast(@StringRes resource: Int, duration: Int = Toast.LENGTH_SHORT, block: (Toast) -> Unit = {}): Toast {
     return toast(getString(resource), duration, block)
 }

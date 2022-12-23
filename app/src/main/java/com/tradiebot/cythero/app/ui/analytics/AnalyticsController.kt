@@ -27,7 +27,8 @@ class AnalyticsController: FullComposeController {
             AUTH_STRING_EXTRA to Injekt.get<Gson>().toJson(auth),
         )
     )
-
+    
+    // the constructor is necessary, removing it will result in a crash
     @Suppress("unused")
     constructor(bundle: Bundle) : this(
         bundle.getString(AUTH_STRING_EXTRA)!!,

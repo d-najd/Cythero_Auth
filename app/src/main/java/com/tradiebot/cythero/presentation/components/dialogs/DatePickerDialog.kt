@@ -17,6 +17,7 @@ import java.util.*
  * @sample DatePickerDialogPreview
  */
 @SuppressLint("ComposableNaming")
+//suppressed because the dialog is converted to sort of a composable
 @Composable
 fun DatePickerDialog(
     @StringRes title: Int,

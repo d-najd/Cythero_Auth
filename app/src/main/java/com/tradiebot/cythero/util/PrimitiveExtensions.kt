@@ -7,7 +7,6 @@ fun Double.includeDecimals(
     roundingMode: RoundingMode = RoundingMode.HALF_UP
 ): Double = toBigDecimal().setScale(decimals, roundingMode).toDouble()
 
-@Suppress("unused")
 fun Float.includeDecimals(
     decimals: Int,
     roundingMode: RoundingMode = RoundingMode.HALF_UP

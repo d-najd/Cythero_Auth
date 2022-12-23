@@ -20,7 +20,6 @@ data class AnalyticsUser(
     }
 }
 
-@Suppress("unused")
 private const val MOCK_USER_ANALYTICS =
             "{\n" +
             "  \"4\": {\n" +

@@ -11,13 +11,12 @@ import com.github.mikephil.charting.interfaces.datasets.IDataSet
 import com.tradiebot.cythero.util.convertPixelsToDp
 import com.tradiebot.cythero.util.mAppContext
 
-@Suppress("MemberVisibilityCanBePrivate")
 object ChartsHelper {
     /**
      * @param [legend] the legend which is being modified
      * @param [holder] the legend which the values are being copied from
      */
-    fun copyIntoLegend(
+    private fun copyIntoLegend(
         legend: Legend,
         holder: ChartSettingsHolder
     ) {

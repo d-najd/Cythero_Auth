@@ -162,6 +162,8 @@ class AnalyticsScreenModel(
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
                 mutableState.update {
                     @Suppress("UselessCallOnCollection")
+//                  the call is not useless since the labels are sorted down the line and having
+//                  null value crashes the app
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
                         analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
