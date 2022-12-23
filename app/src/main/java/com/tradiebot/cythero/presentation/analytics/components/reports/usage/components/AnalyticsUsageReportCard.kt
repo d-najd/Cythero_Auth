@@ -25,15 +25,15 @@ fun AnalyticsUsageReportCard(
 	Card(
 		modifier = Modifier
 			.padding(vertical = 2.dp)
-			.height(50.dp),
+			.height(50.dp)
+			.clickable { onShowUsageItemInfo(analytic) },
 		shape = RoundedCornerShape(6.dp),
 	) {
 		Row(
 			modifier = Modifier
 				.padding(vertical = 8.dp, horizontal = 8.dp)
 				.fillMaxHeight()
-				.background(MaterialTheme.colorScheme.surfaceVariant)
-				.clickable { onShowUsageItemInfo(analytic) },
+				.background(MaterialTheme.colorScheme.surfaceVariant),
 			verticalAlignment = Alignment.CenterVertically,
 		) {
 			AnalyticsUsageBoxText(
