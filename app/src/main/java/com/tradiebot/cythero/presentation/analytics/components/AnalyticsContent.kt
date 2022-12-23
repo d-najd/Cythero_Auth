@@ -47,6 +47,7 @@ fun AnalyticsContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             //.padding(vertical = 24.dp)
+            .padding(contentPadding)
             .verticalScroll(scrollState)
             .fillMaxSize(),
     ) {

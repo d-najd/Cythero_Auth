@@ -22,6 +22,7 @@ import com.tradiebot.cythero.domain.user.model.UserRegister
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.RegisterFields(
+    @Suppress("unused")
     state: RegisterScreenState.Success,
     onClickUserRegister: (UserRegister) -> Unit,
     onClickLogin: () -> Unit,
