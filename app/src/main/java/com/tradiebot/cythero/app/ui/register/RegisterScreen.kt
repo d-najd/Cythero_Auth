@@ -8,11 +8,11 @@ import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.bluelinelabs.conductor.asTransaction
 import com.tradiebot.cythero.R
+import com.tradiebot.cythero.app.ui.base.controller.setRoot
 import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.presentation.components.LoadingScreen
-import com.tradiebot.cythero.presentation.register.RegisterScreen
+import com.tradiebot.cythero.presentation.register.RegisterScreenContent
 import com.tradiebot.cythero.presentation.util.LocalRouter
 import com.tradiebot.cythero.util.toast
 import kotlinx.coroutines.flow.collectLatest
@@ -35,10 +35,10 @@ object RegisterScreen : Screen {
 
         val successState = state as RegisterScreenState.Success
 
-        RegisterScreen(
+        RegisterScreenContent(
             presenter = successState,
             onClickUserRegister = screenModel::registerUser,
-            onClickLogin = { router.setRoot(LoginController().asTransaction()) },
+            onClickLogin = { router.setRoot(LoginController()) },
             onMissingFields = { screenModel.showLocalizedEvent(RegisterEvent.MissingFields) },
             onNotMatchingPassword = { screenModel.showLocalizedEvent(RegisterEvent.NotMatchingPassword) },
         )
@@ -48,7 +48,7 @@ object RegisterScreen : Screen {
                 when (event) {
                     is RegisterEvent.UserRegistered -> {
                         context.toast(context.getString(R.string.info_successfully_registered))
-                        router.setRoot(LoginController().asTransaction())
+                        router.setRoot(LoginController())
                     }
                     is RegisterEvent.LocalizedMessage -> {
                         context.toast(event.stringRes)

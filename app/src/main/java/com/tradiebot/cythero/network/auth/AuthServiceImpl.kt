@@ -9,11 +9,13 @@ import com.tradiebot.cythero.network.utils.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 import java.io.IOException
 
 object AuthServiceImpl : AuthService {
-    private val client = OkHttpClient() // TODO replace with injekt
-    private val gson = Gson() // TODO replace with injekt
+    private val client = Injekt.get<OkHttpClient>()
+    private val gson = Injekt.get<Gson>()
 
     override suspend fun loginUser(user: UserLogin): Auth? {
         val body = MultipartBodyBuilder()
@@ -33,11 +35,9 @@ object AuthServiceImpl : AuthService {
 
         try {
             val response: Response = client.newCallAndPrint(request)
-
-            if (response.isSuccessful) {
-                response.use {
-                    return gson.fromJson(response.body.string(), Auth::class.java)
-                }
+    
+            response.takeIf { res -> res.isSuccessful }.let {
+                return gson.fromJson(it!!.body.string(), Auth::class.java)
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -65,14 +65,17 @@ object AuthServiceImpl : AuthService {
 
         try {
             val response: Response = client.newCallAndPrint(request)
-
-            if (response.isSuccessful) {
-                response.use {
-                    return gson.fromJson(response.body.string(), Auth::class.java)
-                }
+    
+            response.takeIf { res -> res.isSuccessful }.let {
+                return gson.fromJson(it!!.body.string(), Auth::class.java)
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
+            when(e){
+                is IOException,
+                is NullPointerException -> { }
+                else -> throw e
+            }
         }
         return null
     }

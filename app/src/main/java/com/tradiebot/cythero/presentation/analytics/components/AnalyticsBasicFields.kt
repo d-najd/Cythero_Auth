@@ -16,7 +16,7 @@ import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 @OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsBasicFields(
-    state: AnalyticsScreenState.Success,
+    state: AnalyticsScreenState.UserSuccess,
 ){
     Text(
         textAlign = TextAlign.Center,

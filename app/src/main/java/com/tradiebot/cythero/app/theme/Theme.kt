@@ -11,8 +11,8 @@ import com.google.android.material.composethemeadapter3.createMdc3Theme
 
 @Composable
 fun CytheroTheme(content: @Composable () -> Unit) {
-    val context = LocalContext.current
-    val layoutDirection = LocalLayoutDirection.current
+    // val context = LocalContext.current
+    // val layoutDirection = LocalLayoutDirection.current
 
     val colors = if (!isSystemInDarkTheme()) {
         LightColors

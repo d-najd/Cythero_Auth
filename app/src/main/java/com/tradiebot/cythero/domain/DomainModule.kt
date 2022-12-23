@@ -1,25 +1,75 @@
 package com.tradiebot.cythero.domain
 
-import com.tradiebot.cythero.domain.analytics.interactor.RequestAnalytics
-import com.tradiebot.cythero.domain.analytics.service.AnalyticsService
+import com.google.gson.GsonBuilder
+import com.tradiebot.cythero.domain.analytics.part.interactor.RequestPartAnalytics
+import com.tradiebot.cythero.domain.analytics.part.service.AnalyticsPartService
+import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticSessionInfo
+import com.tradiebot.cythero.domain.analytics.shared.interactor.RequestAnalyticsLabels
+import com.tradiebot.cythero.domain.analytics.shared.service.AnalyticsService
+import com.tradiebot.cythero.domain.analytics.usage.interactor.RequestUsageAnalytics
+import com.tradiebot.cythero.domain.analytics.usage.service.AnalyticsUsageService
+import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
+import com.tradiebot.cythero.domain.analytics.user.service.AnalyticsUserService
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.service.AuthService
-import com.tradiebot.cythero.network.analytics.AnalyticsServiceImpl
+import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceImpl
+import com.tradiebot.cythero.network.analytics.part.AnalyticsPartServiceMock
+import com.tradiebot.cythero.network.analytics.shared.AnalyticsServiceImpl
+import com.tradiebot.cythero.network.analytics.shared.AnalyticsServiceMock
+import com.tradiebot.cythero.network.analytics.usage.AnalyticsUsageServiceImpl
+import com.tradiebot.cythero.network.analytics.usage.AnalyticsUsageServiceMock
+import com.tradiebot.cythero.network.analytics.user.AnalyticsUserServiceImpl
+import com.tradiebot.cythero.network.analytics.user.AnalyticsUserServiceMock
 import com.tradiebot.cythero.network.auth.AuthServiceImpl
+import com.tradiebot.cythero.network.auth.AuthServiceMock
+import com.tradiebot.cythero.util.CytheroDateFormat
+import okhttp3.OkHttpClient
 import uy.kohesive.injekt.api.*
 
 class DomainModule : InjektModule {
-
+    companion object {
+        private const val USE_MOCKS = true
+    }
+    
     override fun InjektRegistrar.registerInjectables() {
-        // addSingletonFactory<AuthService> { AuthServiceMock }
-        addSingletonFactory<AuthService> { AuthServiceImpl }
+        addSingletonFactory {
+            OkHttpClient()
+        }
+        
+        addSingletonFactory {
+            GsonBuilder()
+                .setDateFormat(CytheroDateFormat.defaultRequestDateFormat().toPattern())
+                .create()
+        }
+        
+        when (USE_MOCKS) {
+            true -> {
+                addSingletonFactory<AuthService> { AuthServiceMock }
+                
+                addSingletonFactory<AnalyticsService> { AnalyticsServiceMock }
+                addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceMock }
+                addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceMock }
+                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceMock }
+            }
+            false -> {
+                addSingletonFactory<AuthService> { AuthServiceImpl }
+                
+                addSingletonFactory<AnalyticsService> { AnalyticsServiceImpl }
+                addSingletonFactory<AnalyticsUserService> { AnalyticsUserServiceImpl }
+                addSingletonFactory<AnalyticsPartService> { AnalyticsPartServiceImpl }
+                addSingletonFactory<AnalyticsUsageService> { AnalyticsUsageServiceImpl }
+            }
+        }
+        
         addFactory { LoginUser(get()) }
         addFactory { RegisterUser(get()) }
-
-        // addSingletonFactory<AnalyticsService> { AnalyticsServiceMock }
-        addSingletonFactory<AnalyticsService> { AnalyticsServiceImpl }
-        addFactory { RequestAnalytics(get()) }
+        
+        addFactory { RequestUserAnalytics(get()) }
+        addFactory { RequestPartAnalytics(get()) }
+        addFactory { RequestUsageAnalytics(get()) }
+        addFactory { RequestAnalyticsLabels(get()) }
+        addFactory { RequestAnalyticSessionInfo(get()) }
+        
     }
-
 }

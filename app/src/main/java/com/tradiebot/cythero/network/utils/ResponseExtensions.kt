@@ -1,6 +1,5 @@
 package com.tradiebot.cythero.network.utils
 
-import logcat.LogPriority
 import logcat.logcat
 import okhttp3.Response
 
@@ -11,10 +10,9 @@ import okhttp3.Response
  *
  * @return the response to allow method chaining
  */
-fun Response.printResponse() : Response{
+fun Response.printResponse() : Response {
     if(!this.isSuccessful) {
-        logcat("Network Error", LogPriority.ERROR)
-        { "Got response ${this.networkResponse?.toString()}" +
+        logcat { "Got response ${this.networkResponse?.toString()}" +
                 " for url ${this.request.url}" +
                 " with method ${this.request.method}" +
                 " and body ${this.request.body}"}

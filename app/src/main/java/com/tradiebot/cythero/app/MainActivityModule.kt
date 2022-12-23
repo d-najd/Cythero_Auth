@@ -1,7 +1,7 @@
 package com.tradiebot.cythero.app
 
 import androidx.appcompat.app.AppCompatActivity
-import com.tradiebot.cythero.app.util.view.FragmentManagerHolder
+import com.tradiebot.cythero.app.util.view.ContextHolder
 import uy.kohesive.injekt.api.InjektModule
 import uy.kohesive.injekt.api.InjektRegistrar
 import uy.kohesive.injekt.api.addSingleton
@@ -11,7 +11,7 @@ class MainActivityModule(val app: AppCompatActivity) : InjektModule {
     override fun InjektRegistrar.registerInjectables() {
         addSingleton(app)
 
-        addSingletonFactory { FragmentManagerHolder(app) }
+        addSingletonFactory { ContextHolder(app) }
     }
 }
 

@@ -2,6 +2,7 @@ package com.tradiebot.cythero.domain.user.model
 
 import java.io.Serializable
 
+
 /**
  * data class containing all possible possible parameters for a user.
  * @property sign_up_date should be possible to be replaced with 'Date'
@@ -24,10 +25,9 @@ data class User(
     val device_nickname: String? = null,
     val from_web: Boolean? = null,
     val application_id: Long? = null,
-) : Serializable{
+): Serializable {
     companion object {
-        @Suppress("unused")
-        fun testingInstance() = User(
+        fun mockInstance() = User(
             email = "dimitar.najdovski.example@gmail.com",
             password = "Dimitar123",
         )

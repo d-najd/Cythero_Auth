@@ -7,6 +7,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.google.gson.Gson
 import com.tradiebot.cythero.app.ui.base.controller.FullComposeController
 import com.tradiebot.cythero.domain.auth.model.Auth
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
 
 class AnalyticsController: FullComposeController {
 
@@ -22,17 +24,18 @@ class AnalyticsController: FullComposeController {
      */
     constructor(auth: Auth): super(
         bundleOf(
-            AUTH_STRING_EXTRA to Gson().toJson(auth),
+            AUTH_STRING_EXTRA to Injekt.get<Gson>().toJson(auth),
         )
     )
-
+    
+    // the constructor is necessary, removing it will result in a crash
     @Suppress("unused")
     constructor(bundle: Bundle) : this(
         bundle.getString(AUTH_STRING_EXTRA)!!,
     )
 
     val auth: Auth
-        get() = Gson().fromJson(args.getString(AUTH_STRING_EXTRA), Auth::class.java)!!
+        get() = Injekt.get<Gson>().fromJson(args.getString(AUTH_STRING_EXTRA), Auth::class.java)!!
 
     @Composable
     override fun ComposeContent() {

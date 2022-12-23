@@ -70,6 +70,7 @@ sealed class LoginEvent {
 }
 
 sealed class LoginScreenState {
+    
     @Immutable
     object Loading : LoginScreenState()
 
@@ -77,4 +78,5 @@ sealed class LoginScreenState {
     data class Success(
         val auth: Auth?,
     ) : LoginScreenState()
+    
 }

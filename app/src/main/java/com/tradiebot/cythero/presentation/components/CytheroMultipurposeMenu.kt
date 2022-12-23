@@ -25,7 +25,7 @@ import com.tradiebot.cythero.R
  * @param includeDropdownArrow if enabled an dropdown arrow will be put at the end, this arrow will
  * point downwards, off by default
  * @param onClick gets triggered when [text] is clicked
- * @see [CytheroMultipurposeMenuPreview]
+ * @sample CytheroMultipurposeMenuPreview()
  */
 @Composable
 fun CytheroMultipurposeMenu(
@@ -56,7 +56,7 @@ fun CytheroMultipurposeMenu(
             Text(
                 modifier = Modifier
                     .padding(
-                        top = 3.5.dp,
+                        top = (3.5).dp,
                         bottom = 8.dp,
                         start = MULTIPURPOSE_MENU_TEXT_START_PADDING + 1.dp
                     ),

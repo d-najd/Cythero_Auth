@@ -22,7 +22,8 @@ import com.tradiebot.cythero.domain.user.model.UserLogin
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.LoginFields(
-    @Suppress("UNUSED_PARAMETER") state: LoginScreenState.Success,
+    @Suppress("unused")
+    state: LoginScreenState.Success,
     onClickUserLogin: (UserLogin) -> Unit,
     onClickRegister: () -> Unit,
 

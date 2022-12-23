@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tradiebot.cythero.presentation.components.ANALYTICS_CARD_CONTENT_PADDING
 import com.tradiebot.cythero.presentation.components.CytheroCard
@@ -26,12 +26,13 @@ import com.tradiebot.cythero.presentation.components.CytheroCard
 fun AnalyticsPairField(
     key: String,
     value: String,
+    modifier: Modifier = Modifier,
 ){
     val cardContentPadding = ANALYTICS_CARD_CONTENT_PADDING
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             fontWeight = FontWeight.Bold,
@@ -45,7 +46,6 @@ fun AnalyticsPairField(
             textAlign = TextAlign.End,
             modifier = Modifier
                 .padding(cardContentPadding)
-                .padding(top = 2.dp) // the text on the left is a bit lower
                 .fillMaxWidth()
         )
     }
