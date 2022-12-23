@@ -21,7 +21,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
 
 /**
- * @see [DateRangePickerDialogPreview]
+ * @sample DateRangePickerDialogPreview()
  */
 @SuppressLint("ComposableNaming")
 @OptIn(ExperimentalTime::class)

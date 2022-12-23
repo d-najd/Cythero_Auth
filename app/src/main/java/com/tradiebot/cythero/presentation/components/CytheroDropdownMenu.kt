@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
  * @param dropdownContent content of the dropdown menu,
  * @see [CytheroDropdownMenu]
  * @see [DropdownMenu]
- * @see [CytheroDropdownMenuPreview]
+ * @sample CytheroDropdownMenuPreview()
  *
  * TODO animate the arrow
  */

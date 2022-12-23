@@ -14,7 +14,7 @@ import com.tradiebot.cythero.util.CytheroDateFormat
 import java.util.*
 
 /**
- * @see [DatePickerDialogPreview]
+ * @sample DatePickerDialogPreview
  */
 @SuppressLint("ComposableNaming")
 @Composable

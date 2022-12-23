@@ -11,6 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 
+/**
+ * @sample CytheroCardPreview()
+ */
 @Composable
 fun CytheroCard(
     modifier: Modifier = Modifier,
@@ -45,7 +48,7 @@ fun CytheroCard(
     widthDp = 300,
 )
 @Composable
-private fun AnalyticsCardPreview(){
+private fun CytheroCardPreview(){
     var dismissMenu by remember { mutableStateOf(false) }
 
     CytheroCard(title = "title") {
