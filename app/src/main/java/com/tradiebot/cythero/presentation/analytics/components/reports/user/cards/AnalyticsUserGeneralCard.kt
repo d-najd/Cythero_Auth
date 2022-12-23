@@ -12,10 +12,10 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Part
-import com.tradiebot.cythero.presentation.components.CytheroCard
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
+import com.tradiebot.cythero.presentation.components.CytheroCard
 import com.tradiebot.cythero.presentation.components.dialogs.CytheroButtonDefaults
+import com.tradiebot.cythero.util.CytheroDateFormat
 
 @Composable
 fun AnalyticsGeneralCard(
@@ -27,7 +27,7 @@ fun AnalyticsGeneralCard(
     val timesPlayed = analyticsTable.sessionID.size.toString()
     val mostPaintedPart = if(analyticsTable.part.isNotEmpty()) analyticsTable.part.groupingBy { it }.eachCount().maxBy { it.value }.key else Part.DOOR
     val totalTimePlayedSec = if(analyticsTable.totalTimePlayedSec.isNotEmpty()) analyticsTable.totalTimePlayedSec.sum().toLong() else 0L
-    val totalTimePlayedString = AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = totalTimePlayedSec)
+    val totalTimePlayedString = CytheroDateFormat.generateStringFromTime(timeSeconds = totalTimePlayedSec)
 
     CytheroCard(
         title = stringResource(R.string.field_general),

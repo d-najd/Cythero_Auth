@@ -37,7 +37,6 @@ fun AnalyticsPartCoverageBreakdownCard(
         Column(
             modifier = Modifier
                 .height(150.dp)
-        
         ) {
             PieChart(dataSet = flow { emit(gradePieDataSet) })
         }

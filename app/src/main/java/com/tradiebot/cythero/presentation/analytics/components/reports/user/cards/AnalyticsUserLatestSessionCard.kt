@@ -6,9 +6,9 @@ import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import com.tradiebot.cythero.domain.analytics.Grade
 import com.tradiebot.cythero.domain.analytics.Part
-import com.tradiebot.cythero.presentation.analytics.components.AnalyticsContentHelper
 import com.tradiebot.cythero.presentation.analytics.components.AnalyticsPairField
 import com.tradiebot.cythero.presentation.components.CytheroCard
+import com.tradiebot.cythero.util.CytheroDateFormat
 import com.tradiebot.cythero.util.conditionalIncludeDecimals
 import com.tradiebot.cythero.util.includeDecimals
 
@@ -33,8 +33,7 @@ fun AnalyticsLatestSessionCard(
         "${lastPaintUsedDouble.conditionalIncludeDecimals(condition = lastPaintUsedDouble < 10)} ml"
     
     val lastTimePlayedSec = analyticsTable.totalTimePlayedSec.lastOrNull()?.toLong() ?: 0L
-    val lastTimePlayedString =
-        AnalyticsContentHelper.generateStringFromTimePlayed(timePlayedSec = lastTimePlayedSec)
+    val lastTimePlayedString = CytheroDateFormat.generateStringFromTime(timeSeconds = lastTimePlayedSec)
 
     CytheroCard(
         title = stringResource(R.string.field_latest_session),
