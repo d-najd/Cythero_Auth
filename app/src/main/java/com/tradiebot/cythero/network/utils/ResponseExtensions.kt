@@ -9,12 +9,15 @@ fun <T> Call.processResponse(
     content: (Response) -> T
 ): T? {
     try{
-        val response = execute()
+        val response = execute().printResponse()
         if(response.isSuccessful && response.code == 200){
             return content(response)
         } else if (response.code == 401){
             logcat { "User Failed to authenticate" }
+        } else if (response.code == 409) {
+            logcat { "Duplicate Entry" }
         }
+        
     } catch (e: Exception){
         when(e){
             is IOException -> logcat { "IOException, likely because there is no internet connection" }
