@@ -3,12 +3,12 @@ package com.tradiebot.cythero.app.ui.login
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
-import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.auth.interactor.LoginUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.UserLogin
+import com.tradiebot.cythero.presentation.util.CytheroStateScreenModel
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +18,10 @@ import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
-class LoginScreenModel(
+class LoginStateScreenModel(
     val context: Context,
     private val loginUser: LoginUser = Injekt.get(),
-) : StateScreenModel<LoginScreenState>(LoginScreenState.Loading) {
+) : CytheroStateScreenModel<LoginScreenState>(context, LoginScreenState.Loading) {
 
     private val _events: Channel<LoginEvent> = Channel(Int.MAX_VALUE)
     val events: Flow<LoginEvent> = _events.receiveAsFlow()
@@ -46,8 +46,6 @@ class LoginScreenModel(
                     )
                 }
                 _events.send(LoginEvent.UserLoggedIn(auth))
-            } else {
-                showLocalizedEvent(LoginEvent.NetworkError)
             }
         }
     }
@@ -63,9 +61,6 @@ sealed class LoginEvent {
     data class UserLoggedIn(val auth: Auth) : LoginEvent()
 
     sealed class LocalizedMessage(@StringRes val stringRes: Int) : LoginEvent()
-    object NetworkError: LocalizedMessage(R.string.error_network)
-
-    //this may not belong here
     object MissingFields: LocalizedMessage(R.string.error_empty_field)
 }
 

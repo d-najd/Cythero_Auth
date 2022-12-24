@@ -23,10 +23,10 @@ object AnalyticsServiceImpl: AnalyticsService {
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
     
-        return client.newCall(request).processResponse {
+        return client.newCall(request).processRequest {
             // Yes it is possible to do this in one line and yes it does crash the app
             val temp = gson.fromJson(it.body.string(), AnalyticsLabelsHolder::class.java)
-            return@processResponse temp.analyticsLabels
+            return@processRequest temp.analyticsLabels
         }.orEmpty()
     }
     
@@ -36,10 +36,10 @@ object AnalyticsServiceImpl: AnalyticsService {
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
     
-        return client.newCall(request).processResponse {
+        return client.newCall(request).processRequest {
             // Doing it this way because it may crash in 1 liner for some reason
             val temp = gson.fromJson(it.body.string(), AnalyticsSessionHolder::class.java)
-            return@processResponse temp.analyticSessions
+            return@processRequest temp.analyticSessions
         }.orEmpty()
     }
 }

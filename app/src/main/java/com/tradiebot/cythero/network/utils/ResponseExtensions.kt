@@ -1,31 +1,7 @@
 package com.tradiebot.cythero.network.utils
 
 import logcat.logcat
-import okhttp3.Call
 import okhttp3.Response
-import java.io.IOException
-
-fun <T> Call.processResponse(
-    content: (Response) -> T
-): T? {
-    try{
-        val response = execute().printResponse()
-        if(response.isSuccessful && response.code == 200){
-            return content(response)
-        } else if (response.code == 401){
-            logcat { "User Failed to authenticate" }
-        } else if (response.code == 409) {
-            logcat { "Duplicate Entry" }
-        }
-        
-    } catch (e: Exception){
-        when(e){
-            is IOException -> logcat { "IOException, likely because there is no internet connection" }
-            else -> throw e
-        }
-    }
-    return null
-}
 
 /**
  * If the request was successful prints the request url and method.

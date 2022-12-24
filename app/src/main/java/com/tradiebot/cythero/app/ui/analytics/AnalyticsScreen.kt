@@ -21,7 +21,7 @@ class AnalyticsScreen(
         // val navigator = LocalNavigator.currentOrThrow
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
-        val screenModel = rememberScreenModel { AnalyticsScreenModel(context, auth) }
+        val screenModel = rememberScreenModel { AnalyticsStateScreenModel(context, auth) }
         
         val state by screenModel.state.collectAsState()
         

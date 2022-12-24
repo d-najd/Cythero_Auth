@@ -24,7 +24,7 @@ object RegisterScreen : Screen {
         // val navigator = LocalNavigator.currentOrThrow
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
-        val screenModel = rememberScreenModel { RegisterScreenViewModel(context) }
+        val screenModel = rememberScreenModel { RegisterStateScreenViewModel(context) }
 
         val state by screenModel.state.collectAsState()
 

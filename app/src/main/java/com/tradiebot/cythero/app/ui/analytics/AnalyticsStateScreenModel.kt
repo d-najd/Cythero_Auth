@@ -2,7 +2,6 @@ package com.tradiebot.cythero.app.ui.analytics
 
 import android.content.Context
 import androidx.compose.runtime.*
-import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.domain.analytics.CoverageType
 import com.tradiebot.cythero.domain.analytics.Part
@@ -17,6 +16,7 @@ import com.tradiebot.cythero.domain.analytics.usage.model.*
 import com.tradiebot.cythero.domain.analytics.user.interactor.RequestUserAnalytics
 import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
+import com.tradiebot.cythero.presentation.util.CytheroStateScreenModel
 import com.tradiebot.cythero.util.launchIO
 import com.tradiebot.cythero.util.launchUI
 import com.tradiebot.cythero.util.toast
@@ -27,7 +27,7 @@ import uy.kohesive.injekt.api.get
 import java.util.*
 import kotlin.math.roundToInt
 
-class AnalyticsScreenModel(
+class AnalyticsStateScreenModel(
     val context: Context,
     val auth: Auth,
     private val requestUserAnalytics: RequestUserAnalytics = Injekt.get(),
@@ -37,8 +37,9 @@ class AnalyticsScreenModel(
     private val requestUsageAnalytics: RequestUsageAnalytics = Injekt.get(),
     private val requestAnalyticsLabels: RequestAnalyticsLabels = Injekt.get(),
     private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
-) : StateScreenModel<AnalyticsScreenState>(AnalyticsScreenState.Loading) {
+) : CytheroStateScreenModel<AnalyticsScreenState>(context, AnalyticsScreenState.Loading) {
     init {
+        context.toast("hello")
         coroutineScope.launch {
             mutableState.update {
                 AnalyticsScreenState.Success(

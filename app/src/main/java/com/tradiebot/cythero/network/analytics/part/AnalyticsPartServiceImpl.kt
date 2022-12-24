@@ -31,9 +31,8 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
             body = body,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-    
-        return client.newCall(request).processResponse {
-            return@processResponse gson.fromJson(it.body.string(), AnalyticsParts::class.java).AnalyticsParts
+        return client.newCall(request).processRequest {
+            return@processRequest gson.fromJson(it.body.string(), AnalyticsParts::class.java).AnalyticsParts
         }.orEmpty()
     }
 }

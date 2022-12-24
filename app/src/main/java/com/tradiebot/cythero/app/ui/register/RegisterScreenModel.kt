@@ -3,13 +3,13 @@ package com.tradiebot.cythero.app.ui.register
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
-import cafe.adriel.voyager.core.model.StateScreenModel
 import cafe.adriel.voyager.core.model.coroutineScope
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.domain.auth.interactor.RegisterUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.domain.user.model.User
 import com.tradiebot.cythero.domain.user.model.UserRegister
+import com.tradiebot.cythero.presentation.util.CytheroStateScreenModel
 import com.tradiebot.cythero.util.launchIO
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
-class RegisterScreenViewModel(
+class RegisterStateScreenViewModel(
     val context: Context,
     private val registerUser: RegisterUser = Injekt.get(),
-) : StateScreenModel<RegisterScreenState>(RegisterScreenState.Loading) {
+) : CytheroStateScreenModel<RegisterScreenState>(context, RegisterScreenState.Loading) {
 
     private val _events: Channel<RegisterEvent> = Channel(Int.MAX_VALUE)
     val events: Flow<RegisterEvent> = _events.receiveAsFlow()
@@ -47,8 +47,6 @@ class RegisterScreenViewModel(
                     )
                 }
                 _events.send(RegisterEvent.UserRegistered(auth.user))
-            } else {
-                showLocalizedEvent(RegisterEvent.NetworkError)
             }
         }
 }
@@ -61,11 +59,8 @@ class RegisterScreenViewModel(
 
 sealed class RegisterEvent {
     data class UserRegistered(val user: User): RegisterEvent()
-
+    
     sealed class LocalizedMessage(@StringRes val stringRes: Int) : RegisterEvent()
-    object NetworkError: LocalizedMessage(R.string.error_network)
-
-    //this may not belong here
     object MissingFields: LocalizedMessage(R.string.error_empty_field)
     object NotMatchingPassword: LocalizedMessage(R.string.error_password_do_not_match)
 }

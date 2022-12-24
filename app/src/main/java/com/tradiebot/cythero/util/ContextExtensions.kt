@@ -12,7 +12,7 @@ import uy.kohesive.injekt.api.get
 
 /** gets app context */
 fun mAppContext(): Context {
-    return Injekt.get<ContextHolder>().getContext()
+    return Injekt.get<ContextHolder>().appContext
 }
 
 /**

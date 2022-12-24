@@ -31,8 +31,8 @@ object AuthServiceImpl : AuthService {
             body = body
         )
     
-        return client.newCall(request).processResponse {
-            return@processResponse gson.fromJson(it.body.string(), Auth::class.java)
+        return client.newCall(request).processRequest {
+            return@processRequest gson.fromJson(it.body.string(), Auth::class.java)
         }
     }
 
@@ -54,8 +54,8 @@ object AuthServiceImpl : AuthService {
             body = body
         )
     
-        return client.newCall(request).processResponse {
-            return@processResponse gson.fromJson(it.body.string(), Auth::class.java)
+        return client.newCall(request).processRequest {
+            return@processRequest gson.fromJson(it.body.string(), Auth::class.java)
         }
     }
 }

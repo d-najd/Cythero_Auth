@@ -35,9 +35,9 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
     
-        return client.newCall(request).processResponse<Map<Long, AnalyticsUser>?> {
+        return client.newCall(request).processRequest<Map<Long, AnalyticsUser>?> {
             val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
-            return@processResponse gson.fromJson(it.body.string(), analyticsUserType)
+            return@processRequest gson.fromJson(it.body.string(), analyticsUserType)
         }.orEmpty()
     }
 }

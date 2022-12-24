@@ -24,7 +24,7 @@ object LoginScreen : Screen {
         // val navigator = LocalNavigator.currentOrThrow
         val router = LocalRouter.currentOrThrow
         val context = LocalContext.current
-        val screenModel = rememberScreenModel { LoginScreenModel(context) }
+        val screenModel = rememberScreenModel { LoginStateScreenModel(context) }
 
         val state by screenModel.state.collectAsState()
 
