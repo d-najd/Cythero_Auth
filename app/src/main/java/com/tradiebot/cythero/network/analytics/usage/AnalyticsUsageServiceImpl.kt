@@ -8,10 +8,8 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
 import com.tradiebot.cythero.util.CytheroDateFormat
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.io.IOException
 import java.util.*
 
 object AnalyticsUsageServiceImpl: AnalyticsUsageService {
@@ -36,24 +34,11 @@ object AnalyticsUsageServiceImpl: AnalyticsUsageService {
             body = body,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-        
-        try {
-            val response: Response = client.newCall(request).execute().printResponse()
-            
-            response.takeIf { res -> res.isSuccessful }.let {
-                // Yes it is possible to do this in one line and yes it does crash the app
-                val temp = gson.fromJson(it!!.body.string(), AnalyticsUsageHolder::class.java)
     
-                return temp.analyticsUsage
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            when(e){
-                is IOException,
-                is NullPointerException -> { }
-                else -> throw e
-            }
+        return client.newCall(request).processResponse {
+            // Yes it is possible to do this in one line and yes it does crash the app
+            val temp = gson.fromJson(it.body.string(), AnalyticsUsageHolder::class.java)
+            return@processResponse temp.analyticsUsage
         }
-        return null
     }
 }

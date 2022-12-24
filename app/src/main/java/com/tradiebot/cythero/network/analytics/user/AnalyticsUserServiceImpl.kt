@@ -8,10 +8,8 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
 import com.tradiebot.cythero.util.CytheroDateFormat
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.io.IOException
 import java.util.*
 
 object AnalyticsUserServiceImpl: AnalyticsUserService {
@@ -36,22 +34,10 @@ object AnalyticsUserServiceImpl: AnalyticsUserService {
             body = body,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-
-        try {
-            val response: Response = client.newCall(request).execute().printResponse()
     
-            response.takeIf { res -> res.isSuccessful }.let {
-                val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
-                return gson.fromJson(it!!.body.string(), analyticsUserType)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            when(e){
-                is IOException,
-                is NullPointerException -> { }
-                else -> throw e
-            }
-        }
-        return emptyMap()
+        return client.newCall(request).processResponse<Map<Long, AnalyticsUser>?> {
+            val analyticsUserType = object : TypeToken<Map<Long, AnalyticsUser>>(){}.type
+            return@processResponse gson.fromJson(it.body.string(), analyticsUserType)
+        }.orEmpty()
     }
 }

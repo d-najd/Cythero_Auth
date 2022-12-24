@@ -19,9 +19,9 @@ import com.tradiebot.cythero.domain.analytics.user.model.AnalyticsUser
 import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.util.launchIO
 import com.tradiebot.cythero.util.launchUI
+import com.tradiebot.cythero.util.toast
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import logcat.logcat
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import java.util.*
@@ -63,10 +63,10 @@ class AnalyticsScreenModel(
                     )
                 }
             } else {
-                logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
-                        auth = auth
+                        auth = auth,
+                        noContent = true,
                     )
                 }
             }
@@ -87,10 +87,10 @@ class AnalyticsScreenModel(
                     )
                 }
             } else {
-                logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
-                        auth = auth
+                        auth = auth,
+                        noContent = true,
                     )
                 }
             }
@@ -110,14 +110,14 @@ class AnalyticsScreenModel(
                 mutableState.update {
                     AnalyticsScreenState.PartSuccess(
                         auth = auth,
-                        analytics = temp
+                        analytics = temp,
                     )
                 }
             } else {
-                logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
-                        auth = auth
+                        auth = auth,
+                        noContent = true,
                     )
                 }
             }
@@ -137,10 +137,10 @@ class AnalyticsScreenModel(
                     )
                 }
             } else {
-                logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
                         auth = auth,
+                        noContent = true,
                     )
                 }
             }
@@ -172,9 +172,9 @@ class AnalyticsScreenModel(
             if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
                 val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
                 mutableState.update {
-                    @Suppress("UselessCallOnCollection")
 //                  the call is not useless since the labels are sorted down the line and having
 //                  null value crashes the app
+                    @Suppress("UselessCallOnCollection")
                     AnalyticsScreenState.UsageSuccess(
                         auth = auth,
                         analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
@@ -182,10 +182,10 @@ class AnalyticsScreenModel(
                     )
                 }
             } else {
-                logcat { "Something went wrong" }
                 mutableState.update {
                     AnalyticsScreenState.Success(
                         auth = auth,
+                        noContent = true,
                     )
                 }
             }
@@ -240,7 +240,7 @@ class AnalyticsScreenModel(
                         }
                     }
                     else {
-                        logcat { "Something went wrong" }
+                        context.toast("Failed to get data")
                     }
                 }
             }
@@ -271,21 +271,29 @@ sealed class AnalyticsUsageDialog {
 
 sealed class AnalyticsScreenState {
 
-    /** if the screen is loading in, can be used to temporarily store state */
+    /** if the screen is loading in */
     @Immutable
     object Loading : AnalyticsScreenState()
 
-    /** if the screen has successfully loaded but no screen has been selected */
+    /**
+     * if the screen has loaded successfully but before content has loaded in or has failed to load in,
+     * is called after [Loading] and before [LoadingType]
+     *
+     * @param noContent true if the content failed to load, false if no content has been seleected
+     **/
     @Immutable
     data class Success(
         val auth: Auth,
+        val noContent: Boolean = false,
     ) : AnalyticsScreenState()
 
-    /** if a report type is being processed but the screen has loaded */
+    /** if a report type is being processed, this happens after [Success], if the type failed to
+     * load for some reason [Success] gets called again with [Success.noContent] set as true
+     **/
     @Immutable
     object LoadingType : AnalyticsScreenState()
 
-    /** if user analytics were success */
+    /** if user analytics were success, gets called after [LoadingType] */
     @Immutable
     data class UserSuccess(
         val auth: Auth,
@@ -293,7 +301,7 @@ sealed class AnalyticsScreenState {
     ) : AnalyticsScreenState()
 
 
-    /** if part analytics were success */
+    /** if part analytics were success, gets called after [LoadingType] */
     @Immutable
     data class PartSuccess(
         val auth: Auth,
@@ -302,7 +310,7 @@ sealed class AnalyticsScreenState {
     ) : AnalyticsScreenState()
     
     
-    /** if usage analytics were success */
+    /** if usage analytics were success, gets called after [LoadingType] */
     @Immutable
     data class UsageSuccess(
         val auth: Auth,

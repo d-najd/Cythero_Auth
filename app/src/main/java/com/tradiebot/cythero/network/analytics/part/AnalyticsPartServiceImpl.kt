@@ -9,10 +9,8 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.network.utils.*
 import com.tradiebot.cythero.util.mAppContext
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.io.IOException
 
 object AnalyticsPartServiceImpl: AnalyticsPartService {
     private val client = Injekt.get<OkHttpClient>()
@@ -33,21 +31,9 @@ object AnalyticsPartServiceImpl: AnalyticsPartService {
             body = body,
             headers = HeadersBuilder().addBearerToken(userAuth).build(),
         )
-
-        try {
-            val response: Response = client.newCall(request).execute().printResponse()
     
-            response.takeIf { res -> res.isSuccessful }.let {
-                return gson.fromJson(it!!.body.string(), AnalyticsParts::class.java).AnalyticsParts
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            when(e){
-                is IOException,
-                is NullPointerException -> { }
-                else -> throw e
-            }
-        }
-        return emptyList()
+        return client.newCall(request).processResponse {
+            return@processResponse gson.fromJson(it.body.string(), AnalyticsParts::class.java).AnalyticsParts
+        }.orEmpty()
     }
 }

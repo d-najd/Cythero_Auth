@@ -8,10 +8,8 @@ import com.tradiebot.cythero.domain.user.model.UserRegister
 import com.tradiebot.cythero.network.utils.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.Response
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.io.IOException
 
 object AuthServiceImpl : AuthService {
     private val client = Injekt.get<OkHttpClient>()
@@ -32,17 +30,10 @@ object AuthServiceImpl : AuthService {
             url = Urls.AUTH_LOGIN,
             body = body
         )
-
-        try {
-            val response: Response = client.newCallAndPrint(request)
     
-            response.takeIf { res -> res.isSuccessful }.let {
-                return gson.fromJson(it!!.body.string(), Auth::class.java)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
+        return client.newCall(request).processResponse {
+            return@processResponse gson.fromJson(it.body.string(), Auth::class.java)
         }
-        return null
     }
 
     override suspend fun registerUser(user: UserRegister): Auth? {
@@ -62,21 +53,9 @@ object AuthServiceImpl : AuthService {
             url = Urls.AUTH_REGISTER,
             body = body
         )
-
-        try {
-            val response: Response = client.newCallAndPrint(request)
     
-            response.takeIf { res -> res.isSuccessful }.let {
-                return gson.fromJson(it!!.body.string(), Auth::class.java)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            when(e){
-                is IOException,
-                is NullPointerException -> { }
-                else -> throw e
-            }
+        return client.newCall(request).processResponse {
+            return@processResponse gson.fromJson(it.body.string(), Auth::class.java)
         }
-        return null
     }
 }
