@@ -10,7 +10,17 @@ data class AnalyticsUsageSortableHolder(
 	val analyticsList: List<AnalyticsUsageSortable>,
 	val sortType: AnalyticsUsageSortType,
 	val reverse: Boolean
-): Serializable
+): Serializable {
+	companion object {
+		fun emptyObj(): AnalyticsUsageSortableHolder{
+			return AnalyticsUsageSortableHolder(
+				emptyList(),
+				AnalyticsUsageSortType.USER,
+				true,
+			)
+		}
+	}
+}
 
 /**
  * Analytics that are much easier to sort than [AnalyticsUsage] because in [AnalyticsUsage] the

@@ -71,6 +71,10 @@
     <string name="info_select_report_type">Select Report Type</string>
     <string name="info_select_date_range">Select Date Range</string>
 
+    <string name="info_no_data_analytics_user">Not enough data to display this report. Try to select a wider range of dates.</string>
+    <string name="info_no_data_analytics_part">Not enough data to display this report. Try to select another part.</string>
+    <string name="info_no_data_analytics_usage">Not enough data to display this report. Try to select a wider range of dates.</string>
+
     <!-- action -->
     <string name="action_hide_password">Hide Password</string>
     <string name="action_show_password">Show Password</string>

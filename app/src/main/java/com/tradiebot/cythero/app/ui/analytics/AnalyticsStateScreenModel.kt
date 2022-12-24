@@ -19,7 +19,6 @@ import com.tradiebot.cythero.domain.auth.model.Auth
 import com.tradiebot.cythero.presentation.util.CytheroStateScreenModel
 import com.tradiebot.cythero.util.launchIO
 import com.tradiebot.cythero.util.launchUI
-import com.tradiebot.cythero.util.toast
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
@@ -39,7 +38,6 @@ class AnalyticsStateScreenModel(
     private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
 ) : CytheroStateScreenModel<AnalyticsScreenState>(context, AnalyticsScreenState.Loading) {
     init {
-        context.toast("hello")
         coroutineScope.launch {
             mutableState.update {
                 AnalyticsScreenState.Success(
@@ -56,21 +54,10 @@ class AnalyticsStateScreenModel(
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
             val userAnalytics = requestUserAnalytics.await(auth, userID, dateRange)
-            if(userAnalytics != null) {
-                mutableState.update {
-                    AnalyticsScreenState.UserSuccess(
-                        auth = auth,
-                        analytics = mapOf(auth.user.id!! to userAnalytics)
-                    )
-                }
-            } else {
-                mutableState.update {
-                    AnalyticsScreenState.Success(
-                        auth = auth,
-                        noContent = true,
-                    )
-                }
-            }
+            AnalyticsScreenState.UserSuccess(
+                auth = auth,
+                analytics = if(userAnalytics != null) mapOf(auth.user.id!! to userAnalytics) else emptyMap()
+            )
         }
     }
 
@@ -80,20 +67,11 @@ class AnalyticsStateScreenModel(
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
             val userAnalytics = requestUserAnalytics.await(auth, userIDs, dateRange)
-            if(userAnalytics.isNotEmpty()) {
-                mutableState.update {
-                    AnalyticsScreenState.UserSuccess(
-                        auth = auth,
-                        analytics = userAnalytics,
-                    )
-                }
-            } else {
-                mutableState.update {
-                    AnalyticsScreenState.Success(
-                        auth = auth,
-                        noContent = true,
-                    )
-                }
+            mutableState.update {
+                AnalyticsScreenState.UserSuccess(
+                    auth = auth,
+                    analytics = userAnalytics,
+                )
             }
         }
     }
@@ -106,21 +84,11 @@ class AnalyticsStateScreenModel(
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
             val partAnalytics = requestPartAnalytics.await(auth, userID, part)
-            if (partAnalytics != null) {
-                val temp = listOf(partAnalytics)
-                mutableState.update {
-                    AnalyticsScreenState.PartSuccess(
-                        auth = auth,
-                        analytics = temp,
-                    )
-                }
-            } else {
-                mutableState.update {
-                    AnalyticsScreenState.Success(
-                        auth = auth,
-                        noContent = true,
-                    )
-                }
+            mutableState.update {
+                AnalyticsScreenState.PartSuccess(
+                    auth = auth,
+                    analytics = if(partAnalytics != null) listOf(partAnalytics) else emptyList(),
+                )
             }
         }
     }
@@ -130,20 +98,11 @@ class AnalyticsStateScreenModel(
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.Loading }
             val partAnalytics = requestPartAnalytics.await(auth, userIDs, parts)
-            if(partAnalytics.isNotEmpty()) {
-                mutableState.update {
-                    AnalyticsScreenState.PartSuccess(
-                        auth = auth,
-                        analytics = partAnalytics,
-                    )
-                }
-            } else {
-                mutableState.update {
-                    AnalyticsScreenState.Success(
-                        auth = auth,
-                        noContent = true,
-                    )
-                }
+            mutableState.update {
+                AnalyticsScreenState.PartSuccess(
+                    auth = auth,
+                    analytics = partAnalytics,
+                )
             }
         }
     }
@@ -169,26 +128,17 @@ class AnalyticsStateScreenModel(
             
             val userAnalytics = requestUsageAnalytics.await(auth, userID, dateRange)
             val analyticsLabels = requestAnalyticsLabels.await(auth)
+            val userAnalyticsSortable = userAnalytics?.toAnalyticsSortable() ?: AnalyticsUsageSortableHolder.emptyObj()
             
-            if(userAnalytics != null && analyticsLabels.isNotEmpty()) {
-                val userAnalyticsSortable = userAnalytics.toAnalyticsSortable()
-                mutableState.update {
-//                  the call is not useless since the labels are sorted down the line and having
-//                  null value crashes the app
-                    @Suppress("UselessCallOnCollection")
-                    AnalyticsScreenState.UsageSuccess(
-                        auth = auth,
-                        analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
-                        analyticsLabels = analyticsLabels.filterNotNull(),
-                    )
-                }
-            } else {
-                mutableState.update {
-                    AnalyticsScreenState.Success(
-                        auth = auth,
-                        noContent = true,
-                    )
-                }
+            mutableState.update {
+                // the call is not useless since the labels are sorted down the line and having
+                // null value crashes the app
+                @Suppress("UselessCallOnCollection")
+                AnalyticsScreenState.UsageSuccess(
+                    auth = auth,
+                    analytics = userAnalyticsSortable.sortByType(userAnalyticsSortable.sortType, userAnalyticsSortable.reverse),
+                    analyticsLabels = analyticsLabels.filterNotNull(),
+                )
             }
         }
     }
@@ -240,9 +190,6 @@ class AnalyticsStateScreenModel(
                             )
                         }
                     }
-                    else {
-                        context.toast("Failed to get data")
-                    }
                 }
             }
         }
@@ -279,17 +226,13 @@ sealed class AnalyticsScreenState {
     /**
      * if the screen has loaded successfully but before content has loaded in or has failed to load in,
      * is called after [Loading] and before [LoadingType]
-     *
-     * @param noContent true if the content failed to load, false if no content has been seleected
      **/
     @Immutable
     data class Success(
-        val auth: Auth,
-        val noContent: Boolean = false,
+        val auth: Auth
     ) : AnalyticsScreenState()
 
-    /** if a report type is being processed, this happens after [Success], if the type failed to
-     * load for some reason [Success] gets called again with [Success.noContent] set as true
+    /** if a report type is being processed, this happens after [Success]
      **/
     @Immutable
     object LoadingType : AnalyticsScreenState()
