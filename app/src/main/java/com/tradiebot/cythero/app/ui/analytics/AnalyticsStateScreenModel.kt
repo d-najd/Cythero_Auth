@@ -37,7 +37,6 @@ class AnalyticsStateScreenModel(
     private val requestAnalyticsLabels: RequestAnalyticsLabels = Injekt.get(),
     private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
 ) : CytheroStateScreenModel<AnalyticsScreenState>(context, AnalyticsScreenState.Loading) {
-    
     init {
         coroutineScope.launch {
             mutableState.update {
@@ -47,8 +46,6 @@ class AnalyticsStateScreenModel(
             }
         }
     }
-    
-    
     
     // region user
     
