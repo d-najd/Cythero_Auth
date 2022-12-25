@@ -37,6 +37,7 @@ class AnalyticsStateScreenModel(
     private val requestAnalyticsLabels: RequestAnalyticsLabels = Injekt.get(),
     private val requestAnalyticsSessionInfo: RequestAnalyticSessionInfo = Injekt.get(),
 ) : CytheroStateScreenModel<AnalyticsScreenState>(context, AnalyticsScreenState.Loading) {
+    
     init {
         coroutineScope.launch {
             mutableState.update {
@@ -46,21 +47,25 @@ class AnalyticsStateScreenModel(
             }
         }
     }
-
+    
+    
+    
     // region user
-
+    
     /** requesting analytics for single user and updates the state */
     fun requestUserAnalytics(auth: Auth, userID: Long = auth.user.id!!, dateRange: Pair<Date, Date>){
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
             val userAnalytics = requestUserAnalytics.await(auth, userID, dateRange)
-            AnalyticsScreenState.UserSuccess(
-                auth = auth,
-                analytics = if(userAnalytics != null) mapOf(auth.user.id!! to userAnalytics) else emptyMap()
-            )
+            mutableState.update {
+                AnalyticsScreenState.UserSuccess(
+                    auth = auth,
+                    analytics = if(userAnalytics != null) mapOf(auth.user.id!! to userAnalytics) else emptyMap()
+                )
+            }
         }
     }
-
+    
     /** requesting analytics for multiple users and updates the state */
     @Suppress("unused")
     fun requestUserAnalytics(auth: Auth, userIDs: List<Long>, dateRange: Pair<Date, Date>){
@@ -70,16 +75,16 @@ class AnalyticsStateScreenModel(
             mutableState.update {
                 AnalyticsScreenState.UserSuccess(
                     auth = auth,
-                    analytics = userAnalytics,
+                    analytics = userAnalytics
                 )
             }
         }
     }
-
+    
     //endregion
-
+    
     //region part
-
+    
     fun requestPartAnalytics(auth: Auth, userID: Long = auth.user.id!!, part: Part) {
         coroutineScope.launchIO {
             mutableState.update { AnalyticsScreenState.LoadingType }
@@ -92,7 +97,7 @@ class AnalyticsStateScreenModel(
             }
         }
     }
-
+    
     @Suppress("unused")
     fun requestPartAnalytics(auth: Auth, userIDs: List<Long>, parts: List<Part>){
         coroutineScope.launchIO {
@@ -149,11 +154,11 @@ class AnalyticsStateScreenModel(
                 (it as AnalyticsScreenState.UsageSuccess).copy(
                     screenIndex = if(increment &&
                         it.screenIndex < (it.analytics.analyticsList.size/10f).roundToInt())
-                            it.screenIndex + 1
-                        else if (!increment && it.screenIndex > 1)
-                            it.screenIndex - 1
-                        else
-                            it.screenIndex
+                        it.screenIndex + 1
+                    else if (!increment && it.screenIndex > 1)
+                        it.screenIndex - 1
+                    else
+                        it.screenIndex
                 )
             }
         }
@@ -174,7 +179,7 @@ class AnalyticsStateScreenModel(
     
     fun showUsageDialog(dialog: AnalyticsUsageDialog) {
         val usageState = (state.value as AnalyticsScreenState.UsageSuccess)
-    
+        
         when (dialog) {
             is AnalyticsUsageDialog.ItemInfo -> {
                 coroutineScope.launchIO {
@@ -218,11 +223,11 @@ sealed class AnalyticsUsageDialog {
 }
 
 sealed class AnalyticsScreenState {
-
+    
     /** if the screen is loading in */
     @Immutable
     object Loading : AnalyticsScreenState()
-
+    
     /**
      * if the screen has loaded successfully but before content has loaded in or has failed to load in,
      * is called after [Loading] and before [LoadingType]
@@ -231,20 +236,20 @@ sealed class AnalyticsScreenState {
     data class Success(
         val auth: Auth
     ) : AnalyticsScreenState()
-
+    
     /** if a report type is being processed, this happens after [Success]
      **/
     @Immutable
     object LoadingType : AnalyticsScreenState()
-
+    
     /** if user analytics were success, gets called after [LoadingType] */
     @Immutable
     data class UserSuccess(
         val auth: Auth,
         val analytics: Map<Long, AnalyticsUser>,
     ) : AnalyticsScreenState()
-
-
+    
+    
     /** if part analytics were success, gets called after [LoadingType] */
     @Immutable
     data class PartSuccess(
