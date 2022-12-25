@@ -13,10 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import com.github.mikephil.charting.data.PieDataSet
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
@@ -30,7 +27,6 @@ import com.tradiebot.cythero.presentation.components.chart.PieChartHelper
 import com.tradiebot.cythero.presentation.util.chart.ChartSettingsHolder
 import kotlinx.coroutines.flow.flow
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsUsageItemInfoDialog(
 	state: AnalyticsScreenState.UsageSuccess,
@@ -65,7 +61,7 @@ fun AnalyticsUsageItemInfoDialog(
 					color = MaterialTheme.colorScheme.onSurfaceVariant,
 					textAlign = TextAlign.Center,
 					fontWeight = FontWeight.Bold,
-					fontSize = TextUnit(16f, TextUnitType.Sp),
+					fontSize = 16.sp,
 				)
 				
 				Divider(

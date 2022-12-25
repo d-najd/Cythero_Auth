@@ -8,6 +8,7 @@ import com.bluelinelabs.conductor.Router
 import com.github.mikephil.charting.utils.Utils
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsController
 import com.tradiebot.cythero.app.ui.base.controller.setRoot
+import com.tradiebot.cythero.app.ui.login.LoginController
 import com.tradiebot.cythero.databinding.MainActivityBinding
 import com.tradiebot.cythero.domain.DomainModule
 import com.tradiebot.cythero.domain.auth.model.Auth
@@ -35,8 +36,8 @@ class MainActivity : AppCompatActivity() {
         
         // if there is no controller (in other words starting the app) set a root controller
         if(router.backstack.firstOrNull() == null) {
-            router.setRoot(AnalyticsController(auth = Auth.mockInstance()))
-            // router.setRoot(LoginController())
+            // router.setRoot(AnalyticsController(auth = Auth.mockInstance()))
+            router.setRoot(LoginController())
         }
     }
 }

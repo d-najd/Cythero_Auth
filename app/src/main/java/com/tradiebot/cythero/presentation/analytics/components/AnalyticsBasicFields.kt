@@ -7,13 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsBasicFields(
     state: AnalyticsScreenState.UserSuccess,
@@ -21,8 +17,8 @@ fun AnalyticsBasicFields(
     Text(
         textAlign = TextAlign.Center,
         text = "Hello ${state.auth.user.firstName} ${state.auth.user.lastName}",
-        fontSize = TextUnit(24F, TextUnitType.Sp),
-        lineHeight = TextUnit(32F, TextUnitType.Sp),
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .width(240.dp)

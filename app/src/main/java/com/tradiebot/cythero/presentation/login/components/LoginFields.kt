@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.tradiebot.cythero.R
 import com.tradiebot.cythero.app.ui.login.LoginScreenState
 import com.tradiebot.cythero.domain.user.model.UserLogin
+import com.tradiebot.cythero.presentation.components.dialogs.CytheroTextFieldDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -30,7 +31,12 @@ fun ColumnScope.LoginFields(
     onMissingFields: () -> Unit,
 ) {
     val defaultContentModifier = Modifier
-        .padding(start = 16.dp, top = 6.dp, end = 16.dp, bottom = 6.dp)
+        .padding(
+            start = 16.dp,
+            top = 6.dp,
+            end = 16.dp,
+            bottom = 6.dp
+        )
         .align(CenterHorizontally)
         .fillMaxWidth()
 
@@ -39,6 +45,7 @@ fun ColumnScope.LoginFields(
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
     OutlinedTextField(
+        colors = CytheroTextFieldDefaults.outlinedTextFieldBrightColors(),
         value = email,
         onValueChange = { email = it },
         modifier = defaultContentModifier,
@@ -52,6 +59,7 @@ fun ColumnScope.LoginFields(
     )
 
     OutlinedTextField(
+        colors = CytheroTextFieldDefaults.outlinedTextFieldBrightColors(),
         value = password,
         onValueChange = { password = it },
         modifier = defaultContentModifier,
@@ -108,7 +116,11 @@ fun ColumnScope.LoginFields(
     ) {
         Row(
             modifier = Modifier
-                .padding(start = 24.dp, end = 24.dp, bottom = 8.dp)
+                .padding(
+                    start = 24.dp,
+                    end = 24.dp,
+                    bottom = 8.dp
+                )
                 .fillMaxWidth()
                 .width(300.dp),
         ) {
@@ -116,6 +128,7 @@ fun ColumnScope.LoginFields(
                 modifier = Modifier.padding(top = 18.dp),
                 text = stringResource(R.string.info_do_not_have_account),
                 fontWeight = FontWeight.Bold,
+                color = Color.White.copy(.8f),
             )
             TextButton(
                 onClick = { onClickRegister() },

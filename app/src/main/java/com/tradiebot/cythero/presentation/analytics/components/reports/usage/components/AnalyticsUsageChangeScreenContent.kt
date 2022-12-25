@@ -16,14 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.ExperimentalUnitApi
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 import com.tradiebot.cythero.app.ui.analytics.AnalyticsScreenState
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun AnalyticsUsageChangeScreenContent(
 	state: AnalyticsScreenState.UsageSuccess,
@@ -51,7 +47,7 @@ fun AnalyticsUsageChangeScreenContent(
 			color = MaterialTheme.colorScheme.onSurfaceVariant,
 			textAlign = TextAlign.Center,
 			fontWeight = FontWeight.Bold,
-			fontSize = TextUnit(16f, TextUnitType.Sp),
+			fontSize = 16.sp,
 		)
 		
 		IconButton(
